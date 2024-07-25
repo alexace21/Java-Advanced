@@ -17,3 +17,6 @@ spring:
   sql:
     init:
       mode: never
+cars:
+  api:
+    baseUrl: "http://localhost:8081"
