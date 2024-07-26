@@ -7,6 +7,7 @@ import cars.service.RapidApi.repository.CarRepository;
 import cars.service.RapidApi.service.ShopService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -32,7 +33,7 @@ public class ShopServiceImpl implements ShopService {
 
 
     @Override
-    public CarDTO fetchAllCars() {
+    public List<CarDTO> fetchAllCars() {
 //        return carRepository.findAll()
 //                .stream()
 //                .map(ShopServiceImpl::map)
@@ -40,14 +41,16 @@ public class ShopServiceImpl implements ShopService {
 
         return restClient
                 .get()
-                .uri(rapidApiConfig.getBase(), rapidApiConfig.getUrl(), rapidApiConfig.getKey())
+                .uri(rapidApiConfig.getBase())
                 .accept(MediaType.APPLICATION_JSON)
+                .header("x-rapidapi-key", rapidApiConfig.getKey())
                 .retrieve()
-                .body(CarDTO.class);
+                .body(new ParameterizedTypeReference<>() {
+                });
     }
 
     @Override
-    public boolean hasInitializedExRates() {
+    public boolean hasInitializedCarShop() {
         return carRepository.count() > 0;
     }
 

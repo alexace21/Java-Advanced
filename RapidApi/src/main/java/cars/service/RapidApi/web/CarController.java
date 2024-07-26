@@ -26,7 +26,7 @@ public class CarController {
     @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
         return ResponseEntity.ok(
-                shopService.getAllCars()
+                shopService.fetchAllCars()
         );
     }
 }
