@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: RapidApi
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/72cars?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: ${DB_PASS}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      mode: never
+rapid:
+  api:
+    key: ${X-RapidAPI-Key}
+    url: "/v1/cars?model={model}"
+    base: "https://cars-by-api-ninjas.p.rapidapi.com"
+server:
+  error:
+    include-stacktrace: always
+  port: 8081
+#    whitelabel:
+#      enabled: false

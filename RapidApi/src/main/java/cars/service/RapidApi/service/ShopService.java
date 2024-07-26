@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface ShopService {
 
-    List<CarDTO> getAllCars();
+    CarDTO fetchAllCars();
+
+    boolean hasInitializedExRates();
+
 }
