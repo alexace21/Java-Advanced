@@ -10,8 +10,21 @@ interface CarProps {
 }
 
 const CarCard = ({ car }: CarProps) => {
+    const { city_mpg, year, make, model, transmission, drive } = car;
   return (
-    <div>CarCard</div>
+    <div className="car-card group">
+        <div className="car-card__content">
+            <h2 className="car-card__content-title">
+                {make} {model}
+            </h2>
+        </div>
+
+        <p>
+            <span>
+                Car Rent...
+            </span>
+        </p>
+    </div>
   )
 }
 
