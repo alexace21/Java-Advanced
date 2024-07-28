@@ -7,4 +7,6 @@ import java.util.List;
 public interface CarService {
 
     List<CarDTO> getAllCars();
+
+    List<CarDTO> getCarByMakeAndModel(String make, String model);
 }

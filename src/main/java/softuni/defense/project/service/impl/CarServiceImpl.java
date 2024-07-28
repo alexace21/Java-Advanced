@@ -36,7 +36,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<CarDTO> getAllCars() {
-        LOGGER.info("Get All Cars...");
+        LOGGER.info("FETCH All Cars...");
 
         return carRestClient
                 .get()
@@ -46,5 +46,18 @@ public class CarServiceImpl implements CarService {
                 .body(new ParameterizedTypeReference<>() {
                 });
 
+    }
+
+    @Override
+    public List<CarDTO> getCarByMakeAndModel(String make, String model) {
+        LOGGER.info("FETCH all " + make + " " + model + " cars");
+
+        return carRestClient
+                .get()
+                .uri("/shop?make=", make, "&&model=", model)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
     }
 }

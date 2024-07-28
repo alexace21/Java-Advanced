@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,8 +26,16 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
+        System.out.println("Fetching cars...");
         return ResponseEntity.ok(
                 shopService.fetchAllCars()
         );
     }
+
+//    @GetMapping
+//    public ResponseEntity<List<CarDTO>> fetchCarByParameters(@RequestParam(name = "make") String make, @RequestParam(name = "model") String model) {
+//        return ResponseEntity.ok(
+//                shopService.fetchAllCars()
+//        );
+//    }
 }
