@@ -11,6 +11,8 @@ import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter, usePathname } from 'next/navigation';
+import RegisterPage from "@/components/RegisterPage";
 
 export default function Home() {
   const [allCars, setAllCars] = useState([]);
@@ -26,6 +28,12 @@ export default function Home() {
 
   // pagination states
   const [limit, setLimit] = useState(10);
+
+  const router = useRouter();
+  const [pathname, setPathname] = useState(usePathname())
+
+  const showHeroSection = pathname === "/";
+  const showRegistrationSection = pathname === "/users";
 
   const getCars = async () => {
     setLoading(true);
@@ -54,8 +62,14 @@ export default function Home() {
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
+
+  useEffect(() => {
+    console.log("Logged changed pathname: " + pathname);
+  }, [pathname])
+
   return (
     <main className="overflow-hidden">
+      {showHeroSection && 
       <>
         <Hero />
 
@@ -108,6 +122,8 @@ export default function Home() {
           )}
         </div>
       </>
+      }
+      {showRegistrationSection && <RegisterPage />}
     </main>
   );
 }

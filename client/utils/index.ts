@@ -37,6 +37,7 @@ export async function fetchCars(filters: FilterProps) {
   
 
   console.log("ops ", url);
+  
   const response = await fetch(url, {
     headers: headers,
   });
@@ -90,3 +91,27 @@ export const updateSearchParams = (type: string, value: string) => {
 
   return newPathname;
 };
+
+export const registerUser = async (email: string, password: string) => {
+  let url = new URL("http://localhost:8080/users/register");
+
+  const headers = {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': 'http://localhost:3000'
+  };
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({ email, password })
+  });
+
+  if (response.ok) {
+    const result = await response.json();
+    console.log(result);
+  } else {
+    console.log("Error registering user!");
+  }
+
+
+}

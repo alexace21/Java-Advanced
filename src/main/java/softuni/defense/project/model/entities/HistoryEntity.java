@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @Table(name = "shop_history")
 public class HistoryEntity extends BaseEntity {
 
-    @ManyToOne
-    private CarEntity car;
+//    @ManyToOne
+//    private CarEntity car;
     @ManyToOne
     private UserEntity newOwner;
     @Column(name = "old_status")
@@ -24,13 +24,13 @@ public class HistoryEntity extends BaseEntity {
     @Column(name = "change_date")
     private LocalDate changeDate;
 
-    public CarEntity getCar() {
-        return car;
-    }
-
-    public void setCar(CarEntity car) {
-        this.car = car;
-    }
+//    public CarEntity getCar() {
+//        return car;
+//    }
+//
+//    public void setCar(CarEntity car) {
+//        this.car = car;
+//    }
 
     public UserEntity getNewOwner() {
         return newOwner;

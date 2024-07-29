@@ -32,8 +32,8 @@ public class FeedbackEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private FeedbackTypeEnum type;
 
-    @ManyToOne
-    private CarEntity car;
+//    @ManyToOne
+//    private CarEntity car;
 
     public UserEntity getUser() {
         return user;
@@ -107,11 +107,11 @@ public class FeedbackEntity extends BaseEntity {
         this.type = type;
     }
 
-    public CarEntity getCar() {
-        return car;
-    }
-
-    public void setCar(CarEntity car) {
-        this.car = car;
-    }
+//    public CarEntity getCar() {
+//        return car;
+//    }
+//
+//    public void setCar(CarEntity car) {
+//        this.car = car;
+//    }
 }
