@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,15 +34,18 @@ public class ShopServiceImpl implements ShopService {
 
 
     @Override
-    public List<CarDTO> fetchAllCars() {
-//        return carRepository.findAll()
-//                .stream()
-//                .map(ShopServiceImpl::map)
-//                .collect(Collectors.toList());
+    public List<CarDTO> fetchAllCars(String limit, String year) {
+
+        StringBuilder preBuildURI = new StringBuilder();
+        preBuildURI.append(rapidApiConfig.getBase());
+        preBuildURI.append(rapidApiConfig.getUrl());
+
+        preBuildURI.append("?limit=" + limit);
+        preBuildURI.append("&year" + year);
 
         return restClient
                 .get()
-                .uri(rapidApiConfig.getBase())
+                .uri(preBuildURI.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .header("x-rapidapi-key", rapidApiConfig.getKey())
                 .retrieve()
@@ -52,6 +56,48 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public boolean hasInitializedCarShop() {
         return carRepository.count() > 0;
+    }
+
+    @Override
+    public List<CarDTO> getCarsByQueryParameters(Map<String, String> queryParameters) {
+
+        StringBuilder preBuildURI = new StringBuilder();
+
+        if (queryParameters.size() < 2) {
+            return this.fetchAllCars(queryParameters.get("limit"), queryParameters.get("year"));
+        }
+
+        preBuildURI.append(rapidApiConfig.getBase());
+        preBuildURI.append(rapidApiConfig.getUrl());
+
+        preBuildURI.append("?limit=" + queryParameters.get("limit"));
+
+
+
+        for (String key : queryParameters.keySet()) {
+            switch(key) {
+                case "fuel_type": preBuildURI.append("&fuel_type=" + queryParameters.get(key));
+                    break;
+
+                case "year": preBuildURI.append("&year=" + queryParameters.get(key));
+                    break;
+
+                case "make": preBuildURI.append("&make=" + queryParameters.get(key));
+                    break;
+
+                case "model": preBuildURI.append("&model=" + queryParameters.get(key));
+                    break;
+            }
+        }
+
+        return restClient
+                .get()
+                .uri(preBuildURI.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .header("x-rapidapi-key", rapidApiConfig.getKey())
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
     }
 
     private static CarDTO map(CarEntity carEntity){

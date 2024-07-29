@@ -20,8 +20,8 @@ spring:
 rapid:
   api:
     key: ${x-rapidapi-key}
-    url: "/v1/cars?limit=2&model=corolla"
-    base: "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?limit=10&fuel_type=gas"
+    url: "/v1/cars"
+    base: "https://cars-by-api-ninjas.p.rapidapi.com"
 server:
   error:
     include-stacktrace: always

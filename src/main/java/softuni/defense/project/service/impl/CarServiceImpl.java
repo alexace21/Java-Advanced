@@ -11,6 +11,7 @@ import softuni.defense.project.model.dtos.CarDTO;
 import softuni.defense.project.service.CarService;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -35,12 +36,17 @@ public class CarServiceImpl implements CarService {
 //    }
 
     @Override
-    public List<CarDTO> getAllCars() {
+    public List<CarDTO> getAllCars(String limit, String year) {
         LOGGER.info("FETCH All Cars...");
+
+        StringBuilder preBuildURI = new StringBuilder();
+        preBuildURI.append("/shop?");
+        preBuildURI.append("limit=" + limit);
+        preBuildURI.append("&year=" + year);
 
         return carRestClient
                 .get()
-                .uri("/shop")
+                .uri(preBuildURI.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
@@ -49,15 +55,39 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarDTO> getCarByMakeAndModel(String make, String model) {
-        LOGGER.info("FETCH all " + make + " " + model + " cars");
+    public List<CarDTO> getCarsByQueryParameters(Map<String, String> queryParameters) {
+        LOGGER.info("FETCH all by query parameters cars");
+
+        StringBuilder preBuildURI = new StringBuilder();
+        if (queryParameters.size() == 2) {
+            return this.getAllCars(queryParameters.get("limit"), queryParameters.get("year"));
+        }
+
+        preBuildURI.append("/shop?");
+        preBuildURI.append("limit=" + queryParameters.get("limit"));
+        preBuildURI.append("&year=" + queryParameters.get("year"));
+
+
+        for (String key : queryParameters.keySet()) {
+            switch(key) {
+                case "fuel_type": preBuildURI.append("&fuel_type=" + queryParameters.get(key));
+                break;
+
+                case "make": preBuildURI.append("&make=" + queryParameters.get(key));
+                break;
+
+                case "model": preBuildURI.append("&model=" + queryParameters.get(key));
+                break;
+            }
+        }
 
         return carRestClient
                 .get()
-                .uri("/shop?make=", make, "&&model=", model)
+                .uri(preBuildURI.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
                 });
     }
+
 }

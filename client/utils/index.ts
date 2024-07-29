@@ -9,7 +9,7 @@ export async function fetchCars(filters: FilterProps) {
   };
   let url;
 
-  if (model || manufacturer) {
+  if (year || model || limit || fuel || manufacturer) {
     url = new URL("http://localhost:8080/shop?");
 
     if (manufacturer) {
@@ -34,6 +34,7 @@ export async function fetchCars(filters: FilterProps) {
   } else {
     url = new URL("http://localhost:8080/shop/all");
   }
+  
 
   console.log("ops ", url);
   const response = await fetch(url, {

@@ -22,7 +22,7 @@ export default function Home() {
 
   // filter states
   const [fuel, setFuel] = useState("")
-  const [year, setYear] = useState(202);
+  const [year, setYear] = useState("");
 
   // pagination states
   const [limit, setLimit] = useState(10);
@@ -33,7 +33,7 @@ export default function Home() {
     try {
       const result = await fetchCars({
         manufacturer: manufacturer || "",
-        year: year || 2022,
+        year: year || "2022",
         fuel: fuel || "",
         limit: limit || 10,
         model: model || "",

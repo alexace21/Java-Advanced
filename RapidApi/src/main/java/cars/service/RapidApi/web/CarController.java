@@ -5,12 +5,12 @@ import cars.service.RapidApi.service.ShopService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/shop")
@@ -24,18 +24,36 @@ public class CarController {
         this.shopService = shopService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<CarDTO>> getAllCars() {
-        System.out.println("Fetching cars...");
-        return ResponseEntity.ok(
-                shopService.fetchAllCars()
-        );
-    }
 
-//    @GetMapping
-//    public ResponseEntity<List<CarDTO>> fetchCarByParameters(@RequestParam(name = "make") String make, @RequestParam(name = "model") String model) {
-//        return ResponseEntity.ok(
-//                shopService.fetchAllCars()
-//        );
-//    }
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<CarDTO>> getSearchedCar(
+            @RequestParam(name = "limit") String limit,
+            @RequestParam(name = "fuel_type") Optional<String> fuel_type,
+            @RequestParam(name = "year") Optional<String> year,
+            @RequestParam(name = "make") Optional<String> make,
+            @RequestParam(name = "model") Optional<String> model
+    ) {
+
+        Map<String, String> parameters = new HashMap<>();
+
+        parameters.put("limit", limit);
+
+        if (fuel_type.isPresent()) {
+            parameters.put("fuel_type", fuel_type.get());
+        }
+
+        if (year.isPresent()){
+            parameters.put("year", year.get());
+        }
+
+        if (make.isPresent()) {
+            parameters.put("make", make.get());
+        }
+        if (model.isPresent()) {
+            parameters.put("model", model.get());
+        }
+
+        return ResponseEntity.ok(shopService.getCarsByQueryParameters(parameters));
+    }
 }

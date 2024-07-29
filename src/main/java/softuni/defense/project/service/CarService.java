@@ -3,10 +3,11 @@ package softuni.defense.project.service;
 import softuni.defense.project.model.dtos.CarDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CarService {
 
-    List<CarDTO> getAllCars();
+    List<CarDTO> getAllCars(String limit, String year);
 
-    List<CarDTO> getCarByMakeAndModel(String make, String model);
+    List<CarDTO> getCarsByQueryParameters(Map<String, String> queryParameters);
 }
