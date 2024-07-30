@@ -56,7 +56,6 @@ public class CatalogController {
         if (model.isPresent()) {
             parameters.put("model", model.get());
         }
-
         return ResponseEntity.ok(carService.getCarsByQueryParameters(parameters));
     }
 }

@@ -3,6 +3,7 @@
 import { registerUser } from "@/utils";
 import { useState } from "react";
 import CustomButton from "./CustomButton";
+import { useRouter } from "next/navigation";
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -11,9 +12,15 @@ const RegistrationForm: React.FC = () => {
     null
   );
 
+  const router = useRouter();
+
   const handleRegistration = async () => {
     try {
-      registerUser(email, password);
+      const result = await registerUser(email, password);
+
+      if (result == "registered") {
+        router.push("/login");
+      }
     } catch (error) {
       setRegistrationError("Something went wrong. Please try again."); // Customize error message
     }
@@ -21,7 +28,6 @@ const RegistrationForm: React.FC = () => {
 
   return (
     <form
-      method="POST"
       action={"/register"}
       className="registration-form"
     >

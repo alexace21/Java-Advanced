@@ -20,3 +20,8 @@ spring:
 cars:
   api:
     baseUrl: "http://localhost:8081"
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG\

@@ -107,8 +107,8 @@ export const registerUser = async (email: string, password: string) => {
   });
 
   if (response.ok) {
-    const result = await response.json();
-    console.log(result);
+    // const result = await response.json();
+    return "registered";
   } else {
     console.log("Error registering user!");
   }

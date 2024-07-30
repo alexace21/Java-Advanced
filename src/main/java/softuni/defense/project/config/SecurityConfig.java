@@ -3,10 +3,13 @@ package softuni.defense.project.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import softuni.defense.project.repositories.UserRepository;
+import softuni.defense.project.service.impl.CarShopUserDetailsService;
 
 @Configuration
 public class SecurityConfig {
@@ -26,6 +29,7 @@ public class SecurityConfig {
                                         .anyRequest()
                                         .authenticated()
                 )
+                .csrf().disable()
                 .formLogin(formLogin ->
                         formLogin
                                 // Where is our custom login form?
@@ -55,5 +59,11 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return Pbkdf2PasswordEncoder
                 .defaultsForSpringSecurity_v5_8();
+
+    }
+
+    @Bean
+    public CarShopUserDetailsService userDetailsService(UserRepository userRepository) {
+        return new CarShopUserDetailsService(userRepository);
     }
 }
