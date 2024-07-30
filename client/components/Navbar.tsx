@@ -35,7 +35,7 @@ const Navbar = () => {
                 handleClick={(e) => handleSignIn(e)}
             /> */}
 
-            <Link href="/users" prefetch={false}>
+            <Link href="/register">
                 <CustomButton 
                 title="Sign In"
                 btnType="button"
