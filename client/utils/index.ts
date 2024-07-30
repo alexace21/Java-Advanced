@@ -5,7 +5,7 @@ export async function fetchCars(filters: FilterProps) {
 
   const headers = {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': 'http://localhost:3000'
+    "Access-Control-Allow-Origin": "http://localhost:3000",
   };
   let url;
 
@@ -34,10 +34,9 @@ export async function fetchCars(filters: FilterProps) {
   } else {
     url = new URL("http://localhost:8080/shop/all");
   }
-  
 
   console.log("ops ", url);
-  
+
   const response = await fetch(url, {
     headers: headers,
   });
@@ -97,21 +96,39 @@ export const registerUser = async (email: string, password: string) => {
 
   const headers = {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': 'http://localhost:3000'
+    "Access-Control-Allow-Origin": "http://localhost:3000",
   };
 
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: headers,
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
   });
 
   if (response.ok) {
-    // const result = await response.json();
     return "registered";
   } else {
     console.log("Error registering user!");
   }
+};
 
+export const loginUser = async (email: string, password: string) => {
+  let url = new URL("http://localhost:8080/users/login");
 
-}
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (response.ok) {
+    return "logged";
+  } else {
+    console.log("Error Signing IN!");
+  }
+};
