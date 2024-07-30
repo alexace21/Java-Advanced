@@ -3,6 +3,7 @@ package softuni.defense.project.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import softuni.defense.project.model.dtos.UserLoginDTO;
 import softuni.defense.project.model.dtos.UserRegistrationDTO;
 import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.repositories.UserRepository;
@@ -23,6 +24,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerUser(UserRegistrationDTO registerDTO) {
         userRepository.save(map(registerDTO));
+    }
+
+    @Override
+    public void loginUser(UserLoginDTO registerDTO) {
+
     }
 
     private UserEntity map(UserRegistrationDTO userRegistrationDTO) {

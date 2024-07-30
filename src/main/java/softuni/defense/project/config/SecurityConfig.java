@@ -24,7 +24,7 @@ public class SecurityConfig {
                                         // all static resources to "common locations" (css, images, js) are available to anyone
                                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                         // some more resources for all users
-                                        .requestMatchers("/", "/users/login", "/users/register", "/error", "/shop", "/shop/{id}", "/api/convert").permitAll()
+                                        .requestMatchers("/", "/users/login-error","/users/login", "/users/register", "/error", "/shop", "/shop/{id}", "/api/convert").permitAll()
                                         // all other URL-s should be authenticated.
                                         .anyRequest()
                                         .authenticated()
@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 // what is the name of the password parameter in the Login POST request?
                                 .passwordParameter("password")
                                 // What will happen if the login is successful
-                                .defaultSuccessUrl("/", true)
+                                .defaultSuccessUrl("/", false)
                                 // What will happen if the login fails
                                 .failureForwardUrl("/users/login-error")
                 )

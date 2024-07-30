@@ -113,7 +113,7 @@ export const registerUser = async (email: string, password: string) => {
 };
 
 export const loginUser = async (email: string, password: string) => {
-  let url = new URL("http://localhost:8080/users/login");
+  let url = new URL(`http://localhost:8080/users/login?email=${email}&password=${password}`);
 
   const headers = {
     "Content-Type": "application/json",
@@ -126,7 +126,9 @@ export const loginUser = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   });
 
-  if (response.ok) {
+  console.log(response)
+
+  if (response.status === 302) {
     return "logged";
   } else {
     console.log("Error Signing IN!");

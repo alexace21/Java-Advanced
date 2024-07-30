@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.RequestParam;
 import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.model.entities.UserRoleEntity;
 import softuni.defense.project.model.enums.UserRoleEnum;
