@@ -4,7 +4,16 @@ public class UserLoginDTO {
 
     private String email;
 
+    // char[] for data type
     private String password;
+
+    public UserLoginDTO() {
+    }
+
+    public UserLoginDTO(String email, String password, String login) {
+        this.email = email;
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;

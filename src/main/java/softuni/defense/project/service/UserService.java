@@ -1,10 +1,13 @@
 package softuni.defense.project.service;
 
+import softuni.defense.project.model.dtos.UserDto;
 import softuni.defense.project.model.dtos.UserLoginDTO;
 import softuni.defense.project.model.dtos.UserRegistrationDTO;
 
 public interface UserService {
-    void registerUser(UserRegistrationDTO registerDTO);
+    UserDto registerUser(UserRegistrationDTO registerDTO);
 
-    void loginUser(UserLoginDTO registerDTO);
+    UserDto loginUser(UserLoginDTO registerDTO);
+
+    UserDto findByEmail(String issuer);
 }

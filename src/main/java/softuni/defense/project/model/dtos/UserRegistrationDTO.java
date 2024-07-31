@@ -6,6 +6,15 @@ public class UserRegistrationDTO {
 
     private String password;
 
+    public UserRegistrationDTO() {
+    }
+
+
+    public UserRegistrationDTO(String email, String password, String login) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }

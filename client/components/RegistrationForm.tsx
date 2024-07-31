@@ -18,19 +18,19 @@ const RegistrationForm: React.FC = () => {
     try {
       const result = await registerUser(email, password);
 
-      if (result == "registered") {
+      if (result == 200) {
         router.push("/login");
+      } else {
+        setRegistrationError(result); // Customize error message
       }
+      
     } catch (error) {
       setRegistrationError("Something went wrong. Please try again."); // Customize error message
     }
   };
 
   return (
-    <form
-      action={"/register"}
-      className="registration-form"
-    >
+    <form action={"/register"} className="registration-form">
       <div>
         <label htmlFor="email" typeof="text" aria-placeholder="Email" />
         <input
@@ -52,12 +52,12 @@ const RegistrationForm: React.FC = () => {
       </div>
       {registrationError && <p>{registrationError}</p>}
       <div className="items-center px-4">
-      <CustomButton 
-                title="Create user"
-                btnType="button"
-                containerStyles='bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out min-w-[400px]'
-                handleClick={handleRegistration}
-            />
+        <CustomButton
+          title="Create user"
+          btnType="button"
+          containerStyles="bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 ease-in-out min-w-[400px]"
+          handleClick={handleRegistration}
+        />
       </div>
     </form>
   );

@@ -3,12 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CustomButton from "./CustomButton";
-import { loginUser } from "@/utils";
+import { getAuthToken, loginUser } from "@/utils";
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [registrationError, setRegistrationError] = useState<string | null>(
+    const [loginError, setLoginError] = useState<string | null>(
       null
     );
   
@@ -18,11 +18,14 @@ const LoginForm: React.FC = () => {
       try {
         const result = await loginUser(email, password);
   
-        if (result == "logged") {
-          router.push("/");
+        if ( result === 200 && getAuthToken() != null) {
+            router.push("/");
+        } else {
+            setLoginError(result);
         }
+    
       } catch (error) {
-        setRegistrationError("Something went wrong. Please try again."); // Customize error message
+        setLoginError("Something went wrong. Please try again."); // Customize error message
       }
     };
   
@@ -50,7 +53,7 @@ const LoginForm: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        {registrationError && <p>{registrationError}</p>}
+        {loginError && <p>{loginError}</p>}
         <div className="items-center px-4">
         <CustomButton 
                   title="Login"

@@ -106,14 +106,16 @@ export const registerUser = async (email: string, password: string) => {
   });
 
   if (response.ok) {
-    return "registered";
+    return 200;
   } else {
     console.log("Error registering user!");
+    const body = await response.json();
+    return body.message;
   }
 };
 
 export const loginUser = async (email: string, password: string) => {
-  let url = new URL(`http://localhost:8080/users/login?email=${email}&password=${password}`);
+  let url = new URL(`http://localhost:8080/users/login`);
 
   const headers = {
     "Content-Type": "application/json",
@@ -126,11 +128,25 @@ export const loginUser = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   });
 
-  console.log(response)
+  const body = await response.json();
 
-  if (response.status === 302) {
-    return "logged";
+  console.log(body)
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    setAuthToken(body?.token);
+    return 200;
   } else {
     console.log("Error Signing IN!");
+    return body.message;
   }
+};
+
+export const getAuthToken = () => {
+  return window.localStorage.getItem("auth_token");
+};
+
+export const setAuthToken = (token: string) => {
+  window.localStorage.setItem("auth_token", token);
 };

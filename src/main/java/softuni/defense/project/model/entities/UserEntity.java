@@ -9,9 +9,9 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
-
+    @Column(nullable = false)
     private String password;
 
     private String firstName;
@@ -27,6 +27,18 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<UserRoleEntity> roles = new ArrayList<>();
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String email, String password, String firstName, String lastName, List<UserRoleEntity> roles) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roles = roles;
+    }
+
 
     public String getEmail() {
         return email;
