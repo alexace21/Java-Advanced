@@ -4,6 +4,7 @@ import { registerUser } from "@/utils";
 import { useState } from "react";
 import CustomButton from "./CustomButton";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -50,6 +51,17 @@ const RegistrationForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+
+      <div>
+        <span className="font-bold ml-5 mr-5">Already have an account?</span>
+        <Link href="/login">
+          <button
+            className="text-blue-700 font-semibold"
+            type="button"
+          >Login</button>
+        </Link>
+      </div>
+
       {registrationError && <p>{registrationError}</p>}
       <div className="items-center px-4">
         <CustomButton

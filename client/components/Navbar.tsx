@@ -4,16 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import CustomButton from './CustomButton';
-import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
-    const router = useRouter();
-
-    // const handleSignIn = (event) => {
-    //     event.preventDefault();
-    //     router.push("/users");
-
-    // }
 
   return (
     <header className='w-full absolute z-10'>
