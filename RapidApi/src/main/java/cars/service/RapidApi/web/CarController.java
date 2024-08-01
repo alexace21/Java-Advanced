@@ -64,4 +64,9 @@ public class CarController {
 
         return ResponseEntity.ok(car);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<CarDTO>> getAllCars() {
+        return ResponseEntity.ok(this.shopService.fetchAllOffers());
+    }
 }

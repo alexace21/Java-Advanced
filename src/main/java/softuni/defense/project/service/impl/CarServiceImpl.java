@@ -114,4 +114,20 @@ public class CarServiceImpl implements CarService {
 
     }
 
+    @Override
+    public List<CarDTO> getAllOffers() {
+        LOGGER.info("FETCH All Cars from repository...");
+
+        StringBuilder preBuildURI = new StringBuilder();
+        preBuildURI.append("/shop/all");
+
+        return carRestClient
+                .get()
+                .uri(preBuildURI.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+    }
+
 }

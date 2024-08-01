@@ -12,4 +12,6 @@ public interface CarService {
     List<CarDTO> getCarsByQueryParameters(Map<String, String> queryParameters);
 
     CarDTO createCarOffer(CarDTO carDTO);
+
+    List<CarDTO> getAllOffers();
 }

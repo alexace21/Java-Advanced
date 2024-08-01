@@ -15,6 +15,7 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -125,21 +126,17 @@ public class ShopServiceImpl implements ShopService {
         return modelMapper.map(savedEntity, CarDTO.class);
     }
 
-//    private static CarDTO map(CarEntity carEntity){
-//        // todo - use mapped (e.g. ModelMapper)
-//        return new CarDTO(
-//                carEntity.getId(),
-//                carEntity.getCity_mpg(),
-//                carEntity.getCombination_mpg(),
-//                carEntity.getCylinders(),
-//                carEntity.getDisplacement(),
-//                carEntity.getDrive(),
-//                carEntity.getFuel_type(),
-//                carEntity.getHighway_mpg(),
-//                carEntity.getMake(),
-//                carEntity.getModel(),
-//                carEntity.getTransmission(),
-//                carEntity.getYear()
-//        );
-//    }
+    @Override
+    public List<CarDTO> fetchAllOffers() {
+        List<CarEntity> allCars = this.carRepository.findAll();
+
+
+        return allCars.stream()
+                .map(this::map)
+                .collect(Collectors.toList());
+    }
+
+    private CarDTO map(CarEntity carEntity){
+        return this.modelMapper.map(carEntity, CarDTO.class);
+    }
 }

@@ -2,14 +2,12 @@ package softuni.defense.project.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import softuni.defense.project.model.dtos.CarDTO;
 import softuni.defense.project.service.CarService;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cars")
@@ -26,5 +24,10 @@ public class CarController {
     public ResponseEntity<CarDTO> createCarOffer(@RequestBody CarDTO carDTO) {
         CarDTO car = this.carService.createCarOffer(carDTO);
         return ResponseEntity.created(URI.create("/cars/" + car.getId())).body(car);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CarDTO>> getAllCarsForSaleOrRent() {
+        return ResponseEntity.ok(this.carService.getAllOffers());
     }
 }

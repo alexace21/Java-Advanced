@@ -22,15 +22,6 @@ public class CatalogController {
         this.carService = carService;
     }
 
-//    @GetMapping("/all")
-//    @ResponseBody
-//    public ResponseEntity<List<CarDTO>> getAllCars() {
-//
-//        return ResponseEntity.ok(
-//                carService.getAllCars()
-//        );
-//    }
-
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<CarDTO>> getSearchedCar(

@@ -14,4 +14,6 @@ public interface ShopService {
     List<CarDTO> getCarsByQueryParameters(Map<String, String> parameters);
 
     CarDTO createCarOffer(CarDTO carDTO);
+
+    List<CarDTO> fetchAllOffers();
 }
