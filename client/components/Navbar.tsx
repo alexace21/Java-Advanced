@@ -28,6 +28,14 @@ const Navbar = () => {
             />
             </Link>
 
+            <Link href="/sale-rent">
+                <CustomButton 
+                title="For SALE/RENT"
+                btnType="button"
+                containerStyles='text-primary-blue rounded-full bg-white min-w-[130px]'
+            />
+            </Link>
+
             <Link href="/register">
                 <CustomButton 
                 title="Sign In"
