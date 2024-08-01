@@ -237,6 +237,29 @@
   @apply block text-sm font-medium text-gray-700 mb-1;
 }
 
+.profile-image {
+  width: 800px; /* Adjust as needed */
+  height: 800px;
+  float: left;
+  margin-right: 20px; /* Creates space between image and text */
+}
+
+.hobbies-section {
+  float: right;
+  max-width: calc(70% - 220px); /* Adjusts based on image width plus margin */
+  font-family: sans-serif;
+  font-size: large;
+  font-weight: 500;
+  font-style: italic;
+  text-align: right;
+}
+
+/* Clearfix to contain floats */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 
 /* END: search manufacturer styles */
