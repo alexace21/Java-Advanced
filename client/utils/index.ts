@@ -143,6 +143,59 @@ export const loginUser = async (email: string, password: string) => {
   }
 };
 
+export const createCarOffer = async (
+            city_mpg: string, 
+            combination_mpg: string,
+            cylinders: string,
+            displacement: string,
+            drive: string,
+            fuel_type: string,
+            highway_mpg: string,
+            make: string,
+            model: string,
+            transmission: string,
+            year: string
+) => {
+  let url = new URL(`http://localhost:8080/cars/create`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({ 
+            city_mpg, 
+            combination_mpg,
+            cylinders,
+            displacement,
+            drive,
+            fuel_type,
+            highway_mpg,
+            make,
+            model,
+            transmission,
+            year 
+    }),
+  });
+
+  const body = await response.json();
+
+  console.log(body)
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    return body;
+  } else {
+    console.log("Error Creating offer!");
+    return body.message;
+  }
+}
+
 export const getAuthToken = () => {
   return window.localStorage.getItem("auth_token");
 };

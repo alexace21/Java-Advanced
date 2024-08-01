@@ -20,12 +20,13 @@ const Navbar = () => {
                 />
             </Link>
 
-            {/* <CustomButton 
-                title="Sign In"
+            <Link href="/create-offer">
+                <CustomButton 
+                title="Create Offer"
                 btnType="button"
                 containerStyles='text-primary-blue rounded-full bg-white min-w-[130px]'
-                handleClick={(e) => handleSignIn(e)}
-            /> */}
+            />
+            </Link>
 
             <Link href="/register">
                 <CustomButton 

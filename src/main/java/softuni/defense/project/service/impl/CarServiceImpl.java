@@ -90,4 +90,9 @@ public class CarServiceImpl implements CarService {
                 });
     }
 
+    @Override
+    public CarDTO createCarOffer(CarDTO carDTO) {
+        return null;
+    }
+
 }
