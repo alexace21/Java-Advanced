@@ -83,7 +83,7 @@ export const manufacturers = [
     {
       title: "Company",
       links: [
-        { title: "Website", url: "https://3aportfolio.com/" },
+        { title: "Creator", url: "https://3aportfolio.com/" },
         { title: "Blog", url: "/" },
         { title: "Podcast", url: "/" },
         { title: "Contact Me", url: "https://3aportfolio.com/#contact" },

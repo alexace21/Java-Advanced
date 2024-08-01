@@ -13,7 +13,7 @@ const page = () => {
         <div className="ml-5">
           <span className="font-serif font-semibold text-xl">
             I am Software (engineer) enthusiast with Over 5 years of Personal
-            experience & 2 Professional @ CommerzBank AG - Germany
+            experience & 2 Professional <span className="text-yellow-400">@ CommerzBank AG - Germany</span>
           </span>
         </div>
       </div>
