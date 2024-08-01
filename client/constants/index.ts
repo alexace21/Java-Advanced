@@ -74,10 +74,10 @@ export const manufacturers = [
     {
       title: "About",
       links: [
-        { title: "How it works", url: "/how-it-works" },
+        { title: "About me", url: "/about-me" },
         { title: "Featured", url: "/shop/featured" },
-        { title: "Partnership", url: "/partnership" },
-        { title: "Bussiness Relation", url: "/" },
+        { title: "Partnership", url: "/feedback" },
+        { title: "Bussiness Relation", url: "http://3aportfolio.com/" },
       ],
     },
     {
