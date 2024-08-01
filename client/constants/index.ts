@@ -75,7 +75,7 @@ export const manufacturers = [
       title: "About",
       links: [
         { title: "About me", url: "/about-me" },
-        { title: "Featured", url: "/shop/featured" },
+        { title: "Work Experience", url: "https://3aportfolio.com/#work" },
         { title: "Partnership", url: "/feedback" },
         { title: "Bussiness Relation", url: "http://3aportfolio.com/" },
       ],
@@ -83,17 +83,17 @@ export const manufacturers = [
     {
       title: "Company",
       links: [
-        { title: "Events", url: "/" },
+        { title: "Website", url: "https://3aportfolio.com/" },
         { title: "Blog", url: "/" },
         { title: "Podcast", url: "/" },
-        { title: "Invite a friend", url: "/" },
+        { title: "Contact Me", url: "https://3aportfolio.com/#contact" },
       ],
     },
     {
       title: "Socials",
       links: [
-        { title: "Discord", url: "/" },
-        { title: "Instagram", url: "/" },
+        { title: "Discord", url: "https://discord.com/channels/1249417706793468035/1249417707544121467" },
+        { title: "LinkedIn", url: "https://www.linkedin.com/in/alex-asenov/" },
         { title: "Twitter", url: "/" },
         { title: "Facebook", url: "/" },
       ],
