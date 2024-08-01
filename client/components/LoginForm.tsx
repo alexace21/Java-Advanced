@@ -5,11 +5,14 @@ import { useState } from "react";
 import CustomButton from "./CustomButton";
 import { getAuthToken, loginUser } from "@/utils";
 import Link from "next/link";
+import { useAuthContext } from "@/context/AuthContext";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
+
+  const {isAuthenticated, setIsAuthenticated} = useAuthContext();
 
   const router = useRouter();
 
@@ -18,6 +21,8 @@ const LoginForm: React.FC = () => {
       const result = await loginUser(email, password);
 
       if (result === 200 && getAuthToken() != null) {
+        window.localStorage.setItem("auth_user", email);
+        setIsAuthenticated(true);
         router.push("/");
       } else {
         setLoginError(result);
@@ -27,9 +32,6 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const handleNoExistingProfile = () => {
-    router.push("/register");
-  };
   return (
     <form action={"/login"} className="registration-form">
       <div>

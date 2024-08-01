@@ -60,3 +60,4 @@ export interface SearchBarProps {
     setManufacturer: (manufacturer: string) => void;
     setModel: (model: string) => void;
 }
+

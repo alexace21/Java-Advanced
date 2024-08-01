@@ -19,5 +19,5 @@ export {
     SearchManufacturer,
     CarCard,
     CarDetails,
-    ShopCatalog
+    ShopCatalog,
 }

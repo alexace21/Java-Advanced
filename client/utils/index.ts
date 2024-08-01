@@ -225,6 +225,7 @@ export const fetchCarsForSale = async () => {
     return body.message? body.message : body;
   }
 }
+
 export const getAuthToken = () => {
   return window.localStorage.getItem("auth_token");
 };
