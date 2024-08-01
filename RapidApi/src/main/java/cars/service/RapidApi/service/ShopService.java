@@ -12,4 +12,6 @@ public interface ShopService {
     boolean hasInitializedCarShop();
 
     List<CarDTO> getCarsByQueryParameters(Map<String, String> parameters);
+
+    CarDTO createCarOffer(CarDTO carDTO);
 }

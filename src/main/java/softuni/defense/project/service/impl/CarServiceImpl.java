@@ -7,6 +7,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import softuni.defense.project.config.UserAuthProvider;
 import softuni.defense.project.model.dtos.CarDTO;
 import softuni.defense.project.service.CarService;
 
@@ -18,9 +19,11 @@ public class CarServiceImpl implements CarService {
 
     private Logger LOGGER = LoggerFactory.getLogger(CarServiceImpl.class);
     private final RestClient carRestClient;
+    private final UserAuthProvider authProvider;
 
-    public CarServiceImpl(@Qualifier("carsRestClient") RestClient carRestClient) {
+    public CarServiceImpl(@Qualifier("carsRestClient") RestClient carRestClient, UserAuthProvider authProvider) {
         this.carRestClient = carRestClient;
+        this.authProvider = authProvider;
     }
 
 //    public String makeApiCall(String method, String url, Object body, HttpHeaders headers) {
@@ -92,7 +95,23 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public CarDTO createCarOffer(CarDTO carDTO) {
-        return null;
+        LOGGER.info("Creating offer..." + carDTO);
+
+        StringBuilder preBuildURI = new StringBuilder();
+
+        preBuildURI.append("/shop/create");
+
+        carDTO.setOwner(authProvider.getCurrentLogin());
+
+        return carRestClient
+                .post()
+                .uri(preBuildURI.toString())
+                .body(carDTO)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+
     }
 
 }

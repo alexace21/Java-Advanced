@@ -5,6 +5,7 @@ import cars.service.RapidApi.model.dtos.CarDTO;
 import cars.service.RapidApi.model.entities.CarEntity;
 import cars.service.RapidApi.repository.CarRepository;
 import cars.service.RapidApi.service.ShopService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,7 +15,6 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -24,12 +24,14 @@ public class ShopServiceImpl implements ShopService {
 
     private final RestClient restClient;
     private final RapidApiConfig rapidApiConfig;
+    private final ModelMapper modelMapper;
 
 
-    public ShopServiceImpl(CarRepository carRepository, RestClient restClient, RapidApiConfig rapidApiConfig) {
+    public ShopServiceImpl(CarRepository carRepository, RestClient restClient, RapidApiConfig rapidApiConfig, ModelMapper modelMapper) {
         this.carRepository = carRepository;
         this.restClient = restClient;
         this.rapidApiConfig = rapidApiConfig;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -100,21 +102,44 @@ public class ShopServiceImpl implements ShopService {
                 });
     }
 
-    private static CarDTO map(CarEntity carEntity){
-        // todo - use mapped (e.g. ModelMapper)
-        return new CarDTO(
-                carEntity.getId(),
-                carEntity.getCity_mpg(),
-                carEntity.getCombination_mpg(),
-                carEntity.getCylinders(),
-                carEntity.getDisplacement(),
-                carEntity.getDrive(),
-                carEntity.getFuel_type(),
-                carEntity.getHighway_mpg(),
-                carEntity.getMake(),
-                carEntity.getModel(),
-                carEntity.getTransmission(),
-                carEntity.getYear()
-        );
+    @Override
+    public CarDTO createCarOffer(CarDTO carDTO) {
+
+//        CarEntity car = new CarEntity(
+//                carDTO.city_mpg(),
+//                carDTO.combination_mpg(),
+//                carDTO.cylinders(),
+//                carDTO.displacement(),
+//                carDTO.drive(),
+//                carDTO.fuel_type(),
+//                carDTO.highway_mpg(),
+//                carDTO.make(),
+//                carDTO.model(),
+//                carDTO.transmission(),
+//                carDTO.year(),
+//                carDTO.owner()
+//                );
+        CarEntity car = this.modelMapper.map(carDTO, CarEntity.class);
+        CarEntity savedEntity = carRepository.save(car);
+
+        return modelMapper.map(savedEntity, CarDTO.class);
     }
+
+//    private static CarDTO map(CarEntity carEntity){
+//        // todo - use mapped (e.g. ModelMapper)
+//        return new CarDTO(
+//                carEntity.getId(),
+//                carEntity.getCity_mpg(),
+//                carEntity.getCombination_mpg(),
+//                carEntity.getCylinders(),
+//                carEntity.getDisplacement(),
+//                carEntity.getDrive(),
+//                carEntity.getFuel_type(),
+//                carEntity.getHighway_mpg(),
+//                carEntity.getMake(),
+//                carEntity.getModel(),
+//                carEntity.getTransmission(),
+//                carEntity.getYear()
+//        );
+//    }
 }

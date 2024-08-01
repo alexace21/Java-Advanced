@@ -57,7 +57,7 @@ const OfferForm = () => {
             year
         );
     
-          if (result === 200 && getAuthToken() != null) {
+          if (result && getAuthToken() != null) {
             router.push("/");
           } else {
             setOfferError(result);

@@ -56,4 +56,12 @@ public class CarController {
 
         return ResponseEntity.ok(shopService.getCarsByQueryParameters(parameters));
     }
+
+    @PostMapping("/create")
+    @ResponseBody
+    public ResponseEntity<CarDTO> createCarOffer(@RequestBody CarDTO carDTO) {
+        CarDTO car = this.shopService.createCarOffer(carDTO);
+
+        return ResponseEntity.ok(car);
+    }
 }

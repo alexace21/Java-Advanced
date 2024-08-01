@@ -25,6 +25,6 @@ public class CarController {
     @PostMapping("/create")
     public ResponseEntity<CarDTO> createCarOffer(@RequestBody CarDTO carDTO) {
         CarDTO car = this.carService.createCarOffer(carDTO);
-        return ResponseEntity.created(URI.create("/cars/" + car.id())).body(car);
+        return ResponseEntity.created(URI.create("/cars/" + car.getId())).body(car);
     }
 }

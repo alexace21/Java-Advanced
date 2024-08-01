@@ -22,6 +22,8 @@ public class UserAuthProvider {
     @Value("${security.jwt.token.secret-key:secret-value}")
     private String secretKey;
 
+    private String currentLogin;
+
     private final UserService userService;
 
     public UserAuthProvider(UserService userService) {
@@ -37,6 +39,7 @@ public class UserAuthProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3_600_000);
 
+        setCurrentLogin(login);
         return JWT.create()
                 .withIssuer(login)
                 .withIssuedAt(now)
@@ -50,8 +53,16 @@ public class UserAuthProvider {
         DecodedJWT decodedJWT = verifier.verify(token);
 
         UserDto user = userService.findByEmail(decodedJWT.getIssuer());
+        setCurrentLogin(user.getEmail());
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }
 
+    public String getCurrentLogin() {
+        return currentLogin;
+    }
+
+    public void setCurrentLogin(String currentLogin) {
+        this.currentLogin = currentLogin;
+    }
 }

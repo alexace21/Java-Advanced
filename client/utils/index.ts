@@ -192,7 +192,7 @@ export const createCarOffer = async (
     return body;
   } else {
     console.log("Error Creating offer!");
-    return body.message;
+    return body.message? body.message : body;
   }
 }
 
