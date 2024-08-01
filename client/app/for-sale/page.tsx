@@ -1,7 +1,19 @@
+"use client";
+
 import SaleCatalog from '@/components/SaleCatalog'
+import { useAuthContext } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const page = () => {
+
+  const {isAuthenticated, setIsAuthenticated} = useAuthContext();
+  const router = useRouter();
+
+  if (!isAuthenticated) {
+    router.push("/login");
+  }
+
   return (
     <main className="overflow-hidden">
       <div className="">

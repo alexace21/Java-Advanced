@@ -8,19 +8,18 @@ import { getAuthToken } from "@/utils";
 import { useEffect } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 const Navbar = () => {
-
-  const {isAuthenticated, setIsAuthenticated} = useAuthContext();
+  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
 
   const userLogout = () => {
     setIsAuthenticated(false);
     window.localStorage.removeItem("auth_token");
     window.localStorage.removeItem("auth_user");
-  }
+  };
 
   useEffect(() => {
     const auth = getAuthToken();
 
-    console.log(auth)
+    console.log(auth);
     if (auth) {
       setIsAuthenticated(true);
     } else {
@@ -28,7 +27,7 @@ const Navbar = () => {
     }
 
     console.log(isAuthenticated);
-  }, [isAuthenticated])
+  }, [isAuthenticated]);
 
   return (
     <header className="w-full absolute z-10">
@@ -63,22 +62,26 @@ const Navbar = () => {
           </>
         )}
 
-        <Link href="/register">
-          <CustomButton
-            title="Sign In"
-            btnType="button"
-            containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-          />
-        </Link>
+        {!isAuthenticated && (
+          <>
+            <Link href="/register">
+              <CustomButton
+                title="Sign In"
+                btnType="button"
+                containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
+              />
+            </Link>
+          </>
+        )}
 
         {isAuthenticated && (
           <>
-              <CustomButton
-                title="Logout"
-                btnType="button"
-                containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-                handleClick={userLogout}
-              />
+            <CustomButton
+              title="Logout"
+              btnType="button"
+              containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
+              handleClick={userLogout}
+            />
           </>
         )}
       </nav>
