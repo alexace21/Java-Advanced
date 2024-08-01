@@ -18,6 +18,7 @@ const OfferForm = () => {
     const [model, setModel] = useState("");
     const [transmission, setTransmission] = useState("");
     const [year, setYear] = useState("");
+    const [price, setPrice] = useState("");
 
     const [offerError, setOfferError] = useState<string | null>(null);
 
@@ -36,7 +37,8 @@ const OfferForm = () => {
             !make ||
             !model ||
             !transmission ||
-            !year
+            !year ||
+            !price 
         ) {
             setOfferError("Please fill out all fields!")
             return;
@@ -54,7 +56,8 @@ const OfferForm = () => {
             make,
             model,
             transmission,
-            year
+            year,
+            price
         );
     
           if (result && getAuthToken() != null) {
@@ -177,6 +180,16 @@ const OfferForm = () => {
           placeholder="Car Year"
           value={year}
           onChange={(e) => setYear(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="price" typeof="text" aria-placeholder="Car price" />
+        <input
+          type="price"
+          placeholder="Car price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
         />
       </div>
 

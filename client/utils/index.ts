@@ -154,7 +154,8 @@ export const createCarOffer = async (
             make: string,
             model: string,
             transmission: string,
-            year: string
+            year: string,
+            price: string
 ) => {
   let url = new URL(`http://localhost:8080/cars/create`);
 
@@ -178,7 +179,8 @@ export const createCarOffer = async (
             make,
             model,
             transmission,
-            year 
+            year,
+            price
     }),
   });
 

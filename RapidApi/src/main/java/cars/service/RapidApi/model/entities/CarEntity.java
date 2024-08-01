@@ -20,11 +20,12 @@ public class CarEntity extends BaseEntity {
     private String transmission;
     private Long year;
     private String owner;
+    private String price;
 
     public CarEntity() {
     }
 
-    public CarEntity(Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String owner) {
+    public CarEntity(Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String owner, String price) {
         this.city_mpg = city_mpg;
         this.combination_mpg = combination_mpg;
         this.cylinders = cylinders;
@@ -37,6 +38,15 @@ public class CarEntity extends BaseEntity {
         this.transmission = transmission;
         this.year = year;
         this.owner = owner;
+        this.price = price;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getOwner() {

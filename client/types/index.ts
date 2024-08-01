@@ -28,6 +28,7 @@ export interface CarCardProps {
     "model": string;
     "transmission": string;
     "year": number;
+    "price": number
 }
 
 export interface FilterProps {

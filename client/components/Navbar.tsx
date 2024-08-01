@@ -28,9 +28,9 @@ const Navbar = () => {
             />
             </Link>
 
-            <Link href="/sale-rent">
+            <Link href="/for-sale">
                 <CustomButton 
-                title="For SALE/RENT"
+                title="For SALE"
                 btnType="button"
                 containerStyles='text-primary-blue rounded-full bg-white min-w-[130px]'
             />

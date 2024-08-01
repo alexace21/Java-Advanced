@@ -12,10 +12,12 @@ interface CarProps {
 }
 
 const CarCard = ({ car }: CarProps) => {
-    const { city_mpg, year, make, model, transmission, drive } = car;
+    const { city_mpg, year, make, model, transmission, drive, price } = car;
     const carRent = calculateCarRent(city_mpg, year);
 
     const [isOpen, setisOpen] = useState(false)
+    
+    const isForSale = price != null;
 
   return (
     <div className="car-card group">
@@ -29,10 +31,26 @@ const CarCard = ({ car }: CarProps) => {
             <span className="self-start text-[14px] font-semibold">
                 $
             </span>
-            {carRent}
+            {isForSale == true ? (
+                <>
+                {price}
+                    <span className="self-start text-[14px] font-medium">
+                        /VAT 
+                    </span>
+                </>
+            ) : (
+                <>
+                    {carRent}
+                    <span className="self-start text-[14px] font-medium">
+                        /day 
+                    </span>
+                </>
+            )}
+
+            {/* {carRent}
             <span className="self-start text-[14px] font-medium">
                 /day 
-            </span>
+            </span> */}
         </p>
 
         <div className="relative w-full h-40 my-3 object-contain">
