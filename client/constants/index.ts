@@ -76,7 +76,7 @@ export const manufacturers = [
       links: [
         { title: "About me", url: "/about-me" },
         { title: "Work Experience", url: "https://3aportfolio.com/#work" },
-        { title: "Partnership", url: "/feedback" },
+        { title: "Leave a feedback", url: "/feedback" },
         { title: "Bussiness Relation", url: "http://3aportfolio.com/" },
       ],
     },
