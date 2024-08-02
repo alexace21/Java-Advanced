@@ -198,6 +198,57 @@ export const createCarOffer = async (
   }
 }
 
+export const submitFeedbackForm = async (
+        inputFirstName: string,
+        selectedOption: string, 
+        reasonDescription: string, 
+        adviceDescription: string, 
+        qualityServiceRate: number, 
+        timelinessRate: number, 
+        customerServiceRate: number, 
+        priceRate: number, 
+        cleanlinessRate: number, 
+        recommendOption: string,
+        ownerUser: string | null
+) => {
+
+  let url = new URL(`http://localhost:8080/feedback`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({ 
+            inputFirstName, 
+            selectedOption,
+            reasonDescription,
+            adviceDescription,
+            qualityServiceRate,
+            timelinessRate,
+            customerServiceRate,
+            priceRate,
+            cleanlinessRate,
+            recommendOption,
+            ownerUser
+    }),
+  });
+
+  // const body = await response.json();
+  console.log(response)
+  
+  if (response.ok) {
+    return 200;
+  } else {
+    console.log("Error Submitting Feedback!");
+    // return body.message? body.message : body;
+  }
+}
+
 export const fetchCarsForSale = async () => {
   let url = new URL(`http://localhost:8080/cars`);
 

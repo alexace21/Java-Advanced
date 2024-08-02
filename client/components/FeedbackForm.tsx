@@ -1,10 +1,17 @@
 "use client";
 
+import { submitFeedbackForm } from "@/utils";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 
 const FeedbackForm = () => {
+
+  const router = useRouter();  
   const [selectedOption, setSelectedOption] = useState("satisfied");
+  const [feedbackFormError, setFeedbackFormError] = useState<string | null>(
+    null
+  );
 
   const [reasonDescription, setReasonDescription] = useState("");
   const [adviceDescription, setAdviceDescription] = useState("")
@@ -64,17 +71,52 @@ const FeedbackForm = () => {
     setRecommendOption(event.target.value);
   };
 
-  const handleSubmitFeedbackForm = (event: any) => {
+  const handleSubmitFeedbackForm = async(event: any) => {
     event.preventDefault();
 
-    console.log("submit attempted");
-    console.log(inputFirstName);
-    console.log(inputLastName);
-    
+    if (
+        !inputFirstName ||
+        !selectedOption ||
+        !reasonDescription ||
+        !adviceDescription ||
+        !qualityServiceRate ||
+        !timelinessRate ||
+        !customerServiceRate ||
+        !priceRate ||
+        !cleanlinessRate ||
+        !recommendOption 
+    ) {
+        setFeedbackFormError("Please fill out all fields!");
+    } else {
+        const loggedUser = window.localStorage.getItem("auth_user");
+        const result = await submitFeedbackForm(
+            inputFirstName, 
+            selectedOption,
+            reasonDescription,
+            adviceDescription,
+            qualityServiceRate,
+            timelinessRate,
+            customerServiceRate,
+            priceRate,
+            cleanlinessRate,
+            recommendOption,
+            loggedUser
+        )
+
+        if (result === 200) {
+            alert("Your feedback has been successfully submitted and received by the Customer Service team, thank you! ")
+            router.push("/");
+        } else {
+            alert("Something went wrong with submitting your Feedback! Please try again!")
+            console.log(result)
+        }
+        setFeedbackFormError(null);
+    }
+
   }
 
   return (
-    <main>
+    
       <form
         onSubmit={(event) => handleSubmitFeedbackForm(event)}
         className="feedback-form"
@@ -83,7 +125,7 @@ const FeedbackForm = () => {
         acceptCharset="utf-8"
         method="post"
       >
-        <div className="form-all mt-0 mb-310">
+        <div className="form-all">
           <ul className="form-section page-section">
             <li className="form-input-wide">
               <div className="form-header-group header-large">
@@ -505,6 +547,8 @@ const FeedbackForm = () => {
               </div>
             </li>
 
+            {feedbackFormError && <p className="text-red-700 font-bold text-xl">{feedbackFormError}</p>}
+
             <li
               className="form-line"
               data-type="control_button"
@@ -530,14 +574,10 @@ const FeedbackForm = () => {
               </div>
             </li>
 
-            <li className="hidden">
-              Should be Empty:
-              <input type="hidden" name="website" value="" />
-            </li>
           </ul>
         </div>
       </form>
-    </main>
+    
   );
 };
 

@@ -19,9 +19,10 @@ public class FeedBackController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<List<CarDTO>> submitUserFeedback(
+    public ResponseEntity submitUserFeedback(
             @RequestBody FeedbackDto feedbackDto
     ) {
-        return null;
+        System.out.println(feedbackDto);
+        return ResponseEntity.ok("Thank you for submitting your feedback!");
     }
 }
