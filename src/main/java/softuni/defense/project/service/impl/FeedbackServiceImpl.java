@@ -3,6 +3,8 @@ package softuni.defense.project.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import softuni.defense.project.model.dtos.FeedbackDto;
+import softuni.defense.project.model.dtos.FeedbackLogDTO;
+import softuni.defense.project.model.entities.FeedbackChangeLogEntity;
 import softuni.defense.project.model.entities.FeedbackEntity;
 import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.model.enums.FeedbackStatusEnum;
@@ -47,5 +49,69 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         return null;
+    }
+
+    @Override
+    public FeedbackLogDTO resolveFeedback(String id) {
+        Optional<FeedbackChangeLogEntity> optionalFeedbackChangeLog = this.changeLogService.findFeedbackLogById(Long.valueOf(id));
+
+        if (optionalFeedbackChangeLog.isPresent()) {
+            FeedbackChangeLogEntity feedbackLog = optionalFeedbackChangeLog.get();
+
+            Optional<FeedbackEntity> optionalFeedbackEntity = this.feedbackRepository.findById(feedbackLog.getFeedback().getId());
+
+            if (optionalFeedbackChangeLog.isPresent()) {
+                FeedbackEntity feedback = optionalFeedbackEntity.get();
+
+                feedback.setStatus(FeedbackStatusEnum.RESOLVED);
+                this.feedbackRepository.save(feedback);
+
+                feedbackLog.setStatus(FeedbackStatusEnum.RESOLVED);
+                this.changeLogService.updateFeedbackLog(feedbackLog);
+
+                return mapToLogDTO(feedbackLog);
+            }
+        }
+        throw new RuntimeException("Feedback is corrupt!");
+    }
+
+    @Override
+    public FeedbackLogDTO removeFeedback(String id) {
+        Optional<FeedbackChangeLogEntity> optionalFeedbackChangeLog = this.changeLogService.findFeedbackLogById(Long.valueOf(id));
+
+        if (optionalFeedbackChangeLog.isPresent()) {
+            FeedbackChangeLogEntity feedbackLog = optionalFeedbackChangeLog.get();
+
+            Optional<FeedbackEntity> optionalFeedbackEntity = this.feedbackRepository.findById(feedbackLog.getFeedback().getId());
+
+            if (optionalFeedbackChangeLog.isPresent()) {
+                FeedbackEntity feedback = optionalFeedbackEntity.get();
+
+                feedback.setStatus(FeedbackStatusEnum.REMOVED);
+                this.feedbackRepository.saveAndFlush(feedback);
+
+                feedbackLog.setStatus(FeedbackStatusEnum.REMOVED);
+                this.changeLogService.updateFeedbackLog(feedbackLog);
+
+                return mapToLogDTO(feedbackLog);
+            }
+        }
+        throw new RuntimeException("Feedback is corrupt!");
+    }
+
+    private FeedbackLogDTO mapToLogDTO(FeedbackChangeLogEntity feedbackEntity) {
+
+        FeedbackLogDTO logDTO = new FeedbackLogDTO(
+                feedbackEntity.getId().toString(),
+                feedbackEntity.getStatus().toString(),
+                feedbackEntity.getOwner().getFirstName(),
+                null,
+                feedbackEntity.getOwner().getEmail(),
+                feedbackEntity.getSatisfaction().toString(),
+                feedbackEntity.getRecommendation(),
+                feedbackEntity.getSubmitDate().toString()
+        );
+
+        return logDTO;
     }
 }

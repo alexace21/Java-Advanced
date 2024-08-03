@@ -294,7 +294,7 @@ export const fetchCarsForSale = async () => {
   if (response.ok) {
     return body;
   } else {
-    console.log("Error Creating offer!");
+    console.log("Error fetching Cars for sale!");
     return body.message? body.message : body;
   }
 }
@@ -322,10 +322,68 @@ export const fetchCarsChangeLog = async () => {
   if (response.ok) {
     return body;
   } else {
-    console.log("Error Creating offer!");
+    console.log("Error fetching Car Change logs!");
     return body.message? body.message : body;
   }
 }
+
+export const resolveFeedback = async (id: string) => {
+  let url = new URL(`http://localhost:8080/feedback/${id}`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({id})
+  });
+
+  const body = await response.json();
+
+  console.log(body);
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    return body;
+  } else {
+    console.log("Error Resolving Feedback with Id: " + id);
+    return body.message? body.message : body;
+  }
+};
+
+export const removeUserFeedback = async (id: string) => {
+  let url = new URL(`http://localhost:8080/feedback/${id}`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: headers,
+    body: JSON.stringify({id})
+  });
+
+  const body = await response.json();
+
+  console.log(body);
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    return body;
+  } else {
+    console.log("Error Deleting Feedback with Id: " + id);
+    return body.message? body.message : body;
+  }
+};
 
 export const getAuthToken = () => {
   return window.localStorage.getItem("auth_token");

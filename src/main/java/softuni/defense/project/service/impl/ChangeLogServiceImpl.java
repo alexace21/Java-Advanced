@@ -17,6 +17,7 @@ import softuni.defense.project.service.ChangeLogService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,6 +66,7 @@ public class ChangeLogServiceImpl implements ChangeLogService {
                 break;
         }
         FeedbackChangeLogEntity feedbackLog = new FeedbackChangeLogEntity(
+                savedFeedback,
                 FeedbackStatusEnum.NEW,
                 savedFeedback.getOwnerUser(),
                 satisfaction,
@@ -81,6 +83,7 @@ public class ChangeLogServiceImpl implements ChangeLogService {
 
         return this.feedbackChangeLogRepository.findAll()
                         .stream()
+                .filter(x -> x.getStatus().equals(FeedbackStatusEnum.NEW))
                                 .map(this::mapToLogDTO)
                                         .collect(Collectors.toList());
     }
@@ -107,6 +110,16 @@ public class ChangeLogServiceImpl implements ChangeLogService {
                 .body(new ParameterizedTypeReference<>() {
                 });
 
+    }
+
+    @Override
+    public Optional<FeedbackChangeLogEntity> findFeedbackLogById(Long id) {
+        return this.feedbackChangeLogRepository.findById(id);
+    }
+
+    @Override
+    public void updateFeedbackLog(FeedbackChangeLogEntity feedbackLog) {
+        this.feedbackChangeLogRepository.save(feedbackLog);
     }
 
     private FeedbackLogDTO mapToLogDTO(FeedbackChangeLogEntity feedbackEntity) {

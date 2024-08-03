@@ -1,17 +1,35 @@
+"use client";
+
 import { FeedbackCardProps } from "@/types";
-import React from "react";
+import { resolveFeedback } from "@/utils";
+import React, { useState } from "react";
 
 interface FeedbackProps {
   feedback: FeedbackCardProps;
+  handleRemoveFeedback: (id: string) => void;
 }
 
-const UserFeedbackCard = ({ feedback }: FeedbackProps) => {
+const UserFeedbackCard = ({ handleRemoveFeedback, feedback }: FeedbackProps) => {
+
+    const [status, setStatus] = useState(feedback.status);
+
+    const handleResolveFeedback = async(id: string) => {
+        const result = await resolveFeedback(id);
+
+        if (result) {
+            setStatus(result.status);
+        } else {
+            alert("Something went wrong with resolving Feedback id: " + id + ". Please try again later!");
+        }
+        
+    }
+
   return (
     <>
       <li>
         <div className="my-paintings-first-row bg-special">
           <p>Id: {feedback.id}</p>
-          <p>Status: {feedback.status}</p>
+          <p>Status: {status}</p>
           <p>
             Owner: {feedback.firstName} {feedback.lastName}
           </p>
@@ -22,16 +40,16 @@ const UserFeedbackCard = ({ feedback }: FeedbackProps) => {
         <div className="buttons-info">
           <div className="favorite">
             <p>
-              <a className="btn-info btn" href="/">
+              <button className="btn-info btn" onClick={() => handleResolveFeedback(feedback.id)}>
                 Resolve
-              </a>
+              </button>
             </p>
           </div>
           <div className="rate">
             <p>
-              <a className="btn-primary btn" href="/">
+              <button className="btn-primary btn" onClick={() => handleRemoveFeedback(feedback.id)}>
                 Delete
-              </a>
+              </button>
             </p>
           </div>
         </div>

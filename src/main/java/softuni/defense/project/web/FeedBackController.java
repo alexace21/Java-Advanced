@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import softuni.defense.project.model.dtos.FeedbackDto;
+import softuni.defense.project.model.dtos.FeedbackLogDTO;
 import softuni.defense.project.service.FeedbackService;
 
 @Controller
@@ -24,5 +25,17 @@ public class FeedBackController {
     ) {
         this.feedbackService.submitUserFeedback(feedbackDto);
         return ResponseEntity.ok("Thank you for submitting your feedback!");
+    }
+
+    @PostMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<FeedbackLogDTO> resolveFeedback(@PathVariable String id) {
+        return ResponseEntity.ok(this.feedbackService.resolveFeedback(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<FeedbackLogDTO> removeFeedback(@PathVariable String id) {
+        return ResponseEntity.ok(this.feedbackService.removeFeedback(id));
     }
 }

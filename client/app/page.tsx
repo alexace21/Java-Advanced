@@ -11,7 +11,7 @@ import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export default function Home() {
   const [allCars, setAllCars] = useState([]);

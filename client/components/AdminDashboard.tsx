@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchCarsChangeLog } from "@/utils";
+import { fetchCarsChangeLog, removeUserFeedback } from "@/utils";
 import { useEffect, useState } from "react";
 import UserFeedbackCard from "./UserFeedbackCard";
 
@@ -20,6 +20,16 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
       setAllFeedbacks(result);
     }
   };
+
+  const handleDeleteUserFeedback = async (id: string) => {
+    const result = await removeUserFeedback(id);
+
+        if (result) {
+            setAllFeedbacks(allFeedbacks.filter((feedback: any) => feedback.id != result.id))
+        } else {
+            alert("Something went wrong with resolving Feedback id: " + id + ". Please try again later!");
+        }
+  }
 
   useEffect(() => {
     fetchAllRegisteredCars();
@@ -109,7 +119,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                 <ul className="list-group list-group-vertical text-dark">
                 {allFeedbacks.length > 0 ? (
                 allFeedbacks.map((feedback: any) => (
-                    <UserFeedbackCard feedback={feedback} />
+                    <UserFeedbackCard feedback={feedback} handleRemoveFeedback={handleDeleteUserFeedback}/>
                 ))
                 ) : (
                 <span>Oops, no results yet!</span>
@@ -117,44 +127,6 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                 </ul>
               </div>
             </div>
-
-            {/* <div className="col-6 mt-1 mb-1">
-              <div className="home-fields h-full w-[550px]">
-                <h3 className="my-paintings bg-slate-800">User Feedback</h3>
-                <ul className="list-group list-group-vertical text-dark">
-                  <li>
-                    <div className="my-paintings-first-row bg-special">
-                      <p>Id: id</p>
-                      <p>Status: NEW</p>
-                      <p>Owner: Axel Foli</p>
-                      <p>Satisfaction: Satisfied</p>
-                      <p>Recommend: Probably</p>
-                      <div className="buttons-info"></div>
-                    </div>
-                    <div className="buttons-info">
-                      <div className="favorite">
-                        <p>
-                          <a className="btn-info btn" href="/">
-                            Resolve
-                          </a>
-                        </p>
-                      </div>
-                      <div className="rate">
-                        <p>
-                          <a className="btn-primary btn" href="/">
-                            Delete
-                          </a>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="second-info">
-                      <p>Date: 8/3/2024</p>
-                      <p>Added by axelPz@abv.bg</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
           </div>
         </div>
       </main>

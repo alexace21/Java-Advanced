@@ -1,9 +1,7 @@
 package softuni.defense.project.model.entities;
 
 import jakarta.persistence.*;
-import softuni.defense.project.model.enums.FeedbackRatingEnum;
 import softuni.defense.project.model.enums.FeedbackStatusEnum;
-import softuni.defense.project.model.enums.FeedbackTypeEnum;
 import softuni.defense.project.model.entities.base.BaseEntity;
 
 import java.time.LocalDate;

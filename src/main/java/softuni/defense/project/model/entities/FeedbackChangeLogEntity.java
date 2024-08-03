@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @Table(name = "feedback_change_log")
 public class FeedbackChangeLogEntity extends BaseEntity {
 
+    @ManyToOne
+    private FeedbackEntity feedback;
     @Enumerated(EnumType.STRING)
     private FeedbackStatusEnum status;
     @ManyToOne
@@ -31,6 +33,23 @@ public class FeedbackChangeLogEntity extends BaseEntity {
         this.satisfaction = satisfaction;
         this.recommendation = recommendation;
         this.submitDate = submitDate;
+    }
+
+    public FeedbackChangeLogEntity(FeedbackEntity feedback, FeedbackStatusEnum status, UserEntity owner, FeedbackRatingEnum satisfaction, String recommendation, LocalDate submitDate) {
+        this.feedback = feedback;
+        this.status = status;
+        this.owner = owner;
+        this.satisfaction = satisfaction;
+        this.recommendation = recommendation;
+        this.submitDate = submitDate;
+    }
+
+    public FeedbackEntity getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(FeedbackEntity feedback) {
+        this.feedback = feedback;
     }
 
     public FeedbackStatusEnum getStatus() {
