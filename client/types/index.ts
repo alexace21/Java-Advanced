@@ -16,6 +16,7 @@ export interface SearchManufacturerProps {
 }
 
 export interface CarCardProps {
+    "id": number;
     "city_mpg": number;
     "class": string;
     "combination_mpg": number;
@@ -28,7 +29,8 @@ export interface CarCardProps {
     "model": string;
     "transmission": string;
     "year": number;
-    "price": number
+    "price": number;
+    "owner": string;
 }
 
 export interface FilterProps {

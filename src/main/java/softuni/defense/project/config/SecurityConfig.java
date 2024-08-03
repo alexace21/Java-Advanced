@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 authorizeRequests
                                         // all static resources to "common locations" (css, images, js) are available to anyone
                                         // some more resources for all users
-                                        .requestMatchers("/", "/users/login-error","/users/login", "/users/register", "/error", "/shop", "/api/convert").permitAll()
+                                        .requestMatchers("/","/users/login", "/users/register", "/shop", "/api/convert").permitAll()
                                         // all other URL-s should be authenticated.
                                         .anyRequest()
                                         .authenticated()

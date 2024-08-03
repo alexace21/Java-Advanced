@@ -14,4 +14,6 @@ public interface CarService {
     CarDTO createCarOffer(CarDTO carDTO);
 
     List<CarDTO> getAllOffers();
+
+    CarDTO deleteCarOfferById(String id);
 }

@@ -249,6 +249,28 @@ export const submitFeedbackForm = async (
   }
 }
 
+export const deleteCarForSale = async (id: number) => {
+  let url = new URL(`http://localhost:8080/cars/${id}`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: headers
+  });
+
+  if (response.ok) {
+    return 200;
+  } else {
+    return 400;
+  }
+  
+}
+
 export const fetchCarsForSale = async () => {
   let url = new URL(`http://localhost:8080/cars`);
 

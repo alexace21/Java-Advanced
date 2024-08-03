@@ -30,4 +30,10 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> getAllCarsForSaleOrRent() {
         return ResponseEntity.ok(this.carService.getAllOffers());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CarDTO> deleteCarOffer(@PathVariable String id) {
+
+        return ResponseEntity.ok(this.carService.deleteCarOfferById(id));
+    }
 }

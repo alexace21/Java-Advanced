@@ -130,4 +130,22 @@ public class CarServiceImpl implements CarService {
                 });
     }
 
+    @Override
+    public CarDTO deleteCarOfferById(String id) {
+        LOGGER.info("Deleting offer with ID... " + id);
+
+        StringBuilder preBuildURI = new StringBuilder();
+
+        preBuildURI.append("/shop/");
+        preBuildURI.append(id);
+
+        return carRestClient
+                .delete()
+                .uri(preBuildURI.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+    }
+
 }

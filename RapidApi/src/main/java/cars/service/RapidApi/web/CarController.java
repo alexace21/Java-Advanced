@@ -69,4 +69,10 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> getAllCars() {
         return ResponseEntity.ok(this.shopService.fetchAllOffers());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CarDTO> deleteCarOffer(@PathVariable String id) {
+
+        return ResponseEntity.ok(this.shopService.deleteCarOfferById(id));
+    }
 }

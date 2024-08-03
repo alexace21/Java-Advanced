@@ -16,4 +16,6 @@ public interface ShopService {
     CarDTO createCarOffer(CarDTO carDTO);
 
     List<CarDTO> fetchAllOffers();
+
+    CarDTO deleteCarOfferById(String id);
 }

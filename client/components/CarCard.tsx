@@ -8,10 +8,11 @@ import { calculateCarRent } from "@/utils";
 import CarDetails from "./CarDetails";
 
 interface CarProps {
-    car: CarCardProps
+    car: CarCardProps;
+    handleDeleteCar: (id: number) => void;
 }
 
-const CarCard = ({ car }: CarProps) => {
+const CarCard = ({ handleDeleteCar, car }: CarProps) => {
     const { city_mpg, year, make, model, transmission, drive, price } = car;
     const carRent = calculateCarRent(city_mpg, year);
 
@@ -92,7 +93,7 @@ const CarCard = ({ car }: CarProps) => {
             </div>
         </div>
 
-        <CarDetails isOpen={isOpen} closeModal={() => setisOpen(false)} car={car} />
+        <CarDetails handleDeleteCar={handleDeleteCar} isOpen={isOpen} closeModal={() => setisOpen(false)} car={car} />
     </div>
   )
 }

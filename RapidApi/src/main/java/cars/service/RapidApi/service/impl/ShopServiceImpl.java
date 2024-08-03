@@ -15,6 +15,7 @@ import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -134,6 +135,20 @@ public class ShopServiceImpl implements ShopService {
         return allCars.stream()
                 .map(this::map)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CarDTO deleteCarOfferById(String id) {
+        Optional<CarEntity> optionalCar = this.carRepository.findById(Long.valueOf(id));
+
+        if (optionalCar.isPresent()) {
+            CarDTO output = this.modelMapper.map(optionalCar.get(), CarDTO.class);
+            this.carRepository.delete(optionalCar.get());
+
+            return output;
+        }
+
+        return null;
     }
 
     private CarDTO map(CarEntity carEntity){

@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import CarCard from './CarCard';
 import ShopCatalog from './ShopCatalog';
 import Image from "next/image";
-import { fetchCarsForSale } from '@/utils';
+import { deleteCarForSale, fetchCarsForSale } from '@/utils';
+import { CarCardProps } from '@/types';
 
 const SaleCatalog = () => {
     const [allCars, setAllCars] = useState([]);
@@ -27,10 +28,26 @@ const SaleCatalog = () => {
     }
   };
 
+  const handleDeleteCar = async (id: number) => {
+    console.log("attempted delete of Car Sale Offer! - " + id);
+    const result = await deleteCarForSale(id);
+
+    if (result == 200) {
+      const filteredCars =  allCars.filter((car: CarCardProps) => car.id != id)
+      setAllCars(filteredCars);
+    } else {
+      alert("Something went wrong with delete of car operation! Please try again!");
+    }
+  };
+
   useEffect(() => {
     getCars();
 
   }, [])
+
+  useEffect(() => {
+
+  }, [allCars])
 
   return (
     <>
@@ -38,7 +55,7 @@ const SaleCatalog = () => {
             <section>
               <div className="home__cars-wrapper">
                 {allCars?.map((car) => (
-                  <CarCard car={car} />
+                  <CarCard car={car} handleDeleteCar={handleDeleteCar}/>
                 ))}
               </div>
 

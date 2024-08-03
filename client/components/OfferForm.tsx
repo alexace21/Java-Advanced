@@ -61,7 +61,7 @@ const OfferForm = () => {
         );
     
           if (result && getAuthToken() != null) {
-            router.push("/");
+            router.push("/for-sale");
           } else {
             setOfferError(result);
           }
