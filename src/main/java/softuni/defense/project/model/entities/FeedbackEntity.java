@@ -11,68 +11,130 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "feedbacks")
 public class FeedbackEntity extends BaseEntity {
+    @ManyToOne(optional = false)
+    private UserEntity ownerUser;
+    @Column(name = "user_first_name")
+    private String inputFirstName;
+    @Column(name = "satisfaction")
+    private String selectedOption;
+    @Column(name = "usage_reason")
 
-    @ManyToOne
-    private UserEntity user;
+    private String reasonDescription;
+    @Column(name = "user_advice")
 
-    private String email;
+    private String adviceDescription;
+    @Column(name = "quality_service_rate")
 
-    private String name;
+    private Integer qualityServiceRate;
+    @Column(name = "timeliness_rate")
 
-    private String subject;
+    private Integer timelinessRate;
+    @Column(name = "customer_service_rate")
 
-    private String message;
+    private Integer customerServiceRate;
+    @Column(name = "price_rate")
+
+    private Integer priceRate;
+    @Column(name = "cleanliness_rate")
+
+    private Integer cleanlinessRate;
+    @Column(name = "recommendation")
+    private String recommendOption;
+
     @Column(name = "submit_date")
     private LocalDate submitDate;
     @Enumerated(EnumType.STRING)
     private FeedbackStatusEnum status;
-    @Enumerated(EnumType.STRING)
-    private FeedbackRatingEnum rating;
 
-    @Enumerated(EnumType.STRING)
-    private FeedbackTypeEnum type;
-
-//    @ManyToOne
-//    private CarEntity car;
-
-    public UserEntity getUser() {
-        return user;
+    public FeedbackEntity() {
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public UserEntity getOwnerUser() {
+        return ownerUser;
     }
 
-    public String getEmail() {
-        return email;
+    public void setOwnerUser(UserEntity ownerUser) {
+        this.ownerUser = ownerUser;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getInputFirstName() {
+        return inputFirstName;
     }
 
-    public String getName() {
-        return name;
+    public void setInputFirstName(String inputFirstName) {
+        this.inputFirstName = inputFirstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getSelectedOption() {
+        return selectedOption;
     }
 
-    public String getSubject() {
-        return subject;
+    public void setSelectedOption(String selectedOption) {
+        this.selectedOption = selectedOption;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public String getReasonDescription() {
+        return reasonDescription;
     }
 
-    public String getMessage() {
-        return message;
+    public void setReasonDescription(String reasonDescription) {
+        this.reasonDescription = reasonDescription;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getAdviceDescription() {
+        return adviceDescription;
+    }
+
+    public void setAdviceDescription(String adviceDescription) {
+        this.adviceDescription = adviceDescription;
+    }
+
+    public Integer getQualityServiceRate() {
+        return qualityServiceRate;
+    }
+
+    public void setQualityServiceRate(Integer qualityServiceRate) {
+        this.qualityServiceRate = qualityServiceRate;
+    }
+
+    public Integer getTimelinessRate() {
+        return timelinessRate;
+    }
+
+    public void setTimelinessRate(Integer timelinessRate) {
+        this.timelinessRate = timelinessRate;
+    }
+
+    public Integer getCustomerServiceRate() {
+        return customerServiceRate;
+    }
+
+    public void setCustomerServiceRate(Integer customerServiceRate) {
+        this.customerServiceRate = customerServiceRate;
+    }
+
+    public Integer getPriceRate() {
+        return priceRate;
+    }
+
+    public void setPriceRate(Integer priceRate) {
+        this.priceRate = priceRate;
+    }
+
+    public Integer getCleanlinessRate() {
+        return cleanlinessRate;
+    }
+
+    public void setCleanlinessRate(Integer cleanlinessRate) {
+        this.cleanlinessRate = cleanlinessRate;
+    }
+
+    public String getRecommendOption() {
+        return recommendOption;
+    }
+
+    public void setRecommendOption(String recommendOption) {
+        this.recommendOption = recommendOption;
     }
 
     public LocalDate getSubmitDate() {
@@ -91,27 +153,4 @@ public class FeedbackEntity extends BaseEntity {
         this.status = status;
     }
 
-    public FeedbackRatingEnum getRating() {
-        return rating;
-    }
-
-    public void setRating(FeedbackRatingEnum rating) {
-        this.rating = rating;
-    }
-
-    public FeedbackTypeEnum getType() {
-        return type;
-    }
-
-    public void setType(FeedbackTypeEnum type) {
-        this.type = type;
-    }
-
-//    public CarEntity getCar() {
-//        return car;
-//    }
-//
-//    public void setCar(CarEntity car) {
-//        this.car = car;
-//    }
 }
