@@ -50,6 +50,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                     <td>First Name</td>
                     <td>Last Name</td>
                     <td>Date</td>
+                    <td>Role</td>
                   </tr>
                 </table>
               <table className="table table-striped table-dark">
@@ -58,6 +59,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                     <td>Axel</td>
                     <td>Fooli</td>
                     <td>8/3/2024</td>
+                    <td>Admin</td>
                   </tr>
               </table>
             </div>
@@ -71,7 +73,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                   <div className="my-paintings-first-row">
                     <p>Id: id</p>
                     <p>Status: NEW</p>
-                    <p>by: Axel Foli</p>
+                    <p>Owner: Axel Foli</p>
                     <p>Satisfaction: Satisfied</p>
                     <p>Recommend: Probably</p>
                     <div className="buttons-info"></div>
@@ -94,7 +96,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                   </div>
                   <div className="second-info">
                     <p>Date: 8/3/2024</p>
-                    <p>Added by Axel Foli</p>
+                    <p>Added by axelPz@abv.bg</p>
                   </div>
                 </li>
               </ul>
