@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 const Navbar = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+  const loggedUser = window.localStorage.getItem("auth_user");
+    
+  const isAdmin = loggedUser === "axelPz@abv.bg";
 
   const userLogout = () => {
     setIsAuthenticated(false);
@@ -41,6 +44,19 @@ const Navbar = () => {
             className="object-contain"
           />
         </Link>
+
+        {isAuthenticated && isAdmin && (
+          <>
+            <Link href="/admin-dashboard">
+              <CustomButton
+                title="Admin Dashboard"
+                btnType="button"
+                containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
+              />
+            </Link>
+          </>
+        )}
+
 
         {isAuthenticated && (
           <>

@@ -16,13 +16,18 @@ import CustomButton from "./CustomButton";
 import { useAuthContext } from "@/context/AuthContext";
 
 interface CarDetailsProps {
-  handleDeleteCar: (id: number) => void;
+  handleDeleteCar?: (id: number) => void;
   isOpen: boolean;
   closeModal: () => void;
   car: CarCardProps;
 }
 
-const CarDetails = ({ handleDeleteCar, isOpen, closeModal, car }: CarDetailsProps) => {
+const CarDetails = ({
+  handleDeleteCar,
+  isOpen,
+  closeModal,
+  car,
+}: CarDetailsProps) => {
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const [owner, setOwner] = useState(false);
 
@@ -150,8 +155,10 @@ const CarDetails = ({ handleDeleteCar, isOpen, closeModal, car }: CarDetailsProp
                         textStyles="text-white text-[14px] leading-[17px] font-bold"
                         rightIcon="/right-arrow.svg"
                         handleClick={() => {
-                            closeModal;
+                          closeModal;
+                          if (handleDeleteCar) {
                             handleDeleteCar(car.id);
+                          }
                         }}
                       />
                     )}

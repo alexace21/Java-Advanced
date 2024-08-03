@@ -9,7 +9,7 @@ import CarDetails from "./CarDetails";
 
 interface CarProps {
     car: CarCardProps;
-    handleDeleteCar: (id: number) => void;
+    handleDeleteCar?: (id: number) => void;
 }
 
 const CarCard = ({ handleDeleteCar, car }: CarProps) => {

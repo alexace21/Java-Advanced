@@ -101,6 +101,7 @@ export default function Home() {
                   />
                 </div>
               )}
+              
               <ShopCatalog
                 pageNumber={limit / 10}
                 isNext={limit > allCars.length}
