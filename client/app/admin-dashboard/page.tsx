@@ -1,23 +1,22 @@
-"use client"
+"use client";
 
-import { useAuthContext } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
-import React from 'react'
+import AdminDashboard from "@/components/AdminDashboard";
+import { useAuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const page = () => {
-    const {isAuthenticated, setIsAuthenticated} = useAuthContext();
-    const router = useRouter();
-    const loggedUser = window.localStorage.getItem("auth_user");
-    
-    const isAdmin = loggedUser === "axelPz@abv.bg";
+  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+  const router = useRouter();
+  const loggedUser = window.localStorage.getItem("auth_user");
 
-    if (!isAuthenticated && !isAdmin) {
-      router.push("/");
-    }
+  const isAdmin = loggedUser === "axelPz@abv.bg";
 
-  return (
-    <div>Welcome {loggedUser} to Admin Dashboard</div>
-  )
-}
+  if (!isAuthenticated && !isAdmin) {
+    router.push("/");
+  }
 
-export default page
+  return <AdminDashboard user={loggedUser} />;
+};
+
+export default page;
