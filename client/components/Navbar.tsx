@@ -11,7 +11,7 @@ const Navbar = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const loggedUser = window.localStorage.getItem("auth_user");
     
-  const isAdmin = loggedUser === "axelPz@abv.bg";
+  const isAdmin = loggedUser === "aleks.asenov@outlook.com";
 
   const userLogout = () => {
     setIsAuthenticated(false);

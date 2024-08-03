@@ -9,10 +9,14 @@ import softuni.defense.project.model.dtos.UserDto;
 import softuni.defense.project.model.dtos.UserLoginDTO;
 import softuni.defense.project.model.dtos.UserRegistrationDTO;
 import softuni.defense.project.model.entities.UserEntity;
+import softuni.defense.project.model.entities.UserRoleEntity;
+import softuni.defense.project.model.enums.UserRoleEnum;
 import softuni.defense.project.repositories.UserRepository;
+import softuni.defense.project.repositories.UserRoleRepository;
 import softuni.defense.project.service.ChangeLogService;
 import softuni.defense.project.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,12 +26,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final ChangeLogService changeLogService;
+    private final UserRoleRepository userRoleRepository;
 
-    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository, ChangeLogService changeLogService) {
+    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository, ChangeLogService changeLogService, UserRoleRepository userRoleRepository) {
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.changeLogService = changeLogService;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
@@ -43,6 +49,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
         // TODO: Set Role
+        Optional<UserRoleEntity> optionalRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
+
+        if (optionalUser.isPresent()) {
+            user.setRoles(List.of(optionalRole.get()));
+        }
         UserEntity savedUser = userRepository.save(user);
 
         this.changeLogService.createUserChangeLog(savedUser);

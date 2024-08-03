@@ -10,7 +10,7 @@ const page = () => {
   const router = useRouter();
   const loggedUser = window.localStorage.getItem("auth_user");
 
-  const isAdmin = loggedUser === "axelPz@abv.bg";
+  const isAdmin = loggedUser === "aleks.asenov@outlook.com";
 
   if (!isAuthenticated && !isAdmin) {
     router.push("/");
