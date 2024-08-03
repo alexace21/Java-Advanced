@@ -10,6 +10,7 @@ import softuni.defense.project.model.dtos.UserLoginDTO;
 import softuni.defense.project.model.dtos.UserRegistrationDTO;
 import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.repositories.UserRepository;
+import softuni.defense.project.service.ChangeLogService;
 import softuni.defense.project.service.UserService;
 
 import java.util.Optional;
@@ -20,11 +21,13 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final ChangeLogService changeLogService;
 
-    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UserRepository userRepository, ChangeLogService changeLogService) {
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.changeLogService = changeLogService;
     }
 
     @Override
@@ -39,7 +42,10 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
+        // TODO: Set Role
         UserEntity savedUser = userRepository.save(user);
+
+        this.changeLogService.createUserChangeLog(savedUser);
 
         return modelMapper.map(savedUser, UserDto.class);
     }

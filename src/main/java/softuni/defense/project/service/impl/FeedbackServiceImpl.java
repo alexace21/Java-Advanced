@@ -8,6 +8,7 @@ import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.model.enums.FeedbackStatusEnum;
 import softuni.defense.project.repositories.FeedbackRepository;
 import softuni.defense.project.repositories.UserRepository;
+import softuni.defense.project.service.ChangeLogService;
 import softuni.defense.project.service.FeedbackService;
 
 import java.time.LocalDate;
@@ -19,11 +20,13 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepository feedbackRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final ChangeLogService changeLogService;
 
-    public FeedbackServiceImpl(FeedbackRepository feedbackRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    public FeedbackServiceImpl(FeedbackRepository feedbackRepository, UserRepository userRepository, ModelMapper modelMapper, ChangeLogService changeLogService) {
         this.feedbackRepository = feedbackRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.changeLogService = changeLogService;
     }
 
     @Override
@@ -38,6 +41,8 @@ public class FeedbackServiceImpl implements FeedbackService {
             feedback.setSubmitDate(LocalDate.now());
 
             FeedbackEntity savedFeedback = this.feedbackRepository.save(feedback);
+            this.changeLogService.createFeedbackChangeLog(savedFeedback);
+
             return this.modelMapper.map(savedFeedback, FeedbackDto.class);
         }
 
