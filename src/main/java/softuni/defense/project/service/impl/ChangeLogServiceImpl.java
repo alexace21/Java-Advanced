@@ -1,6 +1,10 @@
 package softuni.defense.project.service.impl;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
+import softuni.defense.project.model.dtos.*;
 import softuni.defense.project.model.entities.FeedbackChangeLogEntity;
 import softuni.defense.project.model.entities.FeedbackEntity;
 import softuni.defense.project.model.entities.UserChangeLogEntity;
@@ -12,16 +16,20 @@ import softuni.defense.project.repositories.UserChangeLogRepository;
 import softuni.defense.project.service.ChangeLogService;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChangeLogServiceImpl implements ChangeLogService {
 
     private final FeedbackChangeLogRepository feedbackChangeLogRepository;
     private final UserChangeLogRepository userChangeLogRepository;
+    private final RestClient carRestClient;
 
-    public ChangeLogServiceImpl(FeedbackChangeLogRepository feedbackChangeLogRepository, UserChangeLogRepository userChangeLogRepository) {
+    public ChangeLogServiceImpl(FeedbackChangeLogRepository feedbackChangeLogRepository, UserChangeLogRepository userChangeLogRepository, RestClient carRestClient) {
         this.feedbackChangeLogRepository = feedbackChangeLogRepository;
         this.userChangeLogRepository = userChangeLogRepository;
+        this.carRestClient = carRestClient;
     }
 
 
@@ -65,5 +73,55 @@ public class ChangeLogServiceImpl implements ChangeLogService {
         );
 
         this.feedbackChangeLogRepository.save(feedbackLog);
+    }
+
+    @Override
+    public List<FeedbackLogDTO> getAllFeedbackLogs() {
+        this.feedbackChangeLogRepository.findAll();
+
+        return this.feedbackChangeLogRepository.findAll()
+                        .stream()
+                                .map(this::mapToLogDTO)
+                                        .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserLogDTO> getAllRegisteredUsers() {
+        List<UserChangeLogEntity> logEntities = this.userChangeLogRepository.findAll();
+
+        System.out.println();
+
+        return null;
+    }
+
+    @Override
+    public List<CarLogDTO> getAllCarLogs() {
+        StringBuilder preBuildURI = new StringBuilder();
+        preBuildURI.append("/change-log/cars");
+
+        return carRestClient
+                .get()
+                .uri(preBuildURI.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {
+                });
+
+    }
+
+    private FeedbackLogDTO mapToLogDTO(FeedbackChangeLogEntity feedbackEntity) {
+
+        FeedbackLogDTO logDTO = new FeedbackLogDTO(
+                feedbackEntity.getId().toString(),
+                feedbackEntity.getStatus().toString(),
+                feedbackEntity.getOwner().getFirstName(),
+                null,
+                feedbackEntity.getOwner().getEmail(),
+                feedbackEntity.getSatisfaction().toString(),
+                feedbackEntity.getRecommendation(),
+                feedbackEntity.getSubmitDate().toString()
+        );
+
+        return logDTO;
     }
 }

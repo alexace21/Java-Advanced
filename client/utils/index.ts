@@ -299,6 +299,34 @@ export const fetchCarsForSale = async () => {
   }
 }
 
+export const fetchCarsChangeLog = async () => {
+  let url = new URL(`http://localhost:8080/change-log/feedback`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: headers
+  });
+
+  const body = await response.json();
+
+  console.log(body);
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    return body;
+  } else {
+    console.log("Error Creating offer!");
+    return body.message? body.message : body;
+  }
+}
+
 export const getAuthToken = () => {
   return window.localStorage.getItem("auth_token");
 };

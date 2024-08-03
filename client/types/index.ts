@@ -33,6 +33,17 @@ export interface CarCardProps {
     "owner": string;
 }
 
+export interface FeedbackCardProps {
+    id: string;
+    status: string;
+    firstName?: string;
+    lastName?: string;
+    ownerEmail: string;
+    satisfaction: string;
+    recommendation: string;
+    submitDate: string;
+}
+
 export interface FilterProps {
     manufacturer: string;
     year: string;

@@ -1,5 +1,6 @@
 package cars.service.RapidApi.service.impl;
 
+import cars.service.RapidApi.model.dtos.CarLogDTO;
 import cars.service.RapidApi.model.entities.CarChangeLogEntity;
 import cars.service.RapidApi.model.entities.CarEntity;
 import cars.service.RapidApi.repository.CarChangeLogRepository;
@@ -7,6 +8,7 @@ import cars.service.RapidApi.service.ChangeLogService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ChangeLogServiceImpl implements ChangeLogService {
@@ -28,5 +30,13 @@ public class ChangeLogServiceImpl implements ChangeLogService {
         );
 
         this.carChangeLogRepository.save(carChangeLogEntity);
+    }
+
+    @Override
+    public List<CarLogDTO> getAllCarLogs() {
+        List<CarChangeLogEntity> logEntities = this.carChangeLogRepository.findAll();
+
+        System.out.println();
+        return null;
     }
 }

@@ -556,7 +556,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   padding: 1em;
   background-color: rgb(84 91 98 / 10%);
-  max-width: 1140px;
+  max-width: 1440px;
   text-align: center;
   margin-right: auto;
   margin-left: auto;
@@ -598,11 +598,14 @@
   border: #b3b8bd solid 1px;
 }
 
+.bg-special {
+  background-color: rgba(87, 86, 83, 0.92);
+}
+
 .my-paintings {
   border-radius: 4px;
   padding: 6px;
   color: rgba(207, 230, 243, 0.78);
-  background-color: rgba(87, 86, 83, 0.92);
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
   font-family: inherit;

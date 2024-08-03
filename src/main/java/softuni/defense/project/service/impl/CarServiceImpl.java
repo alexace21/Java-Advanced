@@ -26,18 +26,6 @@ public class CarServiceImpl implements CarService {
         this.authProvider = authProvider;
     }
 
-//    public String makeApiCall(String method, String url, Object body, HttpHeaders headers) {
-//        HttpEntity<Object> requestEntity = new HttpEntity<>(body, headers);
-//
-//        try {
-//            // Make the API call
-//            return restTemplate.exchange(url, HttpMethod.valueOf(method), requestEntity, String.class).getBody();
-//        } catch (Exception e) {
-//            // Handle exceptions (e.g., connection errors, timeouts)
-//            return "Error: " + e.getMessage();
-//        }
-//    }
-
     @Override
     public List<CarDTO> getAllCars(String limit, String year) {
         LOGGER.info("FETCH All Cars...");
