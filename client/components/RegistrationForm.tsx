@@ -9,6 +9,9 @@ import Link from "next/link";
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const [registrationError, setRegistrationError] = useState<string | null>(
     null
   );
@@ -17,7 +20,7 @@ const RegistrationForm: React.FC = () => {
 
   const handleRegistration = async () => {
     try {
-      const result = await registerUser(email, password);
+      const result = await registerUser(email, password, firstName, lastName);
 
       if (result == 200) {
         router.push("/login");
@@ -49,6 +52,26 @@ const RegistrationForm: React.FC = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="firstName" typeof="text" aria-placeholder="First Name" />
+        <input
+          type="firstName"
+          placeholder="Fisrt Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="lastName" typeof="text" aria-placeholder="Last Name" />
+        <input
+          type="lastName"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
         />
       </div>
 

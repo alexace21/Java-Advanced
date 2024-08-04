@@ -33,14 +33,6 @@ const CryptoBoard = () => {
         ) : (
             <span className="font-sans">Oops, no data yet!</span>
         )}
-
-      {/* <div className="my-2">
-        <span className="font-sans">XRP price: ${0.57}</span>
-      </div>
-
-      <div>
-        <span className="font-sans">Bitcoin price: ${0.027}</span>
-      </div> */}
     </div>
   );
 };

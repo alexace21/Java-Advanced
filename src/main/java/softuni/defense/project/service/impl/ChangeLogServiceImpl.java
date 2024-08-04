@@ -40,10 +40,10 @@ public class ChangeLogServiceImpl implements ChangeLogService {
         UserChangeLogEntity userLog = new UserChangeLogEntity(
                 savedUser.getEmail(),
                 savedUser.getFirstName(),
-                savedUser.getFirstName(),
+                savedUser.getLastName(),
                 LocalDate.now(),
                 savedUser,
-                "USER",
+                savedUser.getRoles().get(0).getRole().toString(),
                 TypeChangeEnum.CREATION,
                 null,
                 "NEW"

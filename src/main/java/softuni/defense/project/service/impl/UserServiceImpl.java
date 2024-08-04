@@ -51,9 +51,10 @@ public class UserServiceImpl implements UserService {
         // TODO: Set Role
         Optional<UserRoleEntity> optionalRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
 
-        if (optionalUser.isPresent()) {
+        if (optionalRole.isPresent()) {
             user.setRoles(List.of(optionalRole.get()));
         }
+
         UserEntity savedUser = userRepository.save(user);
 
         this.changeLogService.createUserChangeLog(savedUser);

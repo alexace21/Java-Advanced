@@ -91,7 +91,7 @@ export const updateSearchParams = (type: string, value: string) => {
   return newPathname;
 };
 
-export const registerUser = async (email: string, password: string) => {
+export const registerUser = async (email: string, password: string, firstName: string, lastName: string) => {
   let url = new URL("http://localhost:8080/users/register");
 
   const headers = {
@@ -102,7 +102,7 @@ export const registerUser = async (email: string, password: string) => {
   const response = await fetch(url, {
     method: "POST",
     headers: headers,
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, firstName, lastName }),
   });
 
   if (response.ok) {
