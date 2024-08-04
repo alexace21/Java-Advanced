@@ -21,7 +21,9 @@ const ShopCatalog = ({ pageNumber, isNext, setLimit }: ShopCatalogProps) => {
     console.log("Internationalization switched! " + internationalization);
 
     if (internationalization === "Български") {
-      setShowMoreTitle("Покажи повече")
+      setShowMoreTitle("Покажи повече");
+    } else {
+      setShowMoreTitle("Show More");
     }
     
   }, [internationalization])

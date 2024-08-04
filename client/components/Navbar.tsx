@@ -38,6 +38,12 @@ const Navbar = () => {
       setForSaleTitle("За продажба");
       setSignInTitle("Регистрация");
       setLogoutTitle("Излез");
+    } else {
+      setAdminDashboardTitle("Admin Dashboard");
+      setCreateOfferTitle("Create Offer");
+      setForSaleTitle("For Sale");
+      setSignInTitle("Sign In");
+      setLogoutTitle("Logout");
     }
     
   }, [internationalization])

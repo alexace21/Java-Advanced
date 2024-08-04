@@ -29,6 +29,10 @@ const Hero = () => {
             setHeadlineTitle("Намерете, резервирайте, или наемете под наем автомобил БЪРЗО и ЛЕСНО с нас 72cars!");
             setSubHeadTitle("Оптимизирайте своете преживяване при наем на автомобил с нашия безпроблемен процес на резервация!");
             setExloreButtonTitle("Разгледайте автомобили");
+        } else {
+            setHeadlineTitle("Find, book, or rent a car QUICKLY and EASILY with 72cars!");
+            setSubHeadTitle("Streamline your car rental experience with our effortless booking process.");
+            setExloreButtonTitle("Explore cars");
         }
         
       }, [internationalization])

@@ -78,6 +78,11 @@ export default function Home() {
         setSubCatalogTitle("Открийте автомобила на мечтите си!");
         setFuelTitle("Гориво");
         setYearTitle("Година");
+    } else {
+        setCarCatalogTitle("Car Catalogue");
+        setSubCatalogTitle("Discover the car of your dreams!");
+        setFuelTitle("Fuel");
+        setYearTitle("Year");
     }
     
   }, [internationalization])
