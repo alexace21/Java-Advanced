@@ -10,11 +10,11 @@ const UserChangeLogCard = ({ user }: UserChangeLogCardProps) => {
   return (
     <>
       <tr className="my-paintings bg-special">
-        <td>{user.email}</td>
-        <td>{user.firstName}</td>
-        <td>{user.lastName}</td>
-        <td>{user.registeredDate}</td>
-        <td>{user.role}</td>
+        <td className="box-table">{user.email}</td>
+        <td className="box-table">{user.firstName}</td>
+        <td className="box-table">{user.lastName}</td>
+        <td className="box-table">{user.registeredDate}</td>
+        <td className="box-table">{user.role}</td>
       </tr>
     </>
   );

@@ -1,7 +1,10 @@
 package cars.service.RapidApi.model.entities;
 
+import cars.service.RapidApi.enums.CarStatusEnum;
 import cars.service.RapidApi.model.entities.base.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +24,13 @@ public class CarEntity extends BaseEntity {
     private Long year;
     private String owner;
     private String price;
+    @Enumerated(EnumType.STRING)
+    private CarStatusEnum status;
 
     public CarEntity() {
     }
 
-    public CarEntity(Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String owner, String price) {
+    public CarEntity(Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String owner, String price, CarStatusEnum status) {
         this.city_mpg = city_mpg;
         this.combination_mpg = combination_mpg;
         this.cylinders = cylinders;
@@ -39,6 +44,15 @@ public class CarEntity extends BaseEntity {
         this.year = year;
         this.owner = owner;
         this.price = price;
+        this.status = status;
+    }
+
+    public CarStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(CarStatusEnum status) {
+        this.status = status;
     }
 
     public String getPrice() {

@@ -1,6 +1,7 @@
 package cars.service.RapidApi.service.impl;
 
 import cars.service.RapidApi.config.RapidApiConfig;
+import cars.service.RapidApi.enums.CarStatusEnum;
 import cars.service.RapidApi.model.dtos.CarDTO;
 import cars.service.RapidApi.model.entities.CarEntity;
 import cars.service.RapidApi.repository.CarRepository;
@@ -110,6 +111,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public CarDTO createCarOffer(CarDTO carDTO) {
         CarEntity car = this.modelMapper.map(carDTO, CarEntity.class);
+        car.setStatus(CarStatusEnum.AVAILABLE);
         CarEntity savedEntity = carRepository.save(car);
 
         this.changeLogService.createCarOfferChangeLog(savedEntity);
@@ -132,7 +134,9 @@ public class ShopServiceImpl implements ShopService {
         Optional<CarEntity> optionalCar = this.carRepository.findById(Long.valueOf(id));
 
         if (optionalCar.isPresent()) {
-            CarDTO output = this.modelMapper.map(optionalCar.get(), CarDTO.class);
+            CarEntity targetEntity = optionalCar.get();
+            this.changeLogService.trackRemovalOfCar(targetEntity);
+            CarDTO output = this.modelMapper.map(targetEntity, CarDTO.class);
             this.carRepository.delete(optionalCar.get());
 
             return output;

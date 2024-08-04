@@ -8,6 +8,7 @@ import softuni.defense.project.model.entities.FeedbackChangeLogEntity;
 import softuni.defense.project.model.entities.FeedbackEntity;
 import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.model.enums.FeedbackStatusEnum;
+import softuni.defense.project.model.enums.TypeChangeEnum;
 import softuni.defense.project.repositories.FeedbackRepository;
 import softuni.defense.project.repositories.UserRepository;
 import softuni.defense.project.service.ChangeLogService;
@@ -66,7 +67,9 @@ public class FeedbackServiceImpl implements FeedbackService {
                 feedback.setStatus(FeedbackStatusEnum.RESOLVED);
                 this.feedbackRepository.save(feedback);
 
-                feedbackLog.setStatus(FeedbackStatusEnum.RESOLVED);
+                feedbackLog.setTypeChange(TypeChangeEnum.STATUS);
+                feedbackLog.setOldValue(FeedbackStatusEnum.NEW.toString());
+                feedbackLog.setNewValue(FeedbackStatusEnum.RESOLVED.toString());
                 this.changeLogService.updateFeedbackLog(feedbackLog);
 
                 return mapToLogDTO(feedbackLog);
@@ -90,7 +93,9 @@ public class FeedbackServiceImpl implements FeedbackService {
                 feedback.setStatus(FeedbackStatusEnum.REMOVED);
                 this.feedbackRepository.saveAndFlush(feedback);
 
-                feedbackLog.setStatus(FeedbackStatusEnum.REMOVED);
+                feedbackLog.setTypeChange(TypeChangeEnum.STATUS);
+                feedbackLog.setOldValue(FeedbackStatusEnum.NEW.toString());
+                feedbackLog.setNewValue(FeedbackStatusEnum.REMOVED.toString());
                 this.changeLogService.updateFeedbackLog(feedbackLog);
 
                 return mapToLogDTO(feedbackLog);
@@ -103,7 +108,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         FeedbackLogDTO logDTO = new FeedbackLogDTO(
                 feedbackEntity.getId().toString(),
-                feedbackEntity.getStatus().toString(),
+                feedbackEntity.getNewValue().toString(),
                 feedbackEntity.getOwner().getFirstName(),
                 null,
                 feedbackEntity.getOwner().getEmail(),

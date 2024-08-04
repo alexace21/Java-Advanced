@@ -40,6 +40,7 @@ export interface CarChangeLogProps {
     price: string;
     submitDate: string;
     userOwner: string;
+    status: string;
 }
 
 export interface FeedbackCardProps {

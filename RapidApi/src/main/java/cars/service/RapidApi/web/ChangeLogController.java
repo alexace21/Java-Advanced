@@ -1,6 +1,5 @@
 package cars.service.RapidApi.web;
 
-import cars.service.RapidApi.model.dtos.CarDTO;
 import cars.service.RapidApi.model.dtos.CarLogDTO;
 import cars.service.RapidApi.service.ChangeLogService;
 import org.springframework.http.ResponseEntity;

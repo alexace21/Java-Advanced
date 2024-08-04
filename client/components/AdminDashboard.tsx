@@ -49,7 +49,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
         if (result) {
             setAllFeedbacks(allFeedbacks.filter((feedback: any) => feedback.id != result.id))
         } else {
-            alert("Something went wrong with resolving Feedback id: " + id + ". Please try again later!");
+            alert("Something went wrong with removing Feedback id: " + id + ". Please try again later!");
         }
   }
 
@@ -84,7 +84,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
             <div className="col-6 mt-1 mb-1 mr-10 w-[820px]">
               <div>
                 <div className="home-fields section-height overflow-auto">
-                  <h3 className="my-paintings bg-slate-800">Registered Cars</h3>
+                  <h3 className="my-paintings bg-slate-800">Cars Change Log</h3>
                   <table className="table">
                     <tr className="my-paintings h-8 bg-special">
                       <td scope="row">id</td>
@@ -93,7 +93,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                       <td>Owner</td>
                       <td>Price</td>
                       <td>Date</td>
-                      <td>Remove</td>
+                      <td>Status</td>
                     </tr>
                   </table>
                   <table className="table table-striped table-dark">
@@ -109,7 +109,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
               </div>
 
               <div className="home-fields section-height overflow-auto">
-                <h3 className="my-paintings bg-slate-800">Registered Users</h3>
+                <h3 className="my-paintings bg-slate-800">Users Change Log</h3>
                 <table className="table">
                   <tr className="my-paintings h-8 bg-special">
                     <td>Email</td>

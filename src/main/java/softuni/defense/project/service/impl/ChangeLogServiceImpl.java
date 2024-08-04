@@ -11,6 +11,7 @@ import softuni.defense.project.model.entities.UserChangeLogEntity;
 import softuni.defense.project.model.entities.UserEntity;
 import softuni.defense.project.model.enums.FeedbackRatingEnum;
 import softuni.defense.project.model.enums.FeedbackStatusEnum;
+import softuni.defense.project.model.enums.TypeChangeEnum;
 import softuni.defense.project.repositories.FeedbackChangeLogRepository;
 import softuni.defense.project.repositories.UserChangeLogRepository;
 import softuni.defense.project.service.ChangeLogService;
@@ -42,7 +43,10 @@ public class ChangeLogServiceImpl implements ChangeLogService {
                 savedUser.getFirstName(),
                 LocalDate.now(),
                 savedUser,
-                "USER"
+                "USER",
+                TypeChangeEnum.CREATION,
+                null,
+                "NEW"
         );
 
         this.userChangeLogRepository.save(userLog);
@@ -66,12 +70,14 @@ public class ChangeLogServiceImpl implements ChangeLogService {
                 break;
         }
         FeedbackChangeLogEntity feedbackLog = new FeedbackChangeLogEntity(
+                TypeChangeEnum.CREATION,
                 savedFeedback,
-                FeedbackStatusEnum.NEW,
                 savedFeedback.getOwnerUser(),
                 satisfaction,
                 savedFeedback.getRecommendOption(), 
-                LocalDate.now()
+                LocalDate.now(),
+                null,
+                FeedbackStatusEnum.NEW.toString()
         );
 
         this.feedbackChangeLogRepository.save(feedbackLog);
@@ -81,7 +87,7 @@ public class ChangeLogServiceImpl implements ChangeLogService {
     public List<FeedbackLogDTO> getAllFeedbackLogs() {
         return this.feedbackChangeLogRepository.findAll()
                         .stream()
-                .filter(x -> x.getStatus().equals(FeedbackStatusEnum.NEW))
+                .filter(x -> x.getNewValue().equals(FeedbackStatusEnum.NEW.toString()))
                                 .map(this::mapToLogDTO)
                                         .collect(Collectors.toList());
     }
@@ -123,7 +129,7 @@ public class ChangeLogServiceImpl implements ChangeLogService {
     private FeedbackLogDTO mapToLogDTO(FeedbackChangeLogEntity feedbackChangeLog) {
         FeedbackLogDTO logDTO = new FeedbackLogDTO(
                 feedbackChangeLog.getId().toString(),
-                feedbackChangeLog.getStatus().toString(),
+                feedbackChangeLog.getNewValue().toString(),
                 feedbackChangeLog.getOwner().getFirstName(),
                 null,
                 feedbackChangeLog.getOwner().getEmail(),

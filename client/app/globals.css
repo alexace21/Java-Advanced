@@ -614,11 +614,12 @@
 }
 
 .table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  margin: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
     padding: 0;
-    border: 0;
+    border: 2px solid lightblue;
+    border-right: 1px solid lightblue;
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
@@ -626,6 +627,13 @@
     max-width: 100%;
     margin-bottom: 1rem;
     background-color: transparent;
+}
+
+.box-table {
+  border-right: 1px solid red;
+  border-bottom: 1px solid lightblue;
+  padding-top: 5px;
+  margin-bottom: 5px;
 }
 
 .text-dark{

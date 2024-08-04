@@ -9,17 +9,13 @@ const CarChangeLogCard = ({ car }: CarChangeLogCardProps) => {
   return (
     <>
       <tr className="my-paintings bg-special">
-        <td scope="row">{car.id}</td>
-        <td>{car.make}</td>
-        <td>{car.model}</td>
-        <td>{car.userOwner}</td>
-        <td>${car.price}</td>
-        <td>{car.submitDate}</td>
-        <td>
-          <button className="btn-danger btn" onClick={() => console.log("attempted delete of Registered Car!")}>
-            Remove
-          </button>
-        </td>
+        <td scope="row" className="box-table">{car.id}</td>
+        <td className="box-table">{car.make}</td>
+        <td className="box-table">{car.model}</td>
+        <td className="box-table">{car.userOwner}</td>
+        <td className="box-table">${car.price}</td>
+        <td className="box-table">{car.submitDate}</td>
+        <td className="box-table">{car.status}</td>
       </tr>
     </>
   );

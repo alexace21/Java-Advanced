@@ -9,4 +9,6 @@ public interface ChangeLogService {
     void createCarOfferChangeLog(CarEntity savedEntity);
 
     List<CarLogDTO> getAllCarLogs();
+
+    void trackRemovalOfCar(CarEntity targetEntity);
 }

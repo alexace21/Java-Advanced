@@ -4,17 +4,15 @@ import jakarta.persistence.*;
 import softuni.defense.project.model.entities.base.BaseEntity;
 import softuni.defense.project.model.enums.FeedbackRatingEnum;
 import softuni.defense.project.model.enums.FeedbackStatusEnum;
+import softuni.defense.project.model.enums.TypeChangeEnum;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "feedback_change_log")
 public class FeedbackChangeLogEntity extends BaseEntity {
-
     @ManyToOne
     private FeedbackEntity feedback;
-    @Enumerated(EnumType.STRING)
-    private FeedbackStatusEnum status;
     @ManyToOne
     private UserEntity owner;
 
@@ -24,24 +22,50 @@ public class FeedbackChangeLogEntity extends BaseEntity {
     private String recommendation;
     @Column(name = "submit_date")
     private LocalDate submitDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_of_change")
+    private TypeChangeEnum typeChange;
+    @Column(name = "old_value")
+    private String oldValue;
+    @Column(name = "new_value")
+    private String newValue;
     public FeedbackChangeLogEntity() {
     }
 
-    public FeedbackChangeLogEntity(FeedbackStatusEnum status, UserEntity owner, FeedbackRatingEnum satisfaction, String recommendation, LocalDate submitDate) {
-        this.status = status;
+    public FeedbackChangeLogEntity(TypeChangeEnum typeChange, FeedbackEntity feedback, UserEntity owner, FeedbackRatingEnum satisfaction, String recommendation, LocalDate submitDate, String oldValue, String newValue) {
+        this.typeChange = typeChange;
+        this.feedback = feedback;
         this.owner = owner;
         this.satisfaction = satisfaction;
         this.recommendation = recommendation;
         this.submitDate = submitDate;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
     }
 
-    public FeedbackChangeLogEntity(FeedbackEntity feedback, FeedbackStatusEnum status, UserEntity owner, FeedbackRatingEnum satisfaction, String recommendation, LocalDate submitDate) {
-        this.feedback = feedback;
-        this.status = status;
-        this.owner = owner;
-        this.satisfaction = satisfaction;
-        this.recommendation = recommendation;
-        this.submitDate = submitDate;
+    public TypeChangeEnum getTypeChange() {
+        return typeChange;
+    }
+
+    public void setTypeChange(TypeChangeEnum typeChange) {
+        this.typeChange = typeChange;
+    }
+
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
     }
 
     public FeedbackEntity getFeedback() {
@@ -50,14 +74,6 @@ public class FeedbackChangeLogEntity extends BaseEntity {
 
     public void setFeedback(FeedbackEntity feedback) {
         this.feedback = feedback;
-    }
-
-    public FeedbackStatusEnum getStatus() {
-        return status;
-    }
-
-    public void setStatus(FeedbackStatusEnum status) {
-        this.status = status;
     }
 
     public UserEntity getOwner() {

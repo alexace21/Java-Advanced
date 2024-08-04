@@ -11,16 +11,27 @@ public class CarLogDTO {
     private String price;
 
     private String submitDate;
+
+    private String status;
     public CarLogDTO() {
     }
 
-    public CarLogDTO(String id, String make, String model, String userOwner, String price, String submitDate) {
+    public CarLogDTO(String id, String make, String model, String userOwner, String price, String submitDate, String status) {
         this.id = id;
         this.make = make;
         this.model = model;
         this.userOwner = userOwner;
         this.price = price;
         this.submitDate = submitDate;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {

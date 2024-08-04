@@ -1,10 +1,8 @@
 package softuni.defense.project.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import softuni.defense.project.model.entities.base.BaseEntity;
+import softuni.defense.project.model.enums.TypeChangeEnum;
 
 import java.time.LocalDate;
 
@@ -23,16 +21,52 @@ public class UserChangeLogEntity extends BaseEntity {
     private UserEntity userId;
 
     private String role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_of_change")
+    private TypeChangeEnum typeChange;
+    @Column(name = "old_value")
+    private String oldValue;
+    @Column(name = "new_value")
+    private String newValue;
+
     public UserChangeLogEntity() {
     }
 
-    public UserChangeLogEntity(String email, String firstName, String lastName, LocalDate registeredDate, UserEntity userId, String role) {
+    public UserChangeLogEntity(String email, String firstName, String lastName, LocalDate registeredDate, UserEntity userId, String role, TypeChangeEnum typeChange, String oldValue, String newValue) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.registeredDate = registeredDate;
         this.userId = userId;
         this.role = role;
+        this.typeChange = typeChange;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+    }
+
+    public TypeChangeEnum getTypeChange() {
+        return typeChange;
+    }
+
+    public void setTypeChange(TypeChangeEnum typeChange) {
+        this.typeChange = typeChange;
+    }
+
+    public String getOldValue() {
+        return oldValue;
+    }
+
+    public void setOldValue(String oldValue) {
+        this.oldValue = oldValue;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
     }
 
     public UserEntity getUserId() {
