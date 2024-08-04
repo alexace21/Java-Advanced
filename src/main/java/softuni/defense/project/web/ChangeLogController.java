@@ -28,7 +28,7 @@ public class ChangeLogController {
 
     @GetMapping("/users")
     public ResponseEntity<List<UserLogDTO>> getAllRegisteredUsers() {
-        return ResponseEntity.ok(this.changeLogService.getAllRegisteredUsers());
+            return ResponseEntity.ok(this.changeLogService.getAllRegisteredUsers());
     }
 
     @GetMapping("/cars")

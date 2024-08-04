@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChangeLogServiceImpl implements ChangeLogService {
@@ -34,9 +35,22 @@ public class ChangeLogServiceImpl implements ChangeLogService {
 
     @Override
     public List<CarLogDTO> getAllCarLogs() {
-        List<CarChangeLogEntity> logEntities = this.carChangeLogRepository.findAll();
+        return this.carChangeLogRepository.findAll()
+                .stream()
+                .map(this::mapToLogDTO)
+                .collect(Collectors.toList());
 
-        System.out.println();
-        return null;
+    }
+
+    private CarLogDTO mapToLogDTO(CarChangeLogEntity carChangeLogEntity) {
+        CarLogDTO logDTO = new CarLogDTO(
+                carChangeLogEntity.getId().toString(),
+                carChangeLogEntity.getMake(),
+                carChangeLogEntity.getModel(),
+                carChangeLogEntity.getUserOwner(),
+                carChangeLogEntity.getCar().getPrice(),
+                carChangeLogEntity.getSubmitDate().toString()
+        );
+        return logDTO;
     }
 }

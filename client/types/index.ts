@@ -33,6 +33,15 @@ export interface CarCardProps {
     "owner": string;
 }
 
+export interface CarChangeLogProps {
+    id: string;
+    make: string;
+    model: string;
+    price: string;
+    submitDate: string;
+    userOwner: string;
+}
+
 export interface FeedbackCardProps {
     id: string;
     status: string;

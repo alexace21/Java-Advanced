@@ -355,6 +355,34 @@ export const fetchAllRegisteredUsers = async () => {
   }
 }
 
+export const fetchAllRegisteredCars = async () => {
+  let url = new URL(`http://localhost:8080/change-log/cars`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: headers
+  });
+
+  const body = await response.json();
+
+  console.log(body);
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    return body;
+  } else {
+    console.log("Error fetching Car Change logs!");
+    return body.message? body.message : body;
+  }
+}
+
 export const resolveFeedback = async (id: string) => {
   let url = new URL(`http://localhost:8080/feedback/${id}`);
 

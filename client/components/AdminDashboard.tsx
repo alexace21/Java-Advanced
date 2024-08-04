@@ -1,9 +1,10 @@
 "use client";
 
-import { fetchAllFeedbackChangeLog, removeUserFeedback, fetchAllRegisteredUsers } from "@/utils";
+import { fetchAllFeedbackChangeLog, removeUserFeedback, fetchAllRegisteredUsers, fetchAllRegisteredCars } from "@/utils";
 import { useEffect, useState } from "react";
 import UserFeedbackCard from "./UserFeedbackCard";
 import UserChangeLogCard from "./UserChangeLogCard";
+import CarChangeLogCard from "./CarChangeLogCard";
 
 interface AdminBoardProps {
   user: string | null;
@@ -32,6 +33,16 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
     }
   };
 
+  const fetchRegisteredCarLogs = async () => {
+    const result = await fetchAllRegisteredCars();
+
+    console.log(result);
+    
+    if (result) {
+        setAllCars(result);
+    }
+  };
+
   const handleDeleteUserFeedback = async (id: string) => {
     const result = await removeUserFeedback(id);
 
@@ -45,6 +56,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   useEffect(() => {
     fetchFeedbackLogs();
     fetchRegisteredUserLogs();
+    fetchRegisteredCarLogs();
   }, []);
 
   return (
@@ -85,19 +97,13 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                     </tr>
                   </table>
                   <table className="table table-striped table-dark">
-                    <tr className="my-paintings bg-special">
-                      <td scope="row">id</td>
-                      <td>{"Toyota"}</td>
-                      <td>{"Corolla"}</td>
-                      <td>{"aleks.asenov@outlook.com"}</td>
-                      <td>${"5000"}</td>
-                      <td>{"8/3/2024"}</td>
-                      <td>
-                        <a className="btn-danger btn" href="">
-                          Remove
-                        </a>
-                      </td>
-                    </tr>
+                    {allCars.length > 0 ? (
+                        allCars.map((car: any) => (
+                            <CarChangeLogCard car={car} />
+                        ))
+                    ) : (
+                        <span>Oops, no results yet!</span> 
+                    )}
                   </table>
                 </div>
               </div>
@@ -119,7 +125,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                             <UserChangeLogCard user={user}/>
                         )) 
                     ): (
-                <span>Oops, no results yet!</span> 
+                        <span>Oops, no results yet!</span> 
                     )}
                 </table>
               </div>
@@ -134,7 +140,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                     <UserFeedbackCard feedback={feedback} handleRemoveFeedback={handleDeleteUserFeedback}/>
                 ))
                 ) : (
-                <span>Oops, no results yet!</span>
+                    <span>Oops, no results yet!</span>
                 )}
                 </ul>
               </div>
