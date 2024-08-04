@@ -12,8 +12,17 @@ import { fetchCars } from "@/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Home() {
+
+  const { internationalization } = useAuthContext();
+
+  const [carCatalogTitle, setCarCatalogTitle] = useState("Car Catalogue");
+  const [subCatalogTitle, setSubCatalogTitle] = useState("Discover the car of your dreams!")
+  const [fuelTitle, setFuelTitle] = useState("Fuel");
+  const [yearTitle, setYearTitle] = useState("Year");
+
   const [allCars, setAllCars] = useState([]);
   const [loading, setLoading] = useState(false);
   
@@ -60,6 +69,19 @@ export default function Home() {
     console.log("Logged changed pathname: " + pathname);
   }, [pathname])
 
+
+  useEffect(() => {
+    console.log("Internationalization switched! " + internationalization);
+
+    if (internationalization === "Български") {
+        setCarCatalogTitle("Каталог на автомобили");
+        setSubCatalogTitle("Открийте автомобила на мечтите си!");
+        setFuelTitle("Гориво");
+        setYearTitle("Година");
+    }
+    
+  }, [internationalization])
+
   return (
     <main className="overflow-hidden">
       {showHeroSection && 
@@ -68,17 +90,17 @@ export default function Home() {
 
         <div className="mt-12 padding-x padding-y max-width" id="discover">
           <div className="home__text-container">
-            <h1 className="text-4xl font-extrabold">Car Catalogue</h1>
+            <h1 className="text-4xl font-extrabold">{carCatalogTitle}</h1>
 
-            <p>Discover the car of your dreams!</p>
+            <p>{subCatalogTitle}</p>
           </div>
 
           <div className="home__filters">
             <SearchBar setManufacturer={setManufacturer} setModel={setModel}/>
 
             <div className="home__filter-container">
-              <CustomFilter title="fuel" options={fuels} setFilter={setFuel}/>
-              <CustomFilter title="year" options={yearsOfProduction} setFilter={setYear}/>
+              <CustomFilter title={fuelTitle} options={fuels} setFilter={setFuel}/>
+              <CustomFilter title={yearTitle} options={yearsOfProduction} setFilter={setYear}/>
             </div>
           </div>
 
