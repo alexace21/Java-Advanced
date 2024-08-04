@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import UserFeedbackCard from "./UserFeedbackCard";
 import UserChangeLogCard from "./UserChangeLogCard";
 import CarChangeLogCard from "./CarChangeLogCard";
+import CryptoBoard from "./CryptoBoard";
 
 interface AdminBoardProps {
   user: string | null;
@@ -62,20 +63,7 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   return (
     <>
       <main className="mb-5 pt-16">
-        <div className="flex flex-col absolute items-center ml-[28px] mt-28 border border-solid">
-          <h3 className="text-xl text-red-600 font-bold">
-            Prices today by CoinGecko API!
-          </h3>
-          <span className="text-xl">~~~~~~~~~~~~~~~~~~~</span>
-          <div className="my-2">
-            <span>XRP price: ${0.57}</span>
-          </div>
-
-          <div>
-            <span>XDC price: ${0.027}</span>
-          </div>
-        </div>
-
+        <CryptoBoard />
         <div className="welcome mt-1 mb-4">
           <p className="mySticky bg-gray text-dark user text-2xl">
             Welcome <span className="text-blue-400">{user}</span>
