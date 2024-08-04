@@ -44,6 +44,14 @@ export interface FeedbackCardProps {
     submitDate: string;
 }
 
+export interface UserChangeLogProps {
+    email: string;
+    firstName: string;
+    lastName: string;
+    registeredDate: string;
+    role: string;
+}
+
 export interface FilterProps {
     manufacturer: string;
     year: string;

@@ -79,8 +79,6 @@ public class ChangeLogServiceImpl implements ChangeLogService {
 
     @Override
     public List<FeedbackLogDTO> getAllFeedbackLogs() {
-        this.feedbackChangeLogRepository.findAll();
-
         return this.feedbackChangeLogRepository.findAll()
                         .stream()
                 .filter(x -> x.getStatus().equals(FeedbackStatusEnum.NEW))
@@ -90,11 +88,11 @@ public class ChangeLogServiceImpl implements ChangeLogService {
 
     @Override
     public List<UserLogDTO> getAllRegisteredUsers() {
-        List<UserChangeLogEntity> logEntities = this.userChangeLogRepository.findAll();
+        return this.userChangeLogRepository.findAll()
+                .stream()
+                .map(this::mapToLogDTO)
+                .collect(Collectors.toList());
 
-        System.out.println();
-
-        return null;
     }
 
     @Override
@@ -122,19 +120,28 @@ public class ChangeLogServiceImpl implements ChangeLogService {
         this.feedbackChangeLogRepository.save(feedbackLog);
     }
 
-    private FeedbackLogDTO mapToLogDTO(FeedbackChangeLogEntity feedbackEntity) {
-
+    private FeedbackLogDTO mapToLogDTO(FeedbackChangeLogEntity feedbackChangeLog) {
         FeedbackLogDTO logDTO = new FeedbackLogDTO(
-                feedbackEntity.getId().toString(),
-                feedbackEntity.getStatus().toString(),
-                feedbackEntity.getOwner().getFirstName(),
+                feedbackChangeLog.getId().toString(),
+                feedbackChangeLog.getStatus().toString(),
+                feedbackChangeLog.getOwner().getFirstName(),
                 null,
-                feedbackEntity.getOwner().getEmail(),
-                feedbackEntity.getSatisfaction().toString(),
-                feedbackEntity.getRecommendation(),
-                feedbackEntity.getSubmitDate().toString()
+                feedbackChangeLog.getOwner().getEmail(),
+                feedbackChangeLog.getSatisfaction().toString(),
+                feedbackChangeLog.getRecommendation(),
+                feedbackChangeLog.getSubmitDate().toString()
         );
+        return logDTO;
+    }
 
+    private UserLogDTO mapToLogDTO(UserChangeLogEntity userChangeLog) {
+        UserLogDTO logDTO = new UserLogDTO(
+                userChangeLog.getEmail(),
+                userChangeLog.getFirstName(),
+                userChangeLog.getLastName(),
+                userChangeLog.getRegisteredDate().toString(),
+                userChangeLog.getRole()
+        );
         return logDTO;
     }
 }

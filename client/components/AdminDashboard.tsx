@@ -1,8 +1,9 @@
 "use client";
 
-import { fetchCarsChangeLog, removeUserFeedback } from "@/utils";
+import { fetchAllFeedbackChangeLog, removeUserFeedback, fetchAllRegisteredUsers } from "@/utils";
 import { useEffect, useState } from "react";
 import UserFeedbackCard from "./UserFeedbackCard";
+import UserChangeLogCard from "./UserChangeLogCard";
 
 interface AdminBoardProps {
   user: string | null;
@@ -13,11 +14,21 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   const [allUsers, setAllUsers] = useState([]);
   const [allFeedbacks, setAllFeedbacks] = useState([]);
 
-  const fetchAllRegisteredCars = async () => {
-    const result = await fetchCarsChangeLog();
+  const fetchFeedbackLogs = async () => {
+    const result = await fetchAllFeedbackChangeLog();
 
     if (result) {
       setAllFeedbacks(result);
+    }
+  };
+
+  const fetchRegisteredUserLogs = async () => {
+    const result = await fetchAllRegisteredUsers();
+
+    console.log(result);
+    
+    if (result) {
+        setAllUsers(result);
     }
   };
 
@@ -32,7 +43,8 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   }
 
   useEffect(() => {
-    fetchAllRegisteredCars();
+    fetchFeedbackLogs();
+    fetchRegisteredUserLogs();
   }, []);
 
   return (
@@ -102,13 +114,13 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                   </tr>
                 </table>
                 <table className="table table-striped table-dark">
-                  <tr className="my-paintings bg-special">
-                    <td>axelFoli@abv.bg</td>
-                    <td>Axel</td>
-                    <td>Fooli</td>
-                    <td>8/3/2024</td>
-                    <td>Admin</td>
-                  </tr>
+                    {allUsers.length > 0 ? (
+                        allUsers.map((user: any) => (
+                            <UserChangeLogCard user={user}/>
+                        )) 
+                    ): (
+                <span>Oops, no results yet!</span> 
+                    )}
                 </table>
               </div>
             </div>

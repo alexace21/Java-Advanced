@@ -299,7 +299,7 @@ export const fetchCarsForSale = async () => {
   }
 }
 
-export const fetchCarsChangeLog = async () => {
+export const fetchAllFeedbackChangeLog = async () => {
   let url = new URL(`http://localhost:8080/change-log/feedback`);
 
   const headers = {
@@ -323,6 +323,34 @@ export const fetchCarsChangeLog = async () => {
     return body;
   } else {
     console.log("Error fetching Car Change logs!");
+    return body.message? body.message : body;
+  }
+}
+
+export const fetchAllRegisteredUsers = async () => {
+  let url = new URL(`http://localhost:8080/change-log/users`);
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Authorization": "Bearer " + getAuthToken()
+  };
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: headers
+  });
+
+  const body = await response.json();
+
+  console.log(body);
+
+  console.log(response.ok);
+  
+  if (response.ok) {
+    return body;
+  } else {
+    console.log("Error fetching User Change logs!");
     return body.message? body.message : body;
   }
 }
