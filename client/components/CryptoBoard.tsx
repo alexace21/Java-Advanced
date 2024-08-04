@@ -1,9 +1,14 @@
 "use client";
 
+import { useAuthContext } from "@/context/AuthContext";
 import { fetchAllCryptoData } from "@/utils";
 import React, { useEffect, useState } from "react";
 
 const CryptoBoard = () => {
+    const { internationalization } = useAuthContext();
+    const [headlineText, setHeadlineText] = useState("Crypto TODAY provided by");
+    const [priceText, setPriceText] = useState("price");
+    const [noResultsText, setNoResultsText] = useState("Oops, no data yet!")
 
     const [allCrypto, setAllCrypto] = useState([]);
 
@@ -17,21 +22,34 @@ const CryptoBoard = () => {
         
     }, [])
 
+    useEffect(() => {
+      console.log("Internationalization switched! " + internationalization);
+  
+      if (internationalization === "Български") {
+        setHeadlineText("Крипто-валутни цени ДНЕС благодарение на");
+        setPriceText("цена");
+        setNoResultsText("Няма резултати...");
+      } else {
+        setHeadlineText("Crypto TODAY provided by");
+        setPriceText("price");
+        setNoResultsText("Oops, no data yet!");
+      }
+      
+    }, [internationalization])
 
   return (
-    <div className="flex flex-col absolute items-center mx-[635px] border border-solid">
-      <h3 className="text-xl text-red-600 font-bold">
-        Prices today by CoinGecko API!
+    <div className="flex flex-col absolute items-center mx-[635px] border border-solid ">
+      <h3 className="text-xl text-red-600 font-bold text-wrap text-center">
+        {headlineText} CoinGecko API!
       </h3>
-      <span className="text-xl">~~~~~~~~~~~~~~~~~~~</span>
         {allCrypto.length > 0 ? (
             allCrypto.map((crypto: any) => (
                 <div className="my-2">
-        <span className="font-sans">{crypto.name.toUpperCase()} price: ${crypto.usd}</span>
+        <span className="font-sans">{crypto.name.toUpperCase()} {priceText}: ${crypto.usd}</span>
       </div>
             ))
         ) : (
-            <span className="font-sans">Oops, no data yet!</span>
+            <span className="font-sans">{noResultsText}</span>
         )}
     </div>
   );

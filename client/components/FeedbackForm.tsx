@@ -1,11 +1,114 @@
 "use client";
 
+import { useAuthContext } from "@/context/AuthContext";
 import { submitFeedbackForm } from "@/utils";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 
 const FeedbackForm = () => {
+  const { internationalization } = useAuthContext();
+  const [headlineText, setHeadlineText] = useState("Car Service Satisfaction Survey");
+  const [subHeadlineText, setSubHeadlineText] = useState("Please take a few minutes to provide feedback on your recent car experience with carHub");
+  const [satisfactionQuestion, setSatisfactionQuestion] = useState("How satisfied are you with the car service you received?");
+
+  const [verySatisfiedText, setVerySatisfiedText] = useState("Very Satisfied");
+  const [satisfiedText, setSatisfiedText] = useState("Satisfied");
+  const [neutralText, setNeutralText] = useState("Neutral");
+  const [dissatisfiedText, setDissatisfiedText] = useState("Dissatisfied");
+  const [veryDissatisfiedText, setVeryDissatisfiedText] = useState("Very Dissatisfied");
+
+  const [reasonQuestion, setReasonQuestion] = useState("What was the reason for your car service?");
+
+  const [qualityText, setQualityText] = useState("Quality of Service");
+  const [timelinessText, setTimelinessText] = useState("Timeliness");
+  const [customerServiceText, setCustomerServiceText] = useState("Customer Service");
+  const [priceText, setPriceText] = useState("Price");
+  const [cleanlinessText, setCleanlinessText] = useState("Cleanliness");
+
+  const [adviceQuestion, setAdviceQuestion] = useState("Do you have any suggestions or comments for improving our car service?");
+  const [recommendQuestion, setRecommendQuestion] = useState("Would you recommend our car service to others?");
+
+  const [recommendSelectText, setRecommendSelectText] = useState("Please Select");
+  const [recommendOptionOne, setRecommendOptionOne] = useState("Definitely");
+  const [recommendOptionTwo, setRecommendOptionTwo] = useState("Probably");
+  const [recommendOptionThree, setRecommendOptionThree] = useState("Not Sure");
+  const [recommendOptionFour, setRecommendOptionFour] = useState("Probably Not");
+  const [recommendOptionFive, setRecommendOptionFive] = useState("Definitely Not");
+
+  const [contactInfoText, setContactInfoText] = useState("Please provide your contact information if you would like us to follow up with you");
+  const [firstNameText, setFirstNameText] = useState("First Name");
+  const [lastNameText, setLastNameText] = useState("Last Name");
+  const [submitText, setSubmitText] = useState("Submit");
+
+  useEffect(() => {
+    console.log("Internationalization switched! " + internationalization);
+
+    if (internationalization === "Български") {
+      if (feedbackFormError != null) {
+        setFeedbackFormError("Моля попълнете всички полета!");
+      }
+
+      setHeadlineText("Анкета за удовлетвореност от автосервиз");
+      setSubHeadlineText("Моля, отделете няколко минути, за да дадете обратна връзка за вашето последно преживяване с автомагазина на carHub");
+      setSatisfactionQuestion("Колко сте удовлетворени от услугата, която получихте?");
+      setVerySatisfiedText("Много удовлетворен");
+      setSatisfiedText("Удовлетворен");
+      setNeutralText("Неутрален");
+      setDissatisfiedText("Недоволен");
+      setVeryDissatisfiedText("Много недоволен");
+      setReasonQuestion("Каква е причината за вашето посещение на автосервиза?");
+      setQualityText("Качество на услугата");
+      setTimelinessText("Своевременност");
+      setCustomerServiceText("Обслужване на клиенти");
+      setPriceText("Цена");
+      setCleanlinessText("Чистота");
+      setAdviceQuestion("Имате ли предложения или коментари за подобряване на нашата услуга?");
+      setRecommendQuestion("Бихте ли препоръчали нашия автосервиз на други?");
+      setRecommendSelectText("Моля изберете")
+      setRecommendOptionOne("Определено");
+      setRecommendOptionTwo("Вероятно");
+      setRecommendOptionThree("Не съм сигурен");
+      setRecommendOptionFour("Вероятно не");
+      setRecommendOptionFive("Определено не");
+      setContactInfoText("Моля, предоставете контактна информация, ако искате да се свържем с вас");
+      setFirstNameText("Име");
+      setLastNameText("Фамилия");
+      setSubmitText("Изпрати");
+
+    } else {
+      if (feedbackFormError != null) {
+        setFeedbackFormError("Please fill out all fields!");
+      }
+      setHeadlineText("Car Service Satisfaction Survey");
+      setSubHeadlineText("Please take a few minutes to provide feedback on your recent car experience with carHub");
+      setSatisfactionQuestion("How satisfied are you with the car service you received?");
+      setVerySatisfiedText("Very Satisfied");
+      setSatisfiedText("Satisfied");
+      setNeutralText("Neutral");
+      setDissatisfiedText("Dissatisfied");
+      setVeryDissatisfiedText("Very Dissatisfied");
+      setReasonQuestion("What was the reason for your car service?");
+      setQualityText("Quality of Service")
+      setTimelinessText("Timeliness");
+      setCustomerServiceText("Customer Service");
+      setPriceText("Price");
+      setCleanlinessText("Cleanliness");
+      setAdviceQuestion("Do you have any suggestions or comments for improving our car service?");
+      setRecommendQuestion("Would you recommend our car service to others?");
+      setRecommendSelectText("Please Select");
+      setRecommendOptionOne("Definitely");
+      setRecommendOptionTwo("Probably");
+      setRecommendOptionThree("Not Sure");
+      setRecommendOptionFour("Probably Not");
+      setRecommendOptionFive("Definitely Not");
+      setContactInfoText("Please provide your contact information if you would like us to follow up with you");
+      setFirstNameText("First Name");
+      setLastNameText("Last Name");
+      setSubmitText("Submit");
+    }
+    
+  }, [internationalization])
 
   const router = useRouter();  
   const [selectedOption, setSelectedOption] = useState("satisfied");
@@ -115,6 +218,8 @@ const FeedbackForm = () => {
 
   }
 
+
+
   return (
     
       <form
@@ -131,11 +236,10 @@ const FeedbackForm = () => {
               <div className="form-header-group header-large">
                 <div className="header-text text-center">
                   <h2 className="form-header">
-                    Car Service Satisfaction Survey
+                    {headlineText}
                   </h2>
                   <div className="form-subHeader">
-                    Please take a few minutes to provide feedback on your recent
-                    car experience with carHub.
+                    {subHeadlineText}
                   </div>
                 </div>
               </div>
@@ -146,7 +250,7 @@ const FeedbackForm = () => {
                 htmlFor="input_2_0"
                 className="form-label form-label-top form-label-auto"
               >
-                How satisfied are you with the car service you received?
+                {satisfactionQuestion}
               </label>
               <div id="cid_2" className="form-input-wide" data-layout="full">
                 <div className="form-single-column" role="group">
@@ -160,7 +264,7 @@ const FeedbackForm = () => {
                         onChange={handleOptionChange}
                         className="mr-5 w-4 h-4"
                       />
-                      Very Satisfied
+                      {verySatisfiedText}
                     </label>
                   </span>
 
@@ -174,7 +278,7 @@ const FeedbackForm = () => {
                         onChange={handleOptionChange}
                         className="mr-5 w-4 h-4"
                       />
-                      Satisfied
+                      {satisfiedText}
                     </label>
                   </span>
 
@@ -188,7 +292,7 @@ const FeedbackForm = () => {
                         onChange={handleOptionChange}
                         className="mr-5 w-4 h-4"
                       />
-                      Neutral
+                      {neutralText}
                     </label>
                   </span>
 
@@ -202,7 +306,7 @@ const FeedbackForm = () => {
                         onChange={handleOptionChange}
                         className="mr-5 w-4 h-4"
                       />
-                      Dissatisfied
+                      {dissatisfiedText}
                     </label>
                   </span>
 
@@ -216,7 +320,7 @@ const FeedbackForm = () => {
                         onChange={handleOptionChange}
                         className="mr-5 w-4 h-4"
                       />
-                      Very Dissatisfied
+                      {veryDissatisfiedText}
                     </label>
                   </span>
                 </div>
@@ -228,7 +332,7 @@ const FeedbackForm = () => {
                 htmlFor="input_3"
                 className="form-label form-label-top form-label-auto"
               >
-                What was the reason for your car service?
+                {reasonQuestion}
               </label>
               <div className="form-input-wide" data-layout="full">
                 <textarea
@@ -253,7 +357,7 @@ const FeedbackForm = () => {
                 htmlFor="input_9"
                 aria-hidden="false"
               >
-                Quality of Service
+                {qualityText}
               </label>
               
               <div id="cid_9" className="form-input-wide" data-layout="full">
@@ -290,7 +394,7 @@ const FeedbackForm = () => {
                 htmlFor="input_10"
                 aria-hidden="false"
               >
-                Timeliness
+                {timelinessText}
               </label>
               <div className="form-input-wide" data-layout="full">
                 <div
@@ -325,7 +429,7 @@ const FeedbackForm = () => {
                 htmlFor="input_12"
                 aria-hidden="false"
               >
-                Customer Service
+                {customerServiceText}
               </label>
               <div id="cid_12" className="form-input-wide" data-layout="full">
                 <div
@@ -360,7 +464,7 @@ const FeedbackForm = () => {
                 htmlFor="input_11"
                 aria-hidden="false"
               >
-                Price
+                {priceText}
               </label>
               <div id="cid_11" className="form-input-wide" data-layout="full">
                 <div
@@ -395,7 +499,7 @@ const FeedbackForm = () => {
                 htmlFor="input_14"
                 aria-hidden="false"
               >
-                Cleanliness
+                {cleanlinessText}
               </label>
               <div id="cid_14" className="form-input-wide" data-layout="full">
                 <div
@@ -430,8 +534,7 @@ const FeedbackForm = () => {
                 htmlFor="input_5"
                 aria-hidden="false"
               >
-                Do you have any suggestions or comments for improving our car
-                service?
+                {adviceQuestion}
               </label>
               <div id="cid_5" className="form-input-wide" data-layout="full">
                 <textarea
@@ -458,7 +561,7 @@ const FeedbackForm = () => {
                 htmlFor="input_6"
                 aria-hidden="false"
               >
-                Would you recommend our car service to others?
+                {recommendQuestion}
               </label>
               <div id="cid_6" className="form-input-wide" data-layout="half">
                 <select
@@ -470,12 +573,12 @@ const FeedbackForm = () => {
                   value={recommendOption}
                   onChange={handleRecommendOption}
                 >
-                  <option value="">Please Select</option>
-                  <option value="Definitely">Definitely</option>
-                  <option value="Probably">Probably</option>
-                  <option value="Not Sure">Not Sure</option>
-                  <option value="Probably Not">Probably Not</option>
-                  <option value="Definitely Not">Definitely Not</option>
+                  <option value="">{recommendSelectText}</option>
+                  <option value="Definitely">{recommendOptionOne}</option>
+                  <option value="Probably">{recommendOptionTwo}</option>
+                  <option value="Not Sure">{recommendOptionThree}</option>
+                  <option value="Probably Not">{recommendOptionFour}</option>
+                  <option value="Definitely Not">{recommendOptionFive}</option>
                 </select>
               </div>
             </li>
@@ -492,8 +595,7 @@ const FeedbackForm = () => {
                 htmlFor="first_7"
                 aria-hidden="false"
               >
-                Please provide your contact information if you would like us to
-                follow up with you:
+                {contactInfoText}:
               </label>
               <div id="cid_7" className="form-input-wide" data-layout="full">
                 <div data-wrapper-react="true">
@@ -517,7 +619,7 @@ const FeedbackForm = () => {
                       htmlFor="first_7"
                       id="sublabel_7_first"
                     >
-                      First Name
+                      {firstNameText}
                     </label>
                   </span>
                   <span
@@ -540,7 +642,7 @@ const FeedbackForm = () => {
                       htmlFor="last_7"
                       id="sublabel_7_last"
                     >
-                      Last Name
+                      {lastNameText}
                     </label>
                   </span>
                 </div>
@@ -568,7 +670,7 @@ const FeedbackForm = () => {
                     data-content=""
                     aria-live="polite"
                   >
-                    Submit
+                    {submitText}
                   </button>
                 </div>
               </div>

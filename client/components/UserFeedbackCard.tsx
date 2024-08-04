@@ -1,8 +1,9 @@
 "use client";
 
+import { useAuthContext } from "@/context/AuthContext";
 import { FeedbackCardProps } from "@/types";
 import { resolveFeedback } from "@/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface FeedbackProps {
   feedback: FeedbackCardProps;
@@ -10,6 +11,16 @@ interface FeedbackProps {
 }
 
 const UserFeedbackCard = ({ handleRemoveFeedback, feedback }: FeedbackProps) => {
+    const { internationalization } = useAuthContext();
+    const [statusText, setStatusText] = useState("Status");
+    const [ownerText, setOwnerText] = useState("Owner");
+    const [satisfactionText, setSatisfactionText] = useState("Satisfaction");
+    const [recommendText, setRecommendText] = useState("Recommend");
+    const [dateText, setDateText] = useState("Date");
+    const [addByText, setAddByText] = useState("Added by");
+    const [resolveText, setResolveText] = useState("Resolve");
+    const [deleteText, setDeleteText] = useState("Delete")
+
 
     const [status, setStatus] = useState(feedback.status);
 
@@ -24,38 +35,63 @@ const UserFeedbackCard = ({ handleRemoveFeedback, feedback }: FeedbackProps) => 
         
     }
 
+    useEffect(() => {
+      console.log("Internationalization switched! " + internationalization);
+  
+      if (internationalization === "Български") {
+        setStatusText("Статут");
+        setOwnerText("Собственик");
+        setSatisfactionText("Удовлетворение");
+        setRecommendText("Препоръчвам");
+        setDateText("Дата");
+        setAddByText("Добавен от");
+        setResolveText("Решаване");
+        setDeleteText("Изтриване")
+      } else {
+        setStatusText("Status");
+        setOwnerText("Owner");
+        setSatisfactionText("Satisfaction");
+        setRecommendText("Recommend");
+        setDateText("Date");
+        setAddByText("Added by");
+        setResolveText("Resolve");
+        setDeleteText("Delete")
+      }
+      
+    }, [internationalization])
+
   return (
     <>
       <li>
         <div className="my-paintings-first-row bg-special">
           <p>Id: {feedback.id}</p>
-          <p>Status: {status}</p>
+          <p>{statusText}: {status}</p>
           <p>
-            Owner: {feedback.firstName} {feedback.lastName}
+            {ownerText}: {feedback.firstName} {feedback.lastName}
           </p>
-          <p>Satisfaction: {feedback.satisfaction}</p>
-          <p>Recommend: {feedback.recommendation}</p>
+          <p>{satisfactionText}: {feedback.satisfaction}</p>
+          <p>{recommendText}: {feedback.recommendation}</p>
           <div className="buttons-info"></div>
         </div>
         <div className="buttons-info">
           <div className="favorite">
             <p>
               <button className="btn-info btn" onClick={() => handleResolveFeedback(feedback.id)}>
-                Resolve
+                {resolveText}
               </button>
             </p>
           </div>
           <div className="rate">
             <p>
               <button className="btn-primary btn" onClick={() => handleRemoveFeedback(feedback.id)}>
-                Delete
+                {deleteText}
               </button>
             </p>
           </div>
         </div>
         <div className="second-info">
-          <p>Date: {feedback.submitDate}</p>
-          <p>Added by: {feedback.ownerEmail}</p>
+          <p>{dateText}: {feedback.submitDate}</p>
+          <p>{addByText}: {feedback.ownerEmail}</p>
         </div>
       </li>
     </>
