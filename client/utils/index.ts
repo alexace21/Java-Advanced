@@ -251,6 +251,7 @@ export const submitFeedbackForm = async (
 
 export const deleteCarForSale = async (id: number) => {
   let url = new URL(`http://localhost:8080/cars/${id}`);
+  const currentLogin = window.localStorage.getItem("auth_user");
 
   const headers = {
     "Content-Type": "application/json",
@@ -260,7 +261,8 @@ export const deleteCarForSale = async (id: number) => {
 
   const response = await fetch(url, {
     method: "DELETE",
-    headers: headers
+    headers: headers,
+    body: currentLogin
   });
 
   if (response.ok) {

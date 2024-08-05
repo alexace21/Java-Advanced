@@ -32,8 +32,8 @@ public class CarController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CarDTO> deleteCarOffer(@PathVariable String id) {
-
-        return ResponseEntity.ok(this.carService.deleteCarOfferById(id));
+    public ResponseEntity<CarDTO> deleteCarOffer(@PathVariable String id, @RequestBody String userLogin) {
+        System.out.println(userLogin);
+        return ResponseEntity.ok(this.carService.deleteCarOfferById(id, userLogin));
     }
 }

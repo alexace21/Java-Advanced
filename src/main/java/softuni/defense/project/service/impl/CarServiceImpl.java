@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import softuni.defense.project.config.UserAuthProvider;
@@ -119,21 +120,29 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarDTO deleteCarOfferById(String id) {
+    public CarDTO deleteCarOfferById(String id, String login) {
         LOGGER.info("Deleting offer with ID... " + id);
+
+        boolean isOwner =  authProvider.getCurrentLogin().equals(login);
 
         StringBuilder preBuildURI = new StringBuilder();
 
         preBuildURI.append("/shop/");
         preBuildURI.append(id);
 
-        return carRestClient
-                .delete()
-                .uri(preBuildURI.toString())
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(new ParameterizedTypeReference<>() {
-                });
+        if (isOwner) {
+            return carRestClient
+                    .delete()
+                    .uri(preBuildURI.toString())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<>() {
+                    });
+        } else {
+            throw new RuntimeException("Unauthorized");
+        }
+
+
     }
 
 }
