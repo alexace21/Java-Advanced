@@ -1,17 +1,42 @@
 package softuni.defense.project.model.dtos;
 
-public class FeedbackDto {
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
+public class FeedbackDto {
+    @NotBlank(message = "First Name is required!")
     private String inputFirstName;
+    @NotBlank(message = "Satisfaction option is required!")
     private String selectedOption;
+    @NotBlank(message = "Reason Description is required!")
     private String reasonDescription;
+    @NotBlank(message = "Advice Description is required!")
     private String adviceDescription;
+    @Positive(message = "Quality Service Rate should be a positive number!")
+    @Min(value = 1, message = "Quality Service Rate cannot be 0!")
+    @Max(value = 5, message = "Quality Service Rate cannot exceed 5!")
     private Integer qualityServiceRate;
+    @Positive(message = "Timeliness Rate should be a positive number!")
+    @Min(value = 1, message = "Timeliness Rate cannot be 0!")
+    @Max(value = 5, message = "Timeliness Rate cannot exceed 5!")
     private Integer timelinessRate;
+    @Positive(message = "Customer Service Rate should be a positive number!")
+    @Min(value = 1, message = "Customer Service Rate cannot be 0!")
+    @Max(value = 5, message = "Customer Service Rate cannot exceed 5!")
     private Integer customerServiceRate;
+    @Positive(message = "Price Rate should be a positive number!")
+    @Min(value = 1, message = "Price Rate cannot be 0!")
+    @Max(value = 5, message = "Price Rate cannot exceed 5!")
     private Integer priceRate;
+    @Positive(message = "Cleanliness Rate should be a positive number!")
+    @Min(value = 1, message = "Cleanliness Rate cannot be 0!")
+    @Max(value = 5, message = "Cleanliness Rate cannot exceed 5!")
     private Integer cleanlinessRate;
+    @NotBlank(message = "Recommend option is required!")
     private String recommendOption;
+    @NotBlank(message = "User owner is required!")
     private String ownerUser;
 
 

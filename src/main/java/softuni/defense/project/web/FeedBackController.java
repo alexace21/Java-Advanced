@@ -1,11 +1,14 @@
 package softuni.defense.project.web;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import softuni.defense.project.model.dtos.FeedbackDto;
 import softuni.defense.project.model.dtos.FeedbackLogDTO;
 import softuni.defense.project.service.FeedbackService;
+import softuni.defense.project.utils.Validator;
 
 @Controller
 @RequestMapping("/feedback")
@@ -13,16 +16,21 @@ import softuni.defense.project.service.FeedbackService;
 public class FeedBackController {
 
     private final FeedbackService feedbackService;
+    private final Validator validator;
 
-    public FeedBackController(FeedbackService feedbackService) {
+    public FeedBackController(FeedbackService feedbackService, Validator validator) {
         this.feedbackService = feedbackService;
+        this.validator = validator;
     }
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity submitUserFeedback(
-            @RequestBody FeedbackDto feedbackDto
+    public ResponseEntity<String> submitUserFeedback( @Valid
+            @RequestBody FeedbackDto feedbackDto, BindingResult bindingResult
     ) {
+        if (bindingResult.hasErrors()) {
+            validator.validateFeedback(bindingResult);
+        }
         this.feedbackService.submitUserFeedback(feedbackDto);
         return ResponseEntity.ok("Thank you for submitting your feedback!");
     }

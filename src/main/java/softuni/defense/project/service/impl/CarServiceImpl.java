@@ -4,11 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import softuni.defense.project.config.UserAuthProvider;
+import softuni.defense.project.config.exception.AppException;
 import softuni.defense.project.model.dtos.CarDTO;
 import softuni.defense.project.service.CarService;
 
@@ -87,20 +89,24 @@ public class CarServiceImpl implements CarService {
         LOGGER.info("Creating offer..." + carDTO);
 
         StringBuilder preBuildURI = new StringBuilder();
-
         preBuildURI.append("/shop/create");
 
-        carDTO.setOwner(authProvider.getCurrentLogin());
+        boolean authorize = authProvider.getCurrentLogin().equals(carDTO.getOwner());
 
-        return carRestClient
-                .post()
-                .uri(preBuildURI.toString())
-                .body(carDTO)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .body(new ParameterizedTypeReference<>() {
-                });
+        if (authorize) {
+            carDTO.setOwner(authProvider.getCurrentLogin());
 
+            return carRestClient
+                    .post()
+                    .uri(preBuildURI.toString())
+                    .body(carDTO)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .body(new ParameterizedTypeReference<>() {
+                    });
+        }
+
+        throw new AppException("Unauthorized access", HttpStatus.UNAUTHORIZED);
     }
 
     @Override

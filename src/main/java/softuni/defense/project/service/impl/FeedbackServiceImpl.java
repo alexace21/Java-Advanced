@@ -1,7 +1,9 @@
 package softuni.defense.project.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import softuni.defense.project.config.exception.AppException;
 import softuni.defense.project.model.dtos.FeedbackDto;
 import softuni.defense.project.model.dtos.FeedbackLogDTO;
 import softuni.defense.project.model.entities.FeedbackChangeLogEntity;
@@ -49,7 +51,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             return this.modelMapper.map(savedFeedback, FeedbackDto.class);
         }
 
-        return null;
+        throw new AppException("Unauthorized access", HttpStatus.UNAUTHORIZED);
     }
 
     @Override

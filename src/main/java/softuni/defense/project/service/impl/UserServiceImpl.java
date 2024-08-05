@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
-        // TODO: Set Role
         Optional<UserRoleEntity> optionalRole = this.userRoleRepository.findByRole(UserRoleEnum.USER);
 
         if (optionalRole.isPresent()) {

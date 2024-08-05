@@ -28,20 +28,74 @@ const RegistrationForm: React.FC = () => {
     null
   );
 
+  const emailRegex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+
   const router = useRouter();
 
   const handleRegistration = async () => {
+
+    if (
+      !email ||
+      !password ||
+      !firstName ||
+      !lastName
+    ) {
+      if (internationalization === "Български") {
+        setRegistrationError("Поля попълнете всички празни полета!");
+      } else {
+        setRegistrationError("Please fill out all fields before submit!");
+      }
+      return;
+    }
+
+    if (!email.match(emailRegex)) {
+      if (internationalization === "Български") {
+        setRegistrationError("Невалидна електронна поща!");
+      } else {
+        setRegistrationError("Invalid email address!");
+      }
+      return;
+    }
+
+    if (password.length < 8) {
+      if (internationalization === "Български") {
+        setRegistrationError("Паролата трябва да бъде поне 8 символа!");
+      } else {
+        setRegistrationError("Password must be minimum 8 characters!");
+      }
+      return;
+    }
+
+    if (firstName.length < 2) {
+      if (internationalization === "Български") {
+        setRegistrationError("Невалидно Първо име!");
+      } else {
+        setRegistrationError("Invalid First Name!");
+      }
+      return;
+    }
+
+    if (lastName.length < 2) {
+      if (internationalization === "Български") {
+        setRegistrationError("Невалидна фамилия!");
+      } else {
+        setRegistrationError("Invalid Last Name!");
+      }
+      return;
+    }
+
     try {
       const result = await registerUser(email, password, firstName, lastName);
 
       if (result == 200) {
+        alert("Registration Succsessful!");
         router.push("/login");
       } else {
         setRegistrationError(result); // Customize error message
       }
       
-    } catch (error) {
-      setRegistrationError("Something went wrong. Please try again."); // Customize error message
+    } catch (error: any) {
+      setRegistrationError("Something went wrong. " + error.message); // Customize error message
     }
   };
 

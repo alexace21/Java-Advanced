@@ -8,16 +8,16 @@ import { useAuthContext } from '@/context/AuthContext';
 
 const OfferForm = () => {
     const { internationalization } = useAuthContext();
-    const [cityConsumptionText, setCityConsumptionText] = useState("City Consumption");
-    const [combinedConsumptionText, setCombinedConsumptionText] = useState("Combined Consumption");
-    const [cylindersText, setCylindersText] = useState("Cylinders");
-    const [displacementText, setDisplacementText] = useState("Displacement");
-    const [driveText, setDriveText] = useState("Drive");
-    const [fuelTypeText, setFuelTypeText] = useState("Fuel Type");
-    const [highwayConsumptionText, setHighwayConsumptionText] = useState("Highway Consumption");
-    const [carMakeText, setCarMakeText] = useState("Car Make");
-    const [carModelText, setCarModelText] = useState("Car Model");
-    const [carTransmissionText, setCarTransmissionText] = useState("Car Transmission");
+    const [cityConsumptionText, setCityConsumptionText] = useState("City Consumption: 9");
+    const [combinedConsumptionText, setCombinedConsumptionText] = useState("Combined Consumption: 7");
+    const [cylindersText, setCylindersText] = useState("Cylinders: 5");
+    const [displacementText, setDisplacementText] = useState("Displacement: 4.5");
+    const [driveText, setDriveText] = useState("Drive: FWD,RWD,AWD,4WD");
+    const [fuelTypeText, setFuelTypeText] = useState("Fuel Type: Gas");
+    const [highwayConsumptionText, setHighwayConsumptionText] = useState("Highway Consumption: 6");
+    const [carMakeText, setCarMakeText] = useState("Car Make: Toyota");
+    const [carModelText, setCarModelText] = useState("Car Model: Corolla");
+    const [carTransmissionText, setCarTransmissionText] = useState("Car Transmission: Manual");
     const [carYearText, setCarYearText] = useState("Car Year");
     const [carPriceText, setCarPriceText] = useState("Car Price");
     const [createOfferText, setCreateOfferText] = useState("Create Offer")
@@ -56,8 +56,102 @@ const OfferForm = () => {
             !year ||
             !price 
         ) {
-            setOfferError("Please fill out all fields!")
+          if (internationalization === "Български") {
+            setOfferError("Моля попълнете всички празни полета!");
+          } else {
+            setOfferError("Please fill out all fields!");
+          }
             return;
+        }
+
+        if (isNaN(Number(city_mpg)) || (Number(city_mpg) <= 0)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидна Градска консумация!");
+          } else {
+            setOfferError("Invalid City Consumption!");
+          }
+          return;
+        }
+
+        if (isNaN(Number(combination_mpg)) || (Number(combination_mpg) <= 0)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидна Обединена консумация!");
+          } else {
+            setOfferError("Invalid Combined Consumption!");
+          }
+          return;
+        }
+
+        if (isNaN(Number(cylinders)) || (Number(cylinders) < 2)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидни Цилиндри!");
+          } else {
+            setOfferError("Invalid Cylinders!");
+          }
+          return;
+        }
+
+        if (isNaN(Number(displacement)) || (Number(displacement) < 1.0)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалиден Обем на двигателя!");
+          } else {
+            setOfferError("Invalid Displacement!");
+          }
+          return;
+        }
+
+        if (drive.length < 3) {
+          if (internationalization === "Български") {
+            setOfferError("Невалиден Вид на предавките!");
+          } else {
+            setOfferError("Invalid Drive!");
+          }
+          return;
+        }
+
+        if (fuel_type.length < 3) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидено Вид Гориво!");
+          } else {
+            setOfferError("Invalid Fuel Type!");
+          }
+          return;
+        }
+
+        if (isNaN(Number(highway_mpg)) || (Number(highway_mpg) <= 0)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидна Консумация извънградско!");
+          } else {
+            setOfferError("Invalid Highway Consumption!");
+          }
+          return;
+        }
+
+        if (transmission.length < 5) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидна Трансмисия на автомобила!");
+          } else {
+            setOfferError("Invalid Transmission Type!");
+          }
+          return;
+        }
+
+        if (isNaN(Number(year)) || (Number(year) <= 0) || (Number(year) < 1960) || (Number(year) > 2024)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидна Година на производство!");
+          } else {
+            setOfferError("Invalid Car Year!");
+          }
+          return;
+        }
+
+        if (isNaN(Number(price)) || (Number(price) <= 0)) {
+          if (internationalization === "Български") {
+            setOfferError("Невалидна Цена на автомобила!");
+          } else {
+            setOfferError("Invalid Car Price!");
+          }
+          return;
         }
 
         try {
@@ -90,30 +184,30 @@ const OfferForm = () => {
         console.log("Internationalization switched! " + internationalization);
     
         if (internationalization === "Български") {
-          setCityConsumptionText("Градска консумация");
-          setCombinedConsumptionText("Обединена консумация");
-          setCylindersText("Цилиндри");
-          setDisplacementText("Обем на двигателя");
-          setDriveText("Вид на предавките");
-          setFuelTypeText("Вид гориво");
-          setHighwayConsumptionText("Консумация извънградско");
-          setCarMakeText("Марка на автомобила");
-          setCarModelText("Модел на автомобила");
-          setCarTransmissionText("Трансмисия на автомобила");
+          setCityConsumptionText("Градска консумация: 9");
+          setCombinedConsumptionText("Обединена консумация: 7");
+          setCylindersText("Цилиндри: 2");
+          setDisplacementText("Обем на двигателя: 1.0");
+          setDriveText("Вид на предавките: Предно");
+          setFuelTypeText("Вид гориво: Дизел");
+          setHighwayConsumptionText("Консумация извънградско: 6");
+          setCarMakeText("Марка на автомобила: Toyota");
+          setCarModelText("Модел на автомобила: Corolla");
+          setCarTransmissionText("Трансмисия на автомобила: Автоматик");
           setCarYearText("Година на автомобила");
           setCarPriceText("Цена на автомобила");
           setCreateOfferText("Създай оферта");
         } else {
-          setCityConsumptionText("City Consumption");
-          setCombinedConsumptionText("Combined Consumption");
-          setCylindersText("Cylinders");
-          setDisplacementText("Displacement");
-          setDriveText("Drive");
-          setFuelTypeText("Fuel Type");
-          setHighwayConsumptionText("Highway Consumption");
-          setCarMakeText("Car Make");
-          setCarModelText("Car Model");
-          setCarTransmissionText("Car Transmission");
+          setCityConsumptionText("City Consumption: 9");
+          setCombinedConsumptionText("Combined Consumption: 7");
+          setCylindersText("Cylinders: 5");
+          setDisplacementText("Displacement: 4.5");
+          setDriveText("Drive: FWD,RWD,AWD,4WD");
+          setFuelTypeText("Fuel Type: Gas");
+          setHighwayConsumptionText("Highway Consumption: 6");
+          setCarMakeText("Car Make: Toyota");
+          setCarModelText("Car Model: Corolla");
+          setCarTransmissionText("Car Transmission: Manual");
           setCarYearText("Car Year");
           setCarPriceText("Car Price");
           setCreateOfferText("Create Offer");

@@ -41,6 +41,120 @@ const FeedbackForm = () => {
   const [lastNameText, setLastNameText] = useState("Last Name");
   const [submitText, setSubmitText] = useState("Submit");
 
+  const router = useRouter();  
+  const [selectedOption, setSelectedOption] = useState("satisfied");
+  const [feedbackFormError, setFeedbackFormError] = useState<string | null>(
+    null
+  );
+
+  const [reasonDescription, setReasonDescription] = useState("");
+  const [adviceDescription, setAdviceDescription] = useState("")
+
+  const [qualityServiceRate, setQualityServiceRate] = useState(0);
+  const [timelinessRate, setTimelinessRate] = useState(0);
+  const [customerServiceRate, setCustomerServiceRate] = useState(0);
+  const [priceRate, setPriceRate] = useState(0);
+  const [cleanlinessRate, setCleanlinessRate] = useState(0);
+
+  const [recommendOption, setRecommendOption] = useState("");
+
+  const [inputFirstName, setInputFirstName] = useState("");
+  const [inputLastName, setInputLastName] = useState("");
+
+  const handleInputFirstName = (event: any) => {
+    setInputFirstName(event.target.value);
+  }
+
+  const handleInputLastName = (event: any) => {
+    setInputLastName(event.target.value);
+  }
+
+  const handleOptionChange = (event: any) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const handleTextareaChange = (event: any) => {
+    setReasonDescription(event.target.value);
+  };
+
+  const handleAdviceTextareaChange = (event: any) => {
+    setAdviceDescription(event.target.value);
+  };
+
+  const handleQualityServiceRate = (rate: number) => {
+    setQualityServiceRate(rate);
+  };
+
+  const handleTimelinessRate = (rate: number) => {
+    setTimelinessRate(rate);
+  };
+
+  const handleCustomerServiceRate = (rate: number) => {
+    setCustomerServiceRate(rate);
+  };
+
+  const handlePriceRate = (rate: number) => {
+    setPriceRate(rate);
+  };
+
+  const handleCleaninessRate = (rate: number) => {
+    setCleanlinessRate(rate);
+  };
+
+  const handleRecommendOption = (event: any) => {
+    setRecommendOption(event.target.value);
+  };
+
+  const handleSubmitFeedbackForm = async(event: any) => {
+    event.preventDefault();
+    const loggedUser = window.localStorage.getItem("auth_user");
+
+    if (
+        !inputFirstName ||
+        !selectedOption ||
+        !reasonDescription ||
+        !adviceDescription ||
+        !qualityServiceRate ||
+        !timelinessRate ||
+        !customerServiceRate ||
+        !priceRate ||
+        !cleanlinessRate ||
+        !recommendOption 
+    ) {
+      if (internationalization === "Български") {
+        setFeedbackFormError("Моля попълнете всички празни полета!");
+      } else {
+        setFeedbackFormError("Please fill out all fields!");
+      }
+      return;
+    } 
+    
+    const result = await submitFeedbackForm(
+        inputFirstName, 
+        selectedOption,
+        reasonDescription,
+        adviceDescription,
+        qualityServiceRate,
+        timelinessRate,
+        customerServiceRate,
+        priceRate,
+        cleanlinessRate,
+        recommendOption,
+        loggedUser
+    )
+
+    if (result === 200) {
+        alert("Your feedback has been successfully submitted and received by the Customer Service team, thank you! ")
+        router.push("/");
+    } else {
+        alert("Something went wrong with submitting your Feedback! Please try again!")
+        console.log(result)
+    }
+    setFeedbackFormError(null);
+    
+
+  }
+
   useEffect(() => {
     console.log("Internationalization switched! " + internationalization);
 
@@ -109,115 +223,6 @@ const FeedbackForm = () => {
     }
     
   }, [internationalization])
-
-  const router = useRouter();  
-  const [selectedOption, setSelectedOption] = useState("satisfied");
-  const [feedbackFormError, setFeedbackFormError] = useState<string | null>(
-    null
-  );
-
-  const [reasonDescription, setReasonDescription] = useState("");
-  const [adviceDescription, setAdviceDescription] = useState("")
-
-  const [qualityServiceRate, setQualityServiceRate] = useState(0);
-  const [timelinessRate, setTimelinessRate] = useState(0);
-  const [customerServiceRate, setCustomerServiceRate] = useState(0);
-  const [priceRate, setPriceRate] = useState(0);
-  const [cleanlinessRate, setCleanlinessRate] = useState(0);
-
-  const [recommendOption, setRecommendOption] = useState("");
-
-  const [inputFirstName, setInputFirstName] = useState("");
-  const [inputLastName, setInputLastName] = useState("");
-
-  const handleInputFirstName = (event: any) => {
-    setInputFirstName(event.target.value);
-  }
-
-  const handleInputLastName = (event: any) => {
-    setInputLastName(event.target.value);
-  }
-
-  const handleOptionChange = (event: any) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const handleTextareaChange = (event: any) => {
-    setReasonDescription(event.target.value);
-  };
-
-  const handleAdviceTextareaChange = (event: any) => {
-    setAdviceDescription(event.target.value);
-  };
-
-  const handleQualityServiceRate = (rate: number) => {
-    setQualityServiceRate(rate);
-  };
-
-  const handleTimelinessRate = (rate: number) => {
-    setTimelinessRate(rate);
-  };
-
-  const handleCustomerServiceRate = (rate: number) => {
-    setCustomerServiceRate(rate);
-  };
-
-  const handlePriceRate = (rate: number) => {
-    setPriceRate(rate);
-  };
-
-  const handleCleaninessRate = (rate: number) => {
-    setCleanlinessRate(rate);
-  };
-
-  const handleRecommendOption = (event: any) => {
-    setRecommendOption(event.target.value);
-  };
-
-  const handleSubmitFeedbackForm = async(event: any) => {
-    event.preventDefault();
-
-    if (
-        !inputFirstName ||
-        !selectedOption ||
-        !reasonDescription ||
-        !adviceDescription ||
-        !qualityServiceRate ||
-        !timelinessRate ||
-        !customerServiceRate ||
-        !priceRate ||
-        !cleanlinessRate ||
-        !recommendOption 
-    ) {
-        setFeedbackFormError("Please fill out all fields!");
-    } else {
-        const loggedUser = window.localStorage.getItem("auth_user");
-        const result = await submitFeedbackForm(
-            inputFirstName, 
-            selectedOption,
-            reasonDescription,
-            adviceDescription,
-            qualityServiceRate,
-            timelinessRate,
-            customerServiceRate,
-            priceRate,
-            cleanlinessRate,
-            recommendOption,
-            loggedUser
-        )
-
-        if (result === 200) {
-            alert("Your feedback has been successfully submitted and received by the Customer Service team, thank you! ")
-            router.push("/");
-        } else {
-            alert("Something went wrong with submitting your Feedback! Please try again!")
-            console.log(result)
-        }
-        setFeedbackFormError(null);
-    }
-
-  }
-
 
 
   return (

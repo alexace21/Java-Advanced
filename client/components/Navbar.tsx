@@ -59,7 +59,6 @@ const Navbar = () => {
       setIsAuthenticated(false);
     }
 
-    console.log(isAuthenticated);
   }, [isAuthenticated]);
 
   return (

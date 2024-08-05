@@ -1,22 +1,49 @@
 package softuni.defense.project.model.dtos;
 
+import jakarta.validation.constraints.*;
+
 public class CarDTO {
 
    private  Long id;
+   @NotNull(message = "City Consumption is required!")
+   @Min(value = 1, message = "City Consumption value should be minimum 1!")
+   @Positive(message = "City Consumption should be positive a number!")
    private  Long city_mpg;
+    @NotNull(message = "Combined Consumption is required!")
+    @Min(value = 1, message = "Combined Consumption value should be minimum 1")
+    @Positive(message = "Combined Consumption should be a positive number!")
    private  Long combination_mpg;
+    @NotNull(message = "Car Cylinders are required!")
+    @Min(value = 2, message = "Car Cylinders value should be minimum 2")
+    @Positive(message = "Car Cylinders should be a positive number!")
    private  int cylinders;
+    @NotNull(message = "Car Displacement is required!")
+    @Positive(message = "Car Displacement should be a positive number!")
    private  Double displacement;
+    @NotBlank(message = "Car Drive Type is required!")
    private  String drive;
+    @NotBlank(message = "Car Fuel Type is required!")
    private  String fuel_type;
+    @NotNull(message = "Highway Consumption is required!")
+    @Min(value = 1, message = "Highway Consumption value should be minimum 1")
+    @Positive(message = "Highway Consumption should be a positive number!")
    private  Long highway_mpg;
+    @NotBlank(message = "Car Make is required!")
    private  String make;
+    @NotBlank(message = "Car Model is required!")
    private  String model;
+    @NotBlank(message = "Car Transmission Type is required!")
    private  String transmission;
+    @NotNull(message = "Car Year is required!")
+    @Min(value = 1960, message = "Car Year value should be above 1960!")
+    @Positive(message = "Car Year value should be a positive number!")
+    @Max(value = 2024, message = "Car Year value should not exceed 2024!")
    private  Long year;
+    @NotBlank(message = "Car Price is required!")
+   private String price;
+    @NotBlank(message = "Car Owner is required!")
    private  String owner;
 
-   private String price;
 
     public CarDTO() {
     }
