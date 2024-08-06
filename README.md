@@ -1,3 +1,25 @@
+Project name: 72cars
+
+Your Car Shop where you can discover your dream car or favorite vehicle, thanks to [RapidApi](https://api-ninjas.com/api/cars)
+You can find the following pages and modules:
+1. Login
+2. Register
+3. Logout
+4. Landing page
+5. Catalog page
+6. Cars for sale page
+7. Search Bar with custom filters
+8. Create Offer
+9. Delete Offer
+10. Leave a Feedback
+11. About me Page
+12. Learn more about me page.
+13. LinkedIn page
+14. Business relation and Work experience refs
+15. Internationalization: Bulgarian, English
+16. Admin Dashboard: Change log of USERS, CARS and User Feedback with option to either RESOLVE/DELETE as ADMIN.
+17. Crypto Board: Scheduled to display up to date prices of XRP, Bitcoin, thanks to [CoinGeckoApi](https://docs.coingecko.com/reference/introduction)
+
 Client-side: Next.JS, React, Typescript
 Serveri-side: Java Spring-boot
 
