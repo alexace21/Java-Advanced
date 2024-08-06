@@ -479,3 +479,7 @@ export const setAuthToken = (token: string) => {
   window.localStorage.setItem("auth_token", token);
 };
 
+export const getAuthUser = () => {
+  return window.localStorage.getItem("auth_user");
+}
+

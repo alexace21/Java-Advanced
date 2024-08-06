@@ -2,19 +2,16 @@
 
 import SaleCatalog from '@/components/SaleCatalog'
 import { useAuthContext } from '@/context/AuthContext';
+import { getAuthToken, getAuthUser } from '@/utils';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
 
-  const {isAuthenticated, setIsAuthenticated, internationalization } = useAuthContext();
+  const { internationalization } = useAuthContext();
   const [carCatalogTitle, setCarCatalogTitle] = useState("Catalog Cars for SALE");
 
   const router = useRouter();
-
-  if (!isAuthenticated) {
-    router.push("/login");
-  }
 
   useEffect(() => {
     console.log("Internationalization switched! " + internationalization);
@@ -27,14 +24,20 @@ const page = () => {
     
   }, [internationalization])
 
-  return (
-    <main className="overflow-hidden">
-      <div className="">
-        <h1 className="text-center text-4xl font-extrabold pt-32">{carCatalogTitle}</h1>
-        <SaleCatalog />
-      </div>
-    </main>
-  )
+  if (!getAuthToken() || !getAuthUser()) {
+    router.push("/login");
+  } else {
+    return (
+      <main className="overflow-hidden">
+        <div className="">
+          <h1 className="text-center text-4xl font-extrabold pt-32">{carCatalogTitle}</h1>
+          <SaleCatalog />
+        </div>
+      </main>
+    )
+  }
+
+  
 }
 
 export default page

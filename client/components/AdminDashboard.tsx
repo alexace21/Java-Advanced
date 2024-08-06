@@ -108,7 +108,6 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
       setIsAuthenticated(false);
       window.localStorage.removeItem("auth_token");
       window.localStorage.removeItem("auth_user");
-      alert("Login has expired!");
       router.push("/login");
     }
     
@@ -124,7 +123,6 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
       setIsAuthenticated(false);
       window.localStorage.removeItem("auth_token");
       window.localStorage.removeItem("auth_user");
-      alert("Login has expired!");
       router.push("/login");
     }
 
