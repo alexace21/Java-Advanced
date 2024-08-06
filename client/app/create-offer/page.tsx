@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 
 const page = () => {
 
-  const { internationalization, role } = useAuthContext();
+  const { internationalization } = useAuthContext();
   const [createOfferPageTitle, setCreateOfferPageTitle] = useState("Create Offer");
 
   const router = useRouter();
@@ -24,7 +24,7 @@ const page = () => {
     
   }, [internationalization])
   
-  if (!getAuthToken() || !getAuthUser() || !role ) {
+  if (!getAuthToken() || !getAuthUser()) {
     router.push("/login");
   } else {
     return (

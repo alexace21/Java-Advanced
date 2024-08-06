@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 
 const OfferForm = () => {
-    const { internationalization, setIsAuthenticated, role } = useAuthContext();
+    const { internationalization, setIsAuthenticated } = useAuthContext();
     const [cityConsumptionText, setCityConsumptionText] = useState("City Consumption: 9");
     const [combinedConsumptionText, setCombinedConsumptionText] = useState("Combined Consumption: 7");
     const [cylindersText, setCylindersText] = useState("Cylinders: 5");
