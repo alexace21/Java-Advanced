@@ -7,8 +7,14 @@ import CustomButton from "./CustomButton";
 import { getAuthToken } from "@/utils";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+
+import { jwtDecode } from "jwt-decode";
+import { CustomJwtPayload } from "@/entity/CustomJwtPayload";
+
+
 const Navbar = () => {
-  const { isAuthenticated, setIsAuthenticated, internationalization, setInternationalization } = useAuthContext();
+  const { isAuthenticated, setIsAuthenticated, internationalization, setInternationalization, role, setRole } = useAuthContext();
+
   const loggedUser = window.localStorage.getItem("auth_user");
   const isAdmin = loggedUser === "aleks.asenov@outlook.com";
 
@@ -50,16 +56,23 @@ const Navbar = () => {
 
 
   useEffect(() => {
-    const auth = getAuthToken();
+    const token = getAuthToken();
 
-    console.log(auth);
-    if (auth) {
+    if (token != null) {
       setIsAuthenticated(true);
+
+      const decoded = jwtDecode<CustomJwtPayload>(token);
+      setRole(decoded.role)
     } else {
       setIsAuthenticated(false);
     }
 
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    console.log("Rolq: " + role);
+    
+  }, [role])
 
   return (
     <header className="w-full absolute z-10">
@@ -85,7 +98,7 @@ const Navbar = () => {
                             <option value="Български">Български</option>
                         </select>
 
-        {isAuthenticated && isAdmin && (
+        {isAuthenticated && isAdmin && role === "ADMIN" && (
           <>
             <Link href="/admin-dashboard">
               <CustomButton
@@ -98,7 +111,7 @@ const Navbar = () => {
         )}
 
 
-        {isAuthenticated && (
+        {isAuthenticated && role && (
           <>
             <Link href="/create-offer">
               <CustomButton
@@ -130,7 +143,7 @@ const Navbar = () => {
           </>
         )}
 
-        {isAuthenticated && (
+        {isAuthenticated && role && (
           <>
             <CustomButton
               title={logoutTitle}

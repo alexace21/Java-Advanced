@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 import softuni.defense.project.model.dtos.UserDto;
 import softuni.defense.project.service.UserService;
 
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 
 @Component
 public class UserAuthProvider {
@@ -35,15 +33,16 @@ public class UserAuthProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String login) {
+    public String createToken(UserDto user) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3_600_000);
 
-        setCurrentLogin(login);
+        setCurrentLogin(user.getEmail());
         return JWT.create()
-                .withIssuer(login)
+                .withIssuer(user.getEmail())
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
+                .withClaim("role", user.getRole().name())
                 .sign(Algorithm.HMAC256(secretKey));
     }
 
@@ -55,7 +54,13 @@ public class UserAuthProvider {
         UserDto user = userService.findByEmail(decodedJWT.getIssuer());
         setCurrentLogin(user.getEmail());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        if (user.getRole() != null) {
+            return new UsernamePasswordAuthenticationToken(user, null, Collections.singletonList(user.getRole()));
+
+        } else {
+            return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        }
+
     }
 
     public String getCurrentLogin() {

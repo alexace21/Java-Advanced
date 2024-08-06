@@ -57,8 +57,10 @@ public class UserServiceImpl implements UserService {
         UserEntity savedUser = userRepository.save(user);
 
         this.changeLogService.createUserChangeLog(savedUser);
+        UserDto outputUser = modelMapper.map(savedUser, UserDto.class);
+        outputUser.setRole(savedUser.getRoles().get(0).getRole());
 
-        return modelMapper.map(savedUser, UserDto.class);
+        return outputUser;
     }
 
     @Override
@@ -67,7 +69,9 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
         if (passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            return modelMapper.map(user, UserDto.class);
+            UserDto outputUser = modelMapper.map(user, UserDto.class);
+            outputUser.setRole(user.getRoles().get(0).getRole());
+            return outputUser;
         }
 
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
@@ -78,7 +82,9 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findByEmail(login)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
-        return modelMapper.map(user, UserDto.class);
+        UserDto output = modelMapper.map(user, UserDto.class);
+        output.setRole(user.getRoles().get(0).getRole());
+        return output;
     }
 
     private UserEntity map(UserRegistrationDTO userRegistrationDTO) {
@@ -88,4 +94,6 @@ public class UserServiceImpl implements UserService {
 
         return mappedEntity;
     }
+
+
 }

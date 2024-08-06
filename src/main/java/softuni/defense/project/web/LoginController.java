@@ -25,7 +25,7 @@ public class LoginController {
     @ResponseBody
     public ResponseEntity<UserDto> login(@RequestBody UserLoginDTO loginDTO) {
         UserDto user = userService.loginUser(loginDTO);
-        user.setToken(userAuthProvider.createToken(user.getEmail()));
+        user.setToken(userAuthProvider.createToken(user));
 
         return ResponseEntity.ok(user);
     }

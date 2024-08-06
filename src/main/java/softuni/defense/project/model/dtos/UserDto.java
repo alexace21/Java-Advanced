@@ -1,5 +1,7 @@
 package softuni.defense.project.model.dtos;
 
+import softuni.defense.project.model.enums.UserRoleEnum;
+
 public class UserDto {
     private Long id;
 
@@ -8,14 +10,24 @@ public class UserDto {
     private String email;
     private String token;
 
+    private UserRoleEnum role;
     public UserDto() {
     }
 
-    public UserDto(String firstName, String lastName, String login, String token) {
+    public UserDto(String firstName, String lastName, String email, String token, UserRoleEnum role) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = login;
+        this.email = email;
         this.token = token;
+        this.role = role;
+    }
+
+    public UserRoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoleEnum role) {
+        this.role = role;
     }
 
     public Long getId() {

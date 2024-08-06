@@ -159,12 +159,14 @@ export const createCarOffer = async (
 ) => {
   let url = new URL(`http://localhost:8080/cars/create`);
 
+  const owner = window.localStorage.getItem("auth_user");
+
   const headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "http://localhost:3000",
     "Authorization": "Bearer " + getAuthToken()
   };
-
+  
   const response = await fetch(url, {
     method: "POST",
     headers: headers,
@@ -180,7 +182,8 @@ export const createCarOffer = async (
             model,
             transmission,
             year,
-            price
+            price,
+            owner
     }),
   });
 

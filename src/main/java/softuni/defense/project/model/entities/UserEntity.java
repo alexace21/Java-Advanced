@@ -1,14 +1,18 @@
 package softuni.defense.project.model.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import softuni.defense.project.model.entities.base.BaseEntity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
@@ -49,8 +53,38 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(getRoles().get(0).getRole().name()));
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public UserEntity setPassword(String password) {

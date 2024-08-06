@@ -40,7 +40,7 @@ public class RegistrationController {
         }
 
         UserDto user = userService.registerUser(registerDTO);
-        user.setToken(userAuthProvider.createToken(user.getEmail()));
+        user.setToken(userAuthProvider.createToken(user));
 
         return ResponseEntity.created(URI.create("/users/" + user.getId()))
                 .body(user);

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 
 const page = () => {
 
-  const { internationalization } = useAuthContext();
+  const { internationalization, role } = useAuthContext();
   const [carCatalogTitle, setCarCatalogTitle] = useState("Catalog Cars for SALE");
 
   const router = useRouter();
@@ -24,7 +24,7 @@ const page = () => {
     
   }, [internationalization])
 
-  if (!getAuthToken() || !getAuthUser()) {
+  if (!getAuthToken() || !getAuthUser() || !role ) {
     router.push("/login");
   } else {
     return (

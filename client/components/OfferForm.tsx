@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 
 const OfferForm = () => {
-    const { internationalization, setIsAuthenticated } = useAuthContext();
+    const { internationalization, setIsAuthenticated, role } = useAuthContext();
     const [cityConsumptionText, setCityConsumptionText] = useState("City Consumption: 9");
     const [combinedConsumptionText, setCombinedConsumptionText] = useState("Combined Consumption: 7");
     const [cylindersText, setCylindersText] = useState("Cylinders: 5");
@@ -178,7 +178,7 @@ const OfferForm = () => {
           router.push("/login");
         }
     
-          if (result && getAuthToken() != null) {
+          if (result instanceof Object && getAuthToken() != null) {
             router.push("/for-sale");
           } else {
             setOfferError(result);

@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
 import { useAuthContext } from "@/context/AuthContext";
 
-export default function Home() {
 
+export default function Home() {
   const { internationalization } = useAuthContext();
 
   const [carCatalogTitle, setCarCatalogTitle] = useState("Car Catalogue");
@@ -64,10 +64,6 @@ export default function Home() {
   useEffect(() => {
     getCars();
   }, [fuel, year, limit, manufacturer, model])
-
-  useEffect(() => {
-    console.log("Logged changed pathname: " + pathname);
-  }, [pathname])
 
 
   useEffect(() => {

@@ -11,13 +11,17 @@ type AuthContext = {
     setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
     internationalization: string;
     setInternationalization: React.Dispatch<React.SetStateAction<string>>;
+    role?: string;
+    setRole: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 export const AuthContext = createContext<AuthContext | null>(null);
 
 export default function AuthContextProvider({ children }: AuthContextProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [internationalization, setInternationalization] = useState("English");
+    const [internationalization, setInternationalization] = useState("English");
+    const [role, setRole] = useState<string | undefined>("USER");
+
 
     return (
         <AuthContext.Provider
@@ -25,7 +29,9 @@ export default function AuthContextProvider({ children }: AuthContextProviderPro
                 isAuthenticated,
                 setIsAuthenticated,
                 internationalization,
-                setInternationalization
+                setInternationalization,
+                role,
+                setRole
             }}
         >
             {children}

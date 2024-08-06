@@ -1,6 +1,13 @@
 package softuni.defense.project.model.enums;
 
-public enum UserRoleEnum {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRoleEnum implements GrantedAuthority {
     ADMIN,
-    USER
+    USER;
+
+    @Override
+    public String getAuthority() {
+        return this.name();
+    }
 }
