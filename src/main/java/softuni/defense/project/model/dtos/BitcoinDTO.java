@@ -1,6 +1,6 @@
 package softuni.defense.project.model.dtos;
 
-import softuni.defense.project.model.CoinPriceEntity;
+import softuni.defense.project.model.entities.CoinPriceEntity;
 
 import java.io.Serializable;
 

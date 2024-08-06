@@ -2,6 +2,7 @@ package softuni.defense.project.web;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class CarController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<CarDTO> createCarOffer(@Valid @RequestBody CarDTO carDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             validator.validateCreateOffer(bindingResult);
@@ -36,11 +38,13 @@ public class CarController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<List<CarDTO>> getAllCarsForSaleOrRent() {
         return ResponseEntity.ok(this.carService.getAllOffers());
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     public ResponseEntity<CarDTO> deleteCarOffer(@PathVariable String id, @RequestBody String userLogin) {
         System.out.println(userLogin);
         return ResponseEntity.ok(this.carService.deleteCarOfferById(id, userLogin));

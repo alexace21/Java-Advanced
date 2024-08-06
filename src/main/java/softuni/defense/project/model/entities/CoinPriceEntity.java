@@ -1,4 +1,4 @@
-package softuni.defense.project.model;
+package softuni.defense.project.model.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

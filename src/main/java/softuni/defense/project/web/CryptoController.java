@@ -1,11 +1,12 @@
 package softuni.defense.project.web;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import softuni.defense.project.model.CoinPriceEntity;
+import softuni.defense.project.model.entities.CoinPriceEntity;
 import softuni.defense.project.service.CryptoService;
 
 import java.util.List;
@@ -22,7 +23,8 @@ public class CryptoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CoinPriceEntity>> getAllCarsForSaleOrRent() {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<CoinPriceEntity>> getAllCryptoEntities() {
         return ResponseEntity.ok(this.cryptoService.getRippleAndBitcoinData());
     }
 }

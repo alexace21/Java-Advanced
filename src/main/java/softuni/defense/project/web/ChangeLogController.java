@@ -1,6 +1,7 @@
 package softuni.defense.project.web;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import softuni.defense.project.model.dtos.CarLogDTO;
@@ -22,16 +23,21 @@ public class ChangeLogController {
     }
 
     @GetMapping("/feedback")
+    @PreAuthorize("hasAuthority('ADMIN')")
+
     public ResponseEntity<List<FeedbackLogDTO>> getAllFeedbackLogs() {
         return ResponseEntity.ok(this.changeLogService.getAllFeedbackLogs());
     }
 
     @GetMapping("/users")
+    @PreAuthorize("hasAuthority('ADMIN')")
+
     public ResponseEntity<List<UserLogDTO>> getAllRegisteredUsers() {
             return ResponseEntity.ok(this.changeLogService.getAllRegisteredUsers());
     }
 
     @GetMapping("/cars")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<CarLogDTO>> getAllRegisteredCars() {
         return ResponseEntity.ok(this.changeLogService.getAllCarLogs());
     }

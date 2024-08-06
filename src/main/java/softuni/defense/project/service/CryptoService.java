@@ -1,6 +1,6 @@
 package softuni.defense.project.service;
 
-import softuni.defense.project.model.CoinPriceEntity;
+import softuni.defense.project.model.entities.CoinPriceEntity;
 
 import java.util.List;
 

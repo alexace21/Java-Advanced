@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import softuni.defense.project.config.CoinGeckoConfig;
-import softuni.defense.project.model.CoinPriceEntity;
+import softuni.defense.project.model.entities.CoinPriceEntity;
 import softuni.defense.project.model.dtos.BitcoinDTO;
 import softuni.defense.project.model.dtos.RippleCoinDTO;
 import softuni.defense.project.repositories.CoinPriceRepository;

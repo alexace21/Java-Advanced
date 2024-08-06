@@ -20,7 +20,7 @@ export const AuthContext = createContext<AuthContext | null>(null);
 export default function AuthContextProvider({ children }: AuthContextProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [internationalization, setInternationalization] = useState("English");
-    const [role, setRole] = useState<string | undefined>("USER");
+    const [role, setRole] = useState<string | undefined>(undefined);
 
 
     return (
