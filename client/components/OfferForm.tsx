@@ -178,6 +178,14 @@ const OfferForm = () => {
           router.push("/login");
         }
     
+        if (result === 403) {
+          setIsAuthenticated(false);
+          window.localStorage.removeItem("auth_token");
+          window.localStorage.removeItem("auth_user");
+          alert("You don't have access to this resource!");
+          router.push("/");
+        }
+
           if (result instanceof Object && getAuthToken() != null) {
             router.push("/for-sale");
           } else {

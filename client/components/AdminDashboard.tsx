@@ -88,12 +88,25 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   const fetchFeedbackLogs = async () => {
     const result = await fetchAllFeedbackChangeLog();
 
+    if (result === 403) {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("You don't have access to this resource!");
+      router.push("/");
+
+      return;
+    }
+
+
     if (result === "Unauthorized path") {
       setIsAuthenticated(false);
       window.localStorage.removeItem("auth_token");
       window.localStorage.removeItem("auth_user");
       alert("Login has expired!");
       router.push("/login");
+
+      return;
     }
 
     if (result) {
@@ -104,11 +117,23 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   const fetchRegisteredUserLogs = async () => {
     const result = await fetchAllRegisteredUsers();
 
+    if (result === 403) {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("You don't have access to this resource!");
+      router.push("/");
+
+      return;
+    }
+
     if (result === "Unauthorized path") {
       setIsAuthenticated(false);
       window.localStorage.removeItem("auth_token");
       window.localStorage.removeItem("auth_user");
       router.push("/login");
+
+      return;
     }
     
     if (result) {
@@ -118,12 +143,24 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
 
   const fetchRegisteredCarLogs = async () => {
     const result = await fetchAllRegisteredCars();
+
+    if (result === 403) {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("You don't have access to this resource!");
+      router.push("/");
+
+      return;
+    }
     
     if (result === "Unauthorized path") {
       setIsAuthenticated(false);
       window.localStorage.removeItem("auth_token");
       window.localStorage.removeItem("auth_user");
       router.push("/login");
+
+      return;
     }
 
     if (result) {
@@ -133,6 +170,16 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
 
   const handleDeleteUserFeedback = async (id: string) => {
     const result = await removeUserFeedback(id);
+
+    if (result === 403) {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("You don't have access to this resource!");
+      router.push("/");
+
+      return;
+    }
 
         if (result) {
             setAllFeedbacks(allFeedbacks.filter((feedback: any) => feedback.id != result.id))

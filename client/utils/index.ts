@@ -193,6 +193,11 @@ export const createCarOffer = async (
 
   console.log(response.ok);
   
+  if (response.status === 403) {
+    return 403;
+  }
+
+
   if (response.ok) {
     return body;
   } else {
@@ -243,6 +248,10 @@ export const submitFeedbackForm = async (
 
   // const body = await response.json();
   console.log(response)
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return 200;
@@ -267,6 +276,10 @@ export const deleteCarForSale = async (id: number) => {
     headers: headers,
     body: currentLogin
   });
+
+  if (response.status === 403) {
+    return 403;
+  }
 
   if (response.ok) {
     return 200;
@@ -295,6 +308,10 @@ export const fetchCarsForSale = async () => {
   console.log(body);
 
   console.log(response.ok);
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return body;
@@ -323,6 +340,10 @@ export const fetchAllFeedbackChangeLog = async () => {
   console.log(body);
 
   console.log(response.ok);
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return body;
@@ -351,6 +372,10 @@ export const fetchAllRegisteredUsers = async () => {
   console.log(body);
 
   console.log(response.ok);
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return body;
@@ -379,7 +404,11 @@ export const fetchAllRegisteredCars = async () => {
   console.log(body);
 
   console.log(response.ok);
-  
+
+  if (response.status === 403) {
+    return 403;
+  }
+
   if (response.ok) {
     return body;
   } else {
@@ -407,6 +436,10 @@ export const fetchAllCryptoData = async () => {
   console.log(body);
 
   console.log(response.ok);
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return body;
@@ -436,6 +469,10 @@ export const resolveFeedback = async (id: string) => {
   console.log(body);
 
   console.log(response.ok);
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return body;
@@ -465,6 +502,10 @@ export const removeUserFeedback = async (id: string) => {
   console.log(body);
 
   console.log(response.ok);
+
+  if (response.status === 403) {
+    return 403;
+  }
   
   if (response.ok) {
     return body;

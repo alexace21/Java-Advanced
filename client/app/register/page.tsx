@@ -11,11 +11,6 @@ const RegisterPage = () => {
   const [registerTitle, setRegisterTitle] = useState("Register");
   const router = useRouter();
 
-  if (isAuthenticated) {
-    router.push("/");
-  }
-
-
   useEffect(() => {
     console.log("Internationalization switched! " + internationalization);
 
@@ -27,14 +22,19 @@ const RegisterPage = () => {
     
   }, [internationalization])
 
-  return (
-    <main className="overflow-hidden">
-      <div className="">
-        <h1 className="text-center text-4xl font-extrabold pt-32">{registerTitle}</h1>
-        <RegistrationForm />
-      </div>
-    </main>
-  );
+  if (isAuthenticated) {
+    router.push("/");
+  } else {
+    return (
+      <main className="overflow-hidden">
+        <div className="">
+          <h1 className="text-center text-4xl font-extrabold pt-32">{registerTitle}</h1>
+          <RegistrationForm />
+        </div>
+      </main>
+    );
+  }
+  
 };
 
 export default RegisterPage;

@@ -3,6 +3,7 @@
 import { useAuthContext } from "@/context/AuthContext";
 import { FeedbackCardProps } from "@/types";
 import { resolveFeedback } from "@/utils";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface FeedbackProps {
@@ -11,7 +12,9 @@ interface FeedbackProps {
 }
 
 const UserFeedbackCard = ({ handleRemoveFeedback, feedback }: FeedbackProps) => {
-    const { internationalization } = useAuthContext();
+    const { internationalization, setIsAuthenticated } = useAuthContext();
+    const router = useRouter();
+
     const [statusText, setStatusText] = useState("Status");
     const [ownerText, setOwnerText] = useState("Owner");
     const [satisfactionText, setSatisfactionText] = useState("Satisfaction");
@@ -26,6 +29,16 @@ const UserFeedbackCard = ({ handleRemoveFeedback, feedback }: FeedbackProps) => 
 
     const handleResolveFeedback = async(id: string) => {
         const result = await resolveFeedback(id);
+
+        if (result === 403) {
+          setIsAuthenticated(false);
+          window.localStorage.removeItem("auth_token");
+          window.localStorage.removeItem("auth_user");
+          alert("You don't have access to this resource!");
+          router.push("/");
+    
+          return;
+        }
 
         if (result) {
             setStatus(result.status);

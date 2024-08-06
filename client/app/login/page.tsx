@@ -12,10 +12,6 @@ const page = () => {
 
   const router = useRouter();
 
-  if (isAuthenticated) {
-    router.push("/");
-  }
-
   useEffect(() => {
     console.log("Internationalization switched! " + internationalization);
 
@@ -27,14 +23,19 @@ const page = () => {
     
   }, [internationalization])
 
-  return (
-    <main className="overflow-hidden">
-      <div className="">
-        <h1 className="text-center text-4xl font-extrabold pt-32">{loginTitle}</h1>
-        <LoginForm />
-      </div>
-    </main>
-  )
+  if (isAuthenticated) {
+    router.push("/");
+  } else {
+    return (
+      <main className="overflow-hidden">
+        <div className="">
+          <h1 className="text-center text-4xl font-extrabold pt-32">{loginTitle}</h1>
+          <LoginForm />
+        </div>
+      </main>
+    )
+  }
+  
 }
 
 export default page

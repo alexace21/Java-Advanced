@@ -6,8 +6,12 @@ import ShopCatalog from './ShopCatalog';
 import Image from "next/image";
 import { deleteCarForSale, fetchCarsForSale } from '@/utils';
 import { CarCardProps } from '@/types';
+import { useRouter } from 'next/navigation';
+import { useAuthContext } from '@/context/AuthContext';
 
 const SaleCatalog = () => {
+    const {setIsAuthenticated} = useAuthContext();
+    const router = useRouter();
     const [allCars, setAllCars] = useState([]);
     const [loading, setLoading] = useState(false);
   
@@ -31,6 +35,14 @@ const SaleCatalog = () => {
   const handleDeleteCar = async (id: number) => {
     console.log("attempted delete of Car Sale Offer! - " + id);
     const result = await deleteCarForSale(id);
+
+    if (result === 403) {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("You don't have access to this resource!");
+      router.push("/");
+    }
 
     if (result == 200) {
       const filteredCars =  allCars.filter((car: CarCardProps) => car.id != id)
