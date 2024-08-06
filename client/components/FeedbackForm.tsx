@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 
 const FeedbackForm = () => {
-  const { internationalization } = useAuthContext();
+  const { internationalization, setIsAuthenticated } = useAuthContext();
   const [headlineText, setHeadlineText] = useState("Car Service Satisfaction Survey");
   const [subHeadlineText, setSubHeadlineText] = useState("Please take a few minutes to provide feedback on your recent car experience with carHub");
   const [satisfactionQuestion, setSatisfactionQuestion] = useState("How satisfied are you with the car service you received?");
@@ -142,6 +142,14 @@ const FeedbackForm = () => {
         recommendOption,
         loggedUser
     )
+
+    if (result === 401) {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("Login has expired!");
+      router.push("/login");
+    }
 
     if (result === 200) {
         alert("Your feedback has been successfully submitted and received by the Customer Service team, thank you! ")

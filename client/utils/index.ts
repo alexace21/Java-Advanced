@@ -245,7 +245,7 @@ export const submitFeedbackForm = async (
     return 200;
   } else {
     console.log("Error Submitting Feedback!");
-    // return body.message? body.message : body;
+    return 401;
   }
 }
 

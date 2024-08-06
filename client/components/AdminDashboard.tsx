@@ -7,13 +7,14 @@ import UserChangeLogCard from "./UserChangeLogCard";
 import CarChangeLogCard from "./CarChangeLogCard";
 import CryptoBoard from "./CryptoBoard";
 import { useAuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 interface AdminBoardProps {
   user: string | null;
 }
 
 const AdminDashboard = ({ user }: AdminBoardProps) => {
-  const { internationalization } = useAuthContext();
+  const { internationalization, setIsAuthenticated } = useAuthContext();
   const [welcomeText, setWelcomeText] = useState("Welcome");
   const [carsLogText, setCarsLogText] = useState("Cars Change Log");
   const [usersLogText, setUsersLogText] = useState("Users Change Log");
@@ -31,6 +32,8 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   const [ownerText, setOwnerText] = useState("Owner");
   const [priceText, setPriceText] = useState("Price");
   const [statusText, setStatusText] = useState("Status")
+
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -85,6 +88,14 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   const fetchFeedbackLogs = async () => {
     const result = await fetchAllFeedbackChangeLog();
 
+    if (result === "Unauthorized path") {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("Login has expired!");
+      router.push("/login");
+    }
+
     if (result) {
       setAllFeedbacks(result);
     }
@@ -93,7 +104,13 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
   const fetchRegisteredUserLogs = async () => {
     const result = await fetchAllRegisteredUsers();
 
-    console.log(result);
+    if (result === "Unauthorized path") {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("Login has expired!");
+      router.push("/login");
+    }
     
     if (result) {
         setAllUsers(result);
@@ -102,9 +119,15 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
 
   const fetchRegisteredCarLogs = async () => {
     const result = await fetchAllRegisteredCars();
-
-    console.log(result);
     
+    if (result === "Unauthorized path") {
+      setIsAuthenticated(false);
+      window.localStorage.removeItem("auth_token");
+      window.localStorage.removeItem("auth_user");
+      alert("Login has expired!");
+      router.push("/login");
+    }
+
     if (result) {
         setAllCars(result);
     }
@@ -153,8 +176,8 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                     </tr>
                   </table>
                   <table className="table table-striped table-dark">
-                    {allCars.length > 0 ? (
-                        allCars.map((car: any) => (
+                    {allCars?.length > 0 ? (
+                        allCars?.map((car: any) => (
                             <CarChangeLogCard car={car} />
                         ))
                     ) : (
@@ -176,8 +199,8 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
                   </tr>
                 </table>
                 <table className="table table-striped table-dark">
-                    {allUsers.length > 0 ? (
-                        allUsers.map((user: any) => (
+                    {allUsers?.length > 0 ? (
+                        allUsers?.map((user: any) => (
                             <UserChangeLogCard user={user}/>
                         )) 
                     ): (
@@ -191,8 +214,8 @@ const AdminDashboard = ({ user }: AdminBoardProps) => {
               <div className="home-fields h-full w-[550px]">
                 <h3 className="my-paintings bg-slate-800">{userFeedbackText}</h3>
                 <ul className="list-group list-group-vertical text-dark">
-                {allFeedbacks.length > 0 ? (
-                allFeedbacks.map((feedback: any) => (
+                {allFeedbacks?.length > 0 ? (
+                allFeedbacks?.map((feedback: any) => (
                     <UserFeedbackCard feedback={feedback} handleRemoveFeedback={handleDeleteUserFeedback}/>
                 ))
                 ) : (

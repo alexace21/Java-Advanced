@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
 
 const OfferForm = () => {
-    const { internationalization } = useAuthContext();
+    const { internationalization, setIsAuthenticated } = useAuthContext();
     const [cityConsumptionText, setCityConsumptionText] = useState("City Consumption: 9");
     const [combinedConsumptionText, setCombinedConsumptionText] = useState("Combined Consumption: 7");
     const [cylindersText, setCylindersText] = useState("Cylinders: 5");
@@ -169,6 +169,14 @@ const OfferForm = () => {
             year,
             price
         );
+
+        if (result === "Unauthorized path") {
+          setIsAuthenticated(false);
+          window.localStorage.removeItem("auth_token");
+          window.localStorage.removeItem("auth_user");
+          alert("Login has expired!");
+          router.push("/login");
+        }
     
           if (result && getAuthToken() != null) {
             router.push("/for-sale");

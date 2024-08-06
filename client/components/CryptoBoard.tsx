@@ -42,8 +42,8 @@ const CryptoBoard = () => {
       <h3 className="text-xl text-red-600 font-bold text-wrap text-center">
         {headlineText} CoinGecko API!
       </h3>
-        {allCrypto.length > 0 ? (
-            allCrypto.map((crypto: any) => (
+        {allCrypto?.length > 0 ? (
+            allCrypto?.map((crypto: any) => (
                 <div className="my-2">
         <span className="font-sans">{crypto.name.toUpperCase()} {priceText}: ${crypto.usd}</span>
       </div>
