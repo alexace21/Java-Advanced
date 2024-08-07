@@ -37,7 +37,6 @@ public class FeedBackControllerIT {
 
     @Autowired
     private MockMvc mockedMvc;
-
     @Autowired
     private WebApplicationContext context;
     @Autowired
@@ -56,7 +55,7 @@ public class FeedBackControllerIT {
         if (userRoleRepository.findByRole(UserRoleEnum.USER).isEmpty()) {
             this.userRoleRepository.save(new UserRoleEntity(UserRoleEnum.USER));
         }
-        if (userRepository.count() < 1) {
+        if (userRepository.findByEmail("anna@example.com").isEmpty()) {
         String encodedPass = passwordEncoder.encode("topsecret123");
             UserRoleEntity roleEntity = userRoleRepository.findByRole(UserRoleEnum.USER).get();
             this.userRepository.save(new UserEntity("anna@example.com", encodedPass, "Anna", "Dusseldorf", List.of(roleEntity)));

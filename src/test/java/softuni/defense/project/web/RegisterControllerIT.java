@@ -43,10 +43,10 @@ public class RegisterControllerIT {
             this.userRoleRepository.save(new UserRoleEntity(UserRoleEnum.USER));
         }
 
-        if (userRepository.count() < 1) {
+        if (userRepository.findByEmail("anna@example.com").isEmpty()) {
             String encodedPass = passwordEncoder.encode("topsecret123");
             UserRoleEntity roleEntity = userRoleRepository.findByRole(UserRoleEnum.USER).get();
-            this.userRepository.save(new UserEntity("anna@example2.com", encodedPass, "Anna", "Dusseldorf", List.of(roleEntity)));
+            this.userRepository.save(new UserEntity("anna@example.com", encodedPass, "Anna", "Dusseldorf", List.of(roleEntity)));
         }
 
     }
@@ -54,7 +54,7 @@ public class RegisterControllerIT {
     @Test
     public void testRegistration() throws Exception {
         String jsonPayload = "{\n" +
-                "  \"email\": \"anna@example.com\",\n" +
+                "  \"email\": \"anna2@example2.com\",\n" +
                 "  \"password\": \"topsecret123\",\n" +
                 "  \"firstName\": \"Anna\",\n" +
                 "  \"lastName\": \"Dusseldorf\"\n" +
