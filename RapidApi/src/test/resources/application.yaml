@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      mode: never
+rapid:
+  api:
+    key: ${x-rapidapi-key}
+    url: "/v1/cars"
+    base: "https://cars-by-api-ninjas.p.rapidapi.com"

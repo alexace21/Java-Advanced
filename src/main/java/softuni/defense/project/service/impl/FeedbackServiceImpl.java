@@ -63,7 +63,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
             Optional<FeedbackEntity> optionalFeedbackEntity = this.feedbackRepository.findById(feedbackLog.getFeedback().getId());
 
-            if (optionalFeedbackChangeLog.isPresent()) {
+            if (optionalFeedbackEntity.isPresent()) {
                 FeedbackEntity feedback = optionalFeedbackEntity.get();
 
                 feedback.setStatus(FeedbackStatusEnum.RESOLVED);
@@ -89,7 +89,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
             Optional<FeedbackEntity> optionalFeedbackEntity = this.feedbackRepository.findById(feedbackLog.getFeedback().getId());
 
-            if (optionalFeedbackChangeLog.isPresent()) {
+            if (optionalFeedbackEntity.isPresent()) {
                 FeedbackEntity feedback = optionalFeedbackEntity.get();
 
                 feedback.setStatus(FeedbackStatusEnum.REMOVED);
@@ -102,6 +102,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
                 return mapToLogDTO(feedbackLog);
             }
+
         }
         throw new RuntimeException("Feedback is corrupt!");
     }

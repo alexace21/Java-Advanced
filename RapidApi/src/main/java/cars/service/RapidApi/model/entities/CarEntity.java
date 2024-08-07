@@ -10,7 +10,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "cars")
 public class CarEntity extends BaseEntity {
-
     private Long city_mpg;
     private Long combination_mpg;
     private int cylinders;
@@ -29,6 +28,8 @@ public class CarEntity extends BaseEntity {
 
     public CarEntity() {
     }
+
+
 
     public CarEntity(Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String owner, String price, CarStatusEnum status) {
         this.city_mpg = city_mpg;

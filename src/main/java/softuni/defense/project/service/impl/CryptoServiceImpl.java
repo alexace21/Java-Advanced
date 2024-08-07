@@ -42,7 +42,7 @@ public class CryptoServiceImpl implements CryptoService {
     // 0 0 */1 * * * <-- 1 hour Spring CRON
     // */1 * * * * * <-- 1 minute
     @Scheduled(cron = "0 0 */1 * * *", zone = "Europe/Berlin")
-    private void updateRippleData() {
+    public void updateRippleData() {
         RippleCoinDTO rippleCoinData = fetchRippleData();
         if (rippleCoinData != null) {
             Optional<CoinPriceEntity> optionalCoinEntity = this.coinPriceRepository.findByName("ripple");
@@ -63,7 +63,7 @@ public class CryptoServiceImpl implements CryptoService {
 
 
     @Scheduled(cron = "0 0 */1 * * *", zone = "Europe/Berlin")
-    private void updateBitcoinData() {
+    public void updateBitcoinData() {
         BitcoinDTO bitcoinData = fetchBitcoinData();
         if (bitcoinData != null) {
             Optional<CoinPriceEntity> optionalCoinEntity = this.coinPriceRepository.findByName("bitcoin");
@@ -82,7 +82,7 @@ public class CryptoServiceImpl implements CryptoService {
         }
     }
 
-    private BitcoinDTO fetchBitcoinData() {
+    public BitcoinDTO fetchBitcoinData() {
         LOGGER.info("FETCH Bitcoin Data...");
 
         StringBuilder preBuildURI = new StringBuilder();
@@ -100,7 +100,7 @@ public class CryptoServiceImpl implements CryptoService {
                 });
 
     }
-    private RippleCoinDTO fetchRippleData() {
+    public RippleCoinDTO fetchRippleData() {
         LOGGER.info("FETCH Ripple Data...");
 
         StringBuilder preBuildURI = new StringBuilder();

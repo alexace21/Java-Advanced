@@ -2,6 +2,7 @@ package softuni.defense.project.model.dtos;
 
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class FeedbackLogDTO {
     private String id;
@@ -90,4 +91,5 @@ public class FeedbackLogDTO {
     public void setSubmitDate(String submitDate) {
         this.submitDate = submitDate;
     }
+
 }

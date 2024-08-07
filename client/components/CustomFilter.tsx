@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Fragment } from "react"
+import { useState, Fragment, useEffect } from "react"
 import Image from "next/image";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from "@headlessui/react";
 import { CustomFilterProps } from "@/types";
@@ -8,6 +8,10 @@ import { CustomFilterProps } from "@/types";
 const CustomFilter = ({ title, options, setFilter }: CustomFilterProps) => {
   const [selected, setSelected] = useState(options[0]);
 
+
+  useEffect(() => {
+
+  }, [selected])
   return (
     <div className='w-fit'>
       <Listbox
@@ -20,7 +24,7 @@ const CustomFilter = ({ title, options, setFilter }: CustomFilterProps) => {
         <div className='relative w-fit z-10'>
           {/* Button for the listbox */}
           <ListboxButton className='custom-filter__btn'>
-            <span className='block truncate'>{selected.title === "Fuel" || "Year" ? title : selected.title}</span>
+            <span className='block truncate'>{selected.title}</span>
             <Image src='/chevron-up-down.svg' width={20} height={20} className='ml-4 object-contain' alt='chevron_up-down' />
           </ListboxButton>
           {/* Transition for displaying the options */}
