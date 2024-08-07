@@ -4,10 +4,9 @@ import softuni.defense.project.model.enums.UserRoleEnum;
 
 public class UserDto {
     private Long id;
-
+    private String email;
     private String firstName;
     private String lastName;
-    private String email;
     private String token;
 
     private UserRoleEnum role;
