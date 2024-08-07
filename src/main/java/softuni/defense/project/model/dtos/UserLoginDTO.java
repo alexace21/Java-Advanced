@@ -10,7 +10,7 @@ public class UserLoginDTO {
     public UserLoginDTO() {
     }
 
-    public UserLoginDTO(String email, String password, String login) {
+    public UserLoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

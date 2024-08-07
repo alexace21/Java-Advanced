@@ -15,6 +15,7 @@ import softuni.defense.project.model.enums.UserRoleEnum;
 import softuni.defense.project.repositories.UserRepository;
 import softuni.defense.project.repositories.UserRoleRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,12 +39,20 @@ public class RegisterControllerIT {
 
     @BeforeEach
     void setUp() {
-        this.userRoleRepository.save(new UserRoleEntity(UserRoleEnum.USER));
+        if (userRoleRepository.findByRole(UserRoleEnum.USER).isEmpty()) {
+            this.userRoleRepository.save(new UserRoleEntity(UserRoleEnum.USER));
+        }
+
+        if (userRepository.count() < 1) {
+            String encodedPass = passwordEncoder.encode("topsecret123");
+            UserRoleEntity roleEntity = userRoleRepository.findByRole(UserRoleEnum.USER).get();
+            this.userRepository.save(new UserEntity("anna@example2.com", encodedPass, "Anna", "Dusseldorf", List.of(roleEntity)));
+        }
+
     }
 
     @Test
     public void testRegistration() throws Exception {
-
         String jsonPayload = "{\n" +
                 "  \"email\": \"anna@example.com\",\n" +
                 "  \"password\": \"topsecret123\",\n" +
@@ -73,6 +82,5 @@ public class RegisterControllerIT {
         Assertions.assertTrue(passwordEncoder.matches("topsecret123", userEntity.getPassword()));
 
         Assertions.assertEquals("USER", userEntity.getRoles().get(0).getRole().name());
-
     }
 }

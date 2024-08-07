@@ -14,6 +14,13 @@ public class UserDto {
     public UserDto() {
     }
 
+    public UserDto(String firstName, String lastName, String email, UserRoleEnum role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+    }
+
     public UserDto(String firstName, String lastName, String email, String token, UserRoleEnum role) {
         this.firstName = firstName;
         this.lastName = lastName;
