@@ -53,6 +53,12 @@ export default function Home() {
         model: model || "",
       });
   
+      if (result === 500) {
+        setAllCars([]);
+
+        return;
+      }
+
       setAllCars(result);
     } catch (error) {
       console.error(error);      

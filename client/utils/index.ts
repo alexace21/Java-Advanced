@@ -41,6 +41,10 @@ export async function fetchCars(filters: FilterProps) {
     headers: headers,
   });
 
+  if (response.status === 401) {
+    return 500
+  }
+
   const result = await response.json();
 
   return result;
