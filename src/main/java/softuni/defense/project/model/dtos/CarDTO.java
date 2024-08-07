@@ -48,7 +48,7 @@ public class CarDTO {
     public CarDTO() {
     }
 
-    public CarDTO(Long id, Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String price) {
+    public CarDTO(Long id, Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String price, String owner) {
         this.id = id;
         this.city_mpg = city_mpg;
         this.combination_mpg = combination_mpg;
@@ -62,6 +62,23 @@ public class CarDTO {
         this.transmission = transmission;
         this.year = year;
         this.price = price;
+        this.owner = owner;
+    }
+
+    public CarDTO(Long city_mpg, Long combination_mpg, int cylinders, Double displacement, String drive, String fuel_type, Long highway_mpg, String make, String model, String transmission, Long year, String price, String owner) {
+        this.city_mpg = city_mpg;
+        this.combination_mpg = combination_mpg;
+        this.cylinders = cylinders;
+        this.displacement = displacement;
+        this.drive = drive;
+        this.fuel_type = fuel_type;
+        this.highway_mpg = highway_mpg;
+        this.make = make;
+        this.model = model;
+        this.transmission = transmission;
+        this.year = year;
+        this.price = price;
+        this.owner = owner;
     }
 
     public String getPrice() {

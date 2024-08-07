@@ -9,7 +9,6 @@ import softuni.defense.project.config.exception.AppException;
 public class Validator {
 
     public void validateRegistration(BindingResult bindingResult) {
-
         if (bindingResult.getFieldError("email") != null) {
             throw new AppException(bindingResult.getFieldError("email").getDefaultMessage(), HttpStatus.BAD_REQUEST);
         }

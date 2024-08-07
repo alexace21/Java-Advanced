@@ -34,7 +34,7 @@ public class CarController {
         }
 
         CarDTO car = this.carService.createCarOffer(carDTO);
-        return ResponseEntity.created(URI.create("/cars/" + car.getId())).body(car);
+        return ResponseEntity.created(URI.create("/for-sale/")).body(car);
     }
 
     @GetMapping
