@@ -22,7 +22,7 @@ public class UserRegistrationDTO {
     }
 
 
-    public UserRegistrationDTO(String email, String password, String login) {
+    public UserRegistrationDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

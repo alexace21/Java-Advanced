@@ -24,7 +24,7 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG\
+        security: DEBUG
 crypto:
   api:
     base-url: "https://api.coingecko.com/api/v3"
