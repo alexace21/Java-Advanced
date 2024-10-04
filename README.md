@@ -1,12 +1,13 @@
 Project name: 72cars
 
 Your Car Shop where you can discover your dream car or favorite vehicle, thanks to [RapidApi](https://api-ninjas.com/api/cars)
+
 You can find the following pages and modules:
 1. Login
 2. Register
 3. Logout
 4. Landing page
-5. Catalog page
+5. Catalog page: Fetch car make, manufacturer, car year, fuel_type from RapidApi with up to date information about your DREAM vehicle.
 6. Cars for sale page
 7. Search Bar with custom filters
 8. Create Offer
